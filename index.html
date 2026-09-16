@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#5B0F1A"/>
+<title>BrandxSociety Prototype v2</title>
+<style>
+:root{
+  --maroon:#5B0F1A;
+  --maroon2:#7B1724;
+  --maroon3:#3F0A12;
+  --gold:#C8A24A;
+  --gold2:#E0C16A;
+  --gold-soft:#F7F0DD;
+  --white:#FFFFFF;
+  --bg:#FBF8F5;
+  --ink:#241C1D;
+  --muted:#817275;
+  --line:#E8DEDA;
+  --success:#2C8A61;
+  --danger:#C34F4F;
+  --shadow:0 18px 60px rgba(70,20,27,.12);
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:
+ radial-gradient(circle at 12% 12%,rgba(200,162,74,.14),transparent 28%),
+ radial-gradient(circle at 88% 92%,rgba(91,15,26,.12),transparent 28%),
+ var(--bg);
+ color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+button,input{font:inherit}
+.stage{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:28px}
+.phone{width:min(100%,430px);min-height:880px;background:var(--bg);border:10px solid #2D1115;border-radius:44px;overflow:hidden;box-shadow:0 30px 100px rgba(0,0,0,.22);position:relative}
+.app{min-height:860px;padding-bottom:86px;position:relative}
+.status{display:flex;justify-content:space-between;padding:14px 20px 6px;font-size:12px;font-weight:800}
+.top{padding:8px 18px 14px;display:flex;align-items:center;justify-content:space-between}
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:900;color:var(--gold)}
+h1{margin:4px 0 0;font-size:28px;line-height:1.08}
+h2,h3,h4,p{margin-top:0}
+.iconbtn{border:1px solid var(--line);background:#fff;width:42px;height:42px;border-radius:14px;display:grid;place-items:center;cursor:pointer}
+.hero{margin:0 18px 16px;padding:20px;border-radius:26px;background:linear-gradient(145deg,var(--maroon2),var(--maroon3));color:#fff;box-shadow:var(--shadow)}
+.hero small{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold2);font-weight:900}
+.hero h2{font-size:27px;margin:8px 0 4px}
+.hero p{font-size:13px;color:#F0E7E8;margin-bottom:16px}
+.hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.hero-stat{padding:11px;border-radius:16px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.09)}
+.hero-stat b{display:block;font-size:17px}
+.hero-stat span{font-size:10px;opacity:.8}
+.section{padding:0 18px 18px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:10px 0}
+.section-head h3{font-size:16px;margin:0}
+.link{font-size:12px;color:var(--maroon2);font-weight:900;cursor:pointer}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 10px 32px rgba(70,20,27,.05)}
+.identity-row{display:flex;gap:12px;align-items:center}
+.avatar{width:60px;height:60px;border-radius:20px;display:grid;place-items:center;color:white;background:linear-gradient(145deg,var(--maroon2),var(--gold));font-size:20px;font-weight:950}
+.grow{flex:1}
+.name{font-weight:900}
+.sub{color:var(--muted);font-size:12px;line-height:1.45}
+.pill{display:inline-flex;padding:7px 10px;border-radius:999px;background:var(--gold-soft);color:var(--maroon2);font-size:11px;font-weight:900;margin:6px 4px 0 0;border:1px solid #EBDCAC}
+.progress{height:7px;background:#EEE6E2;border-radius:99px;overflow:hidden;margin-top:10px}
+.bar{height:100%;background:linear-gradient(90deg,var(--gold),var(--maroon2));border-radius:99px}
+.opp{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;cursor:pointer}
+.brandlogo{width:48px;height:48px;border-radius:15px;background:var(--maroon);color:#fff;display:grid;place-items:center;font-weight:950}
+.opp h4{font-size:14px;margin:0 0 3px}
+.money{font-size:14px;font-weight:950;margin-top:4px}
+.match{margin-left:auto;background:#F9F1DC;color:#8A681D;padding:6px 8px;border-radius:99px;font-size:10px;font-weight:950}
+.tabs{display:flex;gap:8px;padding:0 18px 14px;overflow:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:1px solid var(--line);background:white;padding:9px 12px;border-radius:999px;white-space:nowrap;font-size:12px;font-weight:900;cursor:pointer}
+.tab.active{background:var(--maroon);color:white;border-color:var(--maroon)}
+.nav{position:absolute;left:0;right:0;bottom:0;height:78px;background:rgba(255,255,255,.96);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:8px 8px 12px;backdrop-filter:blur(12px)}
+.navbtn{border:0;background:transparent;color:#98898B;font-size:10px;font-weight:900;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
+.navbtn .ico{font-size:20px}
+.navbtn.active{color:var(--maroon)}
+.screen{display:none}.screen.active{display:block}
+.ai-card{background:linear-gradient(150deg,#4E0D17,#2F0810);color:#fff;border-radius:22px;padding:17px}
+.ai-card p{font-size:13px;line-height:1.6;color:#F0E7E8}
+.ai-label{font-size:11px;color:var(--gold2);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.scoregrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+.score{background:white;border:1px solid var(--line);border-radius:18px;padding:14px}
+.score b{font-size:22px}.score span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.btn{width:100%;border:0;border-radius:16px;padding:14px 16px;font-weight:950;cursor:pointer}
+.btn.primary{background:var(--maroon);color:white}
+.btn.gold{background:var(--gold);color:#2B1F0B}
+.btn.secondary{background:white;border:1px solid var(--line);color:var(--ink)}
+.btn + .btn{margin-top:8px}
+.activity-item{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.activity-item:last-child{border-bottom:0}
+.dot{width:10px;height:10px;border-radius:99px;background:var(--gold)}
+.dot.green{background:var(--success)} .dot.gray{background:#BEB4B0}
+.big-profile{text-align:center;padding:8px 18px}
+.big-avatar{width:90px;height:90px;border-radius:30px;margin:0 auto 10px;display:grid;place-items:center;color:white;background:linear-gradient(145deg,var(--maroon2),var(--gold));font-size:30px;font-weight:950}
+.modal{position:absolute;inset:0;background:rgba(42,10,14,.58);display:none;align-items:flex-end;z-index:50}
+.modal.open{display:flex}
+.sheet{background:white;width:100%;border-radius:30px 30px 0 0;padding:22px;max-height:82%;overflow:auto}
+.close{float:right;border:0;background:#F3ECE9;width:36px;height:36px;border-radius:12px;cursor:pointer}
+.hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+.toast{position:absolute;left:50%;bottom:94px;transform:translateX(-50%);background:#2D1115;color:white;padding:10px 14px;border-radius:99px;font-size:12px;font-weight:900;display:none;z-index:60;white-space:nowrap}
+.toast.show{display:block}
+.onboard{position:absolute;inset:0;background:linear-gradient(180deg,#FFFDFB,#FBF8F5 68%);z-index:80;padding:26px;display:flex;flex-direction:column}
+.onboard.hidden{display:none}
+.logo{font-size:22px;font-weight:1000;color:var(--maroon)}
+.logo span{color:var(--gold)}
+.onboard h1{font-size:36px;margin-top:52px}
+.onboard p{color:var(--muted);line-height:1.55}
+.stepdots{display:flex;gap:6px;margin-top:8px}
+.stepdot{width:24px;height:5px;border-radius:99px;background:#E7DBD6}.stepdot.active{background:var(--gold)}
+.connect-list{display:grid;gap:10px;margin:16px 0}
+.connect{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;align-items:center;justify-content:space-between;font-weight:900;cursor:pointer}
+.connect .state{font-size:11px;color:var(--maroon2)}
+.connect.connected{border-color:#DCC16F;background:#FFFCF3}
+.loading{display:none;text-align:center;padding-top:90px}
+.loading.show{display:block}
+.spinner{width:58px;height:58px;border:6px solid #EEE2DE;border-top-color:var(--maroon);border-right-color:var(--gold);border-radius:50%;margin:0 auto 18px;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.analysis-step{background:white;border:1px solid var(--line);border-radius:16px;padding:12px;margin:8px 0;text-align:left;font-size:12px}
+.reveal{display:none}
+.reveal.show{display:block}
+.kicker{font-size:11px;color:var(--gold);font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+.badge{display:inline-block;background:#F5E9C8;color:#704F0C;font-size:10px;font-weight:900;border-radius:99px;padding:6px 8px}
+.empty{padding:30px 10px;text-align:center;color:var(--muted);font-size:13px}
+.filter-summary{margin:0 18px 12px;background:#FFF9E9;border:1px solid #E9D59A;border-radius:16px;padding:12px;font-size:12px;color:#6E5519}
+.toggle{display:flex;gap:8px}
+.toggle button{flex:1;padding:10px;border-radius:14px;border:1px solid var(--line);background:white;font-weight:900;cursor:pointer}
+.toggle button.active{background:var(--maroon);color:white;border-color:var(--maroon)}
+.brand-screen{display:none}.brand-screen.active{display:block}
+.metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.metric{background:white;border:1px solid var(--line);border-radius:18px;padding:14px}
+.metric b{font-size:22px}.metric span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+@media(max-width:600px){
+ .stage{padding:0}.phone{width:100%;min-height:100vh;border:0;border-radius:0;box-shadow:none}.app{min-height:100vh}
+}
+</style>
+</head>
+<body>
+<div class="stage"><div class="phone"><div class="app">
+  <div class="onboard" id="onboard">
+    <div class="logo">Brandx<span>Society</span></div>
+    <div class="stepdots"><div class="stepdot active"></div><div class="stepdot"></div><div class="stepdot"></div></div>
+    <div id="ob1">
+      <h1>Your online identity can become economic value.</h1>
+      <p>Hubungkan akun sosialmu. Brandx AI akan membaca pola konten, gaya komunikasi, interest, audience signals, dan commercial fit.</p>
+      <div class="connect-list">
+        <div class="connect connected" onclick="toggleConnect(this)">Instagram <span class="state">Connected ✓</span></div>
+        <div class="connect connected" onclick="toggleConnect(this)">TikTok <span class="state">Connected ✓</span></div>
+        <div class="connect" onclick="toggleConnect(this)">X <span class="state">Connect</span></div>
+        <div class="connect" onclick="toggleConnect(this)">YouTube <span class="state">Connect</span></div>
+      </div>
+      <button class="btn primary" onclick="goAnalyze()">Analyze my accounts</button>
+    </div>
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <h2>Brandx AI is analyzing you</h2>
+      <p>Prototype simulation — no real social data is accessed.</p>
+      <div class="analysis-step" id="a1">01 · Reading content patterns…</div>
+      <div class="analysis-step" id="a2">02 · Mapping personality & communication style…</div>
+      <div class="analysis-step" id="a3">03 · Estimating audience & brand affinity…</div>
+      <div class="analysis-step" id="a4">04 · Creating your AI Resume…</div>
+    </div>
+    <div class="reveal" id="reveal">
+      <div style="margin-top:34px" class="kicker">AI Resume ready</div>
+      <h1 style="margin-top:8px">Meet your digital identity.</h1>
+      <div class="ai-card">
+        <div class="ai-label">Brandx AI Summary</div>
+        <p><b>Raka is a relatable lifestyle storyteller</b> with strong affinity toward automotive, practical tech, and campus culture. His communication is casual, humorous, and socially engaging. He is most suitable for brands that need authentic short-form content rather than polished celebrity-style endorsement.</p>
+        <span class="badge">Lifestyle</span> <span class="badge">Automotive</span> <span class="badge">Tech</span>
+      </div>
+      <div class="scoregrid">
+        <div class="score"><b>92</b><span>Identity completeness</span></div>
+        <div class="score"><b>88</b><span>Authenticity signal</span></div>
+      </div>
+      <button class="btn gold" style="margin-top:14px" onclick="finishOnboard()">Enter BrandxSociety</button>
+    </div>
+  </div>
+
+  <div class="status"><span>9:41</span><span>5G · 96%</span></div>
+
+  <section class="screen active" id="home">
+    <div class="top"><div><div class="eyebrow">People side</div><h1>Hi, Raka 👋</h1></div><button class="iconbtn" onclick="toast('No new notifications')">🔔</button></div>
+    <div class="hero">
+      <small>Your online identity</small><h2>92% complete</h2><p>Lifestyle × Automotive × Tech</p>
+      <div class="hero-grid"><div class="hero-stat"><b>4.8K</b><span>Digital reach</span></div><div class="hero-stat"><b>18</b><span>Brand matches</span></div><div class="hero-stat"><b>Rp850K</b><span>Earnings</span></div></div>
+    </div>
+    <div class="section">
+      <div class="section-head"><h3>AI Resume</h3><span class="link" onclick="showScreen('identity')">View full</span></div>
+      <div class="card identity-row">
+        <div class="avatar">RP</div>
+        <div class="grow"><div class="name">Raka Pratama</div><div class="sub">Relatable lifestyle storyteller • Casual • Humorous</div><span class="pill">Lifestyle</span><span class="pill">Automotive</span><span class="pill">Tech</span><div class="progress"><div class="bar" style="width:92%"></div></div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-head"><h3>Best opportunities</h3><span class="link" onclick="showScreen('opportunities')">See all</span></div>
+      <div id="homeOpps"></div>
+    </div>
+    <div class="section">
+      <div class="card">
+        <div class="section-head" style="margin-top:0"><h3>Demo switch</h3></div>
+        <div class="sub" style="margin-bottom:10px">See how the ecosystem looks from the Brand / Company side.</div>
+        <button class="btn secondary" onclick="openBrandMode()">Open Brand Dashboard</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="opportunities">
+    <div class="top"><div><div class="eyebrow">Explore</div><h1>Opportunities</h1></div><button class="iconbtn" onclick="toast('Search opened')">⌕</button></div>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-cat="All" onclick="filterCat('All',this)">For You</button>
+      <button class="tab" data-cat="Campaign" onclick="filterCat('Campaign',this)">Campaign</button>
+      <button class="tab" data-cat="Affiliate" onclick="filterCat('Affiliate',this)">Affiliate</button>
+      <button class="tab" data-cat="UGC" onclick="filterCat('UGC',this)">UGC</button>
+      <button class="tab" data-cat="Event" onclick="filterCat('Event',this)">Events</button>
+      <button class="tab" data-cat="Ambassador" onclick="filterCat('Ambassador',this)">Ambassador</button>
+    </div>
+    <div class="filter-summary" id="filterSummary">Showing AI-ranked opportunities based on your Online Identity.</div>
+    <div class="section" id="oppList"></div>
+  </section>
+
+  <section class="screen" id="identity">
+    <div class="top"><div><div class="eyebrow">AI Resume</div><h1>Identity</h1></div><button class="iconbtn" onclick="toast('Public identity link copied')">↗</button></div>
+    <div class="big-profile"><div class="big-avatar">RP</div><div class="name" style="font-size:21px">Raka Pratama</div><div class="sub">@rakapr • Jakarta • Public identity</div></div>
+    <div class="section">
+      <div class="ai-card">
+        <div class="ai-label">AI Summary</div>
+        <p><b>Raka is a relatable lifestyle storyteller</b> whose strongest themes are automotive, practical tech, and everyday youth culture. His tone is casual, humorous, and approachable. He tends to perform best when content feels spontaneous and useful rather than overly scripted.</p>
+        <div class="ai-label">Commercial positioning</div>
+        <p style="margin-bottom:0">Best for: F&B, mobility, gadgets, campus activations, local events, product trials, UGC, and affiliate campaigns.</p>
+      </div>
+      <div class="scoregrid">
+        <div class="score"><b>92</b><span>Identity completeness</span></div>
+        <div class="score"><b>81</b><span>Influence signal</span></div>
+        <div class="score"><b>88</b><span>Authenticity signal</span></div>
+        <div class="score"><b>76</b><span>Commercial signal</span></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-head"><h3>Personality map</h3></div>
+      <div class="card">
+        <span class="pill">Curious 92%</span><span class="pill">Humorous 86%</span><span class="pill">Social 82%</span><span class="pill">Practical 79%</span><span class="pill">Energetic 74%</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-head"><h3>Connected account signals</h3></div>
+      <div class="card">
+        <div class="activity-item"><div class="grow"><b>Instagram</b><div class="sub">Visual lifestyle • Stories • Automotive interest</div></div><span class="badge">Analyzed</span></div>
+        <div class="activity-item"><div class="grow"><b>TikTok</b><div class="sub">Short-form humor • Tech tips • Campus content</div></div><span class="badge">Analyzed</span></div>
+      </div>
+    </div>
+    <div class="section"><button class="btn secondary" onclick="openEditSummary()">Edit & confirm AI Summary</button></div>
+  </section>
+
+  <section class="screen" id="activity">
+    <div class="top"><div><div class="eyebrow">Work & earnings</div><h1>Activity</h1></div><button class="iconbtn" onclick="toast('Activity filter opened')">☷</button></div>
+    <div class="tabs">
+      <button class="tab active" onclick="activityTab('Active',this)">Active</button>
+      <button class="tab" onclick="activityTab('Applied',this)">Applied</button>
+      <button class="tab" onclick="activityTab('Completed',this)">Completed</button>
+    </div>
+    <div class="section"><div class="card" id="activityList"></div></div>
+    <div class="section">
+      <div class="hero" style="margin:0">
+        <small>Available balance</small><h2>Rp850.000</h2><p>Rp350.000 pending approval</p>
+        <button class="btn gold" onclick="toast('Withdraw flow opened')">Withdraw earnings</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="profile">
+    <div class="top"><div><div class="eyebrow">Account</div><h1>Profile</h1></div><button class="iconbtn" onclick="toast('Settings opened')">⚙</button></div>
+    <div class="section"><div class="card identity-row"><div class="avatar">RP</div><div class="grow"><div class="name">Raka Pratama</div><div class="sub">@rakapr • Jakarta</div><span class="pill">Verified email</span></div></div></div>
+    <div class="section">
+      <div class="card">
+        <div class="activity-item" onclick="toast('Connected account manager opened')"><div class="grow"><b>Connected accounts</b><div class="sub">Instagram, TikTok</div></div><b>›</b></div>
+        <div class="activity-item" onclick="showScreen('identity')"><div class="grow"><b>AI Resume & Online Identity</b><div class="sub">View or edit summary</div></div><b>›</b></div>
+        <div class="activity-item" onclick="toast('Public identity link copied')"><div class="grow"><b>Public identity link</b><div class="sub">brandx.id/raka</div></div><b>›</b></div>
+        <div class="activity-item" onclick="toast('Payments profile opened')"><div class="grow"><b>Payments & tax</b><div class="sub">Payout details</div></div><b>›</b></div>
+        <div class="activity-item" onclick="toast('Privacy controls opened')"><div class="grow"><b>Privacy & AI controls</b><div class="sub">Consent, visibility, data usage</div></div><b>›</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="brand">
+    <div class="top"><div><div class="eyebrow">Brand side</div><h1>Brand Dashboard</h1></div><button class="iconbtn" onclick="showScreen('home')">×</button></div>
+    <div class="section">
+      <div class="toggle"><button class="active">Overview</button><button onclick="brandAction('Campaign Builder')">Campaign Builder</button></div>
+    </div>
+    <div class="section">
+      <div class="metric-grid">
+        <div class="metric"><b>12</b><span>Active campaigns</span></div>
+        <div class="metric"><b>486</b><span>Matched identities</span></div>
+        <div class="metric"><b>Rp128M</b><span>Campaign GMV</span></div>
+        <div class="metric"><b>4.6x</b><span>Avg engagement lift*</span></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-head"><h3>AI Match preview</h3><span class="link" onclick="brandAction('People Search')">People Search</span></div>
+      <div class="card">
+        <div class="sub">Prompt</div><b>“Find 100 university students in Jabodetabek interested in coffee, lifestyle and productivity.”</b>
+        <div class="progress"><div class="bar" style="width:84%"></div></div>
+        <div class="sub" style="margin-top:8px">486 potential matches found • 84% average fit</div>
+        <button class="btn primary" style="margin-top:12px" onclick="brandAction('Match AI results')">View matched identities</button>
+      </div>
+    </div>
+    <div class="section"><div class="card">
+      <div class="activity-item" onclick="brandAction('Campaign Builder')"><div class="grow"><b>AI Campaign Builder</b><div class="sub">Generate brief, budget mix, deliverables</div></div><b>›</b></div>
+      <div class="activity-item" onclick="brandAction('People Search')"><div class="grow"><b>People Search</b><div class="sub">Search by identity, niche, location, audience</div></div><b>›</b></div>
+      <div class="activity-item" onclick="brandAction('Campaign Management')"><div class="grow"><b>Campaign Management</b><div class="sub">Select, approve, monitor, payout</div></div><b>›</b></div>
+      <div class="activity-item" onclick="brandAction('Analytics')"><div class="grow"><b>Analytics</b><div class="sub">Performance, reach, conversion, learnings</div></div><b>›</b></div>
+    </div></div>
+  </section>
+
+  <nav class="nav" id="nav">
+    <button class="navbtn active" data-screen="home" onclick="showScreen('home')"><span class="ico">⌂</span>Home</button>
+    <button class="navbtn" data-screen="opportunities" onclick="showScreen('opportunities')"><span class="ico">✦</span>Explore</button>
+    <button class="navbtn" data-screen="identity" onclick="showScreen('identity')"><span class="ico">◉</span>Identity</button>
+    <button class="navbtn" data-screen="activity" onclick="showScreen('activity')"><span class="ico">✓</span>Activity</button>
+    <button class="navbtn" data-screen="profile" onclick="showScreen('profile')"><span class="ico">☺</span>Profile</button>
+  </nav>
+
+  <div class="modal" id="oppModal" onclick="if(event.target===this)closeModal('oppModal')"><div class="sheet">
+    <button class="close" onclick="closeModal('oppModal')">×</button>
+    <div class="sub" id="mbrand"></div><h2 id="mtitle"></h2><div class="pill" id="mmatch"></div>
+    <h3 id="mreward" style="font-size:27px;margin:16px 0 3px"></h3><div class="sub">Reward / earning potential</div>
+    <hr class="hr"><b>Deliverables</b><p class="sub" id="mdeliv"></p><b>Campaign brief</b><p class="sub" id="mdesc"></p><b>Why you match</b><p class="sub" id="mwhy"></p>
+    <button class="btn primary" onclick="applyOpportunity()">Apply with my Online Identity</button>
+  </div></div>
+
+  <div class="modal" id="editModal" onclick="if(event.target===this)closeModal('editModal')"><div class="sheet">
+    <button class="close" onclick="closeModal('editModal')">×</button>
+    <div class="kicker">AI Resume control</div><h2>Edit your summary</h2>
+    <p class="sub">In the real product, users should be able to correct or hide AI-generated attributes.</p>
+    <div class="card" style="margin-bottom:12px"><b>Primary identity</b><p class="sub">Relatable lifestyle storyteller with automotive, practical tech, and campus-culture affinity.</p></div>
+    <div class="card" style="margin-bottom:12px"><b>Visibility</b><p class="sub">Brand-facing: personality, interests, content themes, commercial-fit signals.</p></div>
+    <button class="btn gold" onclick="closeModal('editModal');toast('AI Resume changes saved')">Save & confirm</button>
+  </div></div>
+
+  <div class="modal" id="brandModal" onclick="if(event.target===this)closeModal('brandModal')"><div class="sheet">
+    <button class="close" onclick="closeModal('brandModal')">×</button>
+    <div class="kicker">Brand workflow</div><h2 id="brandModalTitle">Feature</h2>
+    <p class="sub" id="brandModalText"></p>
+    <button class="btn primary" onclick="closeModal('brandModal')">Continue demo</button>
+  </div></div>
+
+  <div class="toast" id="toast"></div>
+</div></div></div>
+
+<script>
+const opps=[
+{id:1,cat:'Campaign',title:'Coffee Campus Launch',brand:'KopiKita',reward:'Rp350.000',match:92,deliver:'1 TikTok + 1 IG Story',desc:'Create casual campus content featuring a new iced coffee.',why:'Food, campus culture, lifestyle storytelling',logo:'KK'},
+{id:2,cat:'UGC',title:'Weekend Ride UGC',brand:'VeloMoto',reward:'Rp500.000',match:88,deliver:'2 short videos',desc:'Create authentic weekend-ride UGC with natural product placement.',why:'Automotive interest, casual short-form style',logo:'VM'},
+{id:3,cat:'Ambassador',title:'Campus Ambassador',brand:'NexPay',reward:'Rp1.200.000',match:84,deliver:'4-week activation',desc:'Represent NexPay in your campus community.',why:'Student community, social personality, event fit',logo:'NP'},
+{id:4,cat:'Affiliate',title:'Tech Accessory Affiliate',brand:'Gearloop',reward:'Up to 12%',match:79,deliver:'Affiliate link + optional content',desc:'Promote selected mobile accessories.',why:'Tech interest, practical content behavior',logo:'GL'},
+{id:5,cat:'Event',title:'Sneaker Pop-up Night',brand:'District87',reward:'Invite + Rp250.000',match:82,deliver:'Attend + 3 story frames',desc:'Join and cover a youth-culture pop-up event.',why:'Lifestyle, social personality, local event fit',logo:'D8'},
+{id:6,cat:'Campaign',title:'Daily Ride Challenge',brand:'UrbanFuel',reward:'Rp425.000',match:86,deliver:'1 Reel + 1 photo',desc:'Show a daily mobility routine with a casual story angle.',why:'Mobility, lifestyle, authentic storytelling',logo:'UF'}
+];
+
+function oppCard(o){
+return `<div class="card opp" onclick="openOpportunity(${o.id})">
+<div class="brandlogo">${o.logo}</div><div class="grow"><h4>${o.title}</h4><div class="sub">${o.brand} • ${o.cat}</div><div class="money">${o.reward}</div></div><div class="match">${o.match}%</div></div>`;
+}
+function renderHome(){document.getElementById('homeOpps').innerHTML=opps.slice(0,2).map(oppCard).join('')}
+function filterCat(cat,btn){
+ document.querySelectorAll('#tabs .tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
+ const list=cat==='All'?opps:opps.filter(o=>o.cat===cat);
+ document.getElementById('oppList').innerHTML=list.length?list.map(oppCard).join(''):`<div class="empty">Belum ada opportunity di kategori ini.</div>`;
+ document.getElementById('filterSummary').textContent=cat==='All'?'Showing AI-ranked opportunities based on your Online Identity.':`Showing ${cat} opportunities ranked by your AI Match.`;
+}
+function openOpportunity(id){
+ const o=opps.find(x=>x.id===id);
+ mbrand.textContent=o.brand+' • '+o.cat;mtitle.textContent=o.title;mreward.textContent=o.reward;mmatch.textContent=o.match+'% AI MATCH';
+ mdeliv.textContent=o.deliver;mdesc.textContent=o.desc;mwhy.textContent=o.why+' — derived from your AI Resume and connected-account signals.';
+ oppModal.classList.add('open');
+}
+function applyOpportunity(){closeModal('oppModal');toast('Application sent using your Online Identity')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+function showScreen(id){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.screen===id));
+ document.getElementById('nav').style.display=id==='brand'?'none':'grid';
+}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+function toggleConnect(el){el.classList.toggle('connected');el.querySelector('.state').textContent=el.classList.contains('connected')?'Connected ✓':'Connect'}
+function goAnalyze(){
+ document.getElementById('ob1').style.display='none';document.getElementById('loading').classList.add('show');
+ const ids=['a1','a2','a3','a4'];ids.forEach((id,i)=>setTimeout(()=>document.getElementById(id).innerHTML='✓ '+document.getElementById(id).textContent.replace(/^\d+\s·\s/,'') ,450*(i+1)));
+ setTimeout(()=>{document.getElementById('loading').classList.remove('show');document.getElementById('reveal').classList.add('show')},2300)
+}
+function finishOnboard(){document.getElementById('onboard').classList.add('hidden')}
+function openEditSummary(){document.getElementById('editModal').classList.add('open')}
+function activityTab(type,btn){
+ document.querySelectorAll('#activity .tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
+ const data={
+ Active:[['green','KopiKita Campus Launch','Accepted • Brief ready','Rp350K'],['','VeloMoto Weekend Ride','Content under review','Rp500K']],
+ Applied:[['gray','NexPay Ambassador','Applied • Waiting for brand','Rp1.2M'],['gray','District87 Pop-up','Applied • Waiting','Rp250K']],
+ Completed:[['green','UrbanFuel Daily Ride','Completed • Paid','Rp425K']]
+ }[type];
+ document.getElementById('activityList').innerHTML=data.map(x=>`<div class="activity-item"><div class="dot ${x[0]}"></div><div class="grow"><b>${x[1]}</b><div class="sub">${x[2]}</div></div><b>${x[3]}</b></div>`).join('');
+}
+function openBrandMode(){showScreen('brand')}
+function brandAction(name){
+ const desc={
+ 'Campaign Builder':'AI turns a marketing objective into a campaign brief, recommended people mix, deliverables, budget allocation and KPI structure.',
+ 'People Search':'Brands search identities by location, niche, interests, personality, audience signals, content style, engagement and performance history.',
+ 'Campaign Management':'Manage invitation, application, selection, content approval, publishing status, payout and dispute workflow in one workspace.',
+ 'Analytics':'Measure reach, engagement, content completion, conversions, affiliate sales and campaign learnings.',
+ 'Match AI results':'View ranked people with an explanation of why each identity fits the campaign.'
+ }[name]||'Interactive brand workflow.';
+ document.getElementById('brandModalTitle').textContent=name;document.getElementById('brandModalText').textContent=desc;document.getElementById('brandModal').classList.add('open');
+}
+renderHome();filterCat('All',document.querySelector('#tabs .tab'));
+activityTab('Active',document.querySelector('#activity .tab'));
+</script>
+</body>
+</html>
