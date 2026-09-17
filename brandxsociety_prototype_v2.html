@@ -1,415 +1,1695 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<meta name="theme-color" content="#5B0F1A"/>
-<title>BrandxSociety Prototype v2</title>
-<style>
-:root{
-  --maroon:#5B0F1A;
-  --maroon2:#7B1724;
-  --maroon3:#3F0A12;
-  --gold:#C8A24A;
-  --gold2:#E0C16A;
-  --gold-soft:#F7F0DD;
-  --white:#FFFFFF;
-  --bg:#FBF8F5;
-  --ink:#241C1D;
-  --muted:#817275;
-  --line:#E8DEDA;
-  --success:#2C8A61;
-  --danger:#C34F4F;
-  --shadow:0 18px 60px rgba(70,20,27,.12);
-}
-*{box-sizing:border-box}
-body{
- margin:0;background:
- radial-gradient(circle at 12% 12%,rgba(200,162,74,.14),transparent 28%),
- radial-gradient(circle at 88% 92%,rgba(91,15,26,.12),transparent 28%),
- var(--bg);
- color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-}
-button,input{font:inherit}
-.stage{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:28px}
-.phone{width:min(100%,430px);min-height:880px;background:var(--bg);border:10px solid #2D1115;border-radius:44px;overflow:hidden;box-shadow:0 30px 100px rgba(0,0,0,.22);position:relative}
-.app{min-height:860px;padding-bottom:86px;position:relative}
-.status{display:flex;justify-content:space-between;padding:14px 20px 6px;font-size:12px;font-weight:800}
-.top{padding:8px 18px 14px;display:flex;align-items:center;justify-content:space-between}
-.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:900;color:var(--gold)}
-h1{margin:4px 0 0;font-size:28px;line-height:1.08}
-h2,h3,h4,p{margin-top:0}
-.iconbtn{border:1px solid var(--line);background:#fff;width:42px;height:42px;border-radius:14px;display:grid;place-items:center;cursor:pointer}
-.hero{margin:0 18px 16px;padding:20px;border-radius:26px;background:linear-gradient(145deg,var(--maroon2),var(--maroon3));color:#fff;box-shadow:var(--shadow)}
-.hero small{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold2);font-weight:900}
-.hero h2{font-size:27px;margin:8px 0 4px}
-.hero p{font-size:13px;color:#F0E7E8;margin-bottom:16px}
-.hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.hero-stat{padding:11px;border-radius:16px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.09)}
-.hero-stat b{display:block;font-size:17px}
-.hero-stat span{font-size:10px;opacity:.8}
-.section{padding:0 18px 18px}
-.section-head{display:flex;align-items:center;justify-content:space-between;margin:10px 0}
-.section-head h3{font-size:16px;margin:0}
-.link{font-size:12px;color:var(--maroon2);font-weight:900;cursor:pointer}
-.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 10px 32px rgba(70,20,27,.05)}
-.identity-row{display:flex;gap:12px;align-items:center}
-.avatar{width:60px;height:60px;border-radius:20px;display:grid;place-items:center;color:white;background:linear-gradient(145deg,var(--maroon2),var(--gold));font-size:20px;font-weight:950}
-.grow{flex:1}
-.name{font-weight:900}
-.sub{color:var(--muted);font-size:12px;line-height:1.45}
-.pill{display:inline-flex;padding:7px 10px;border-radius:999px;background:var(--gold-soft);color:var(--maroon2);font-size:11px;font-weight:900;margin:6px 4px 0 0;border:1px solid #EBDCAC}
-.progress{height:7px;background:#EEE6E2;border-radius:99px;overflow:hidden;margin-top:10px}
-.bar{height:100%;background:linear-gradient(90deg,var(--gold),var(--maroon2));border-radius:99px}
-.opp{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;cursor:pointer}
-.brandlogo{width:48px;height:48px;border-radius:15px;background:var(--maroon);color:#fff;display:grid;place-items:center;font-weight:950}
-.opp h4{font-size:14px;margin:0 0 3px}
-.money{font-size:14px;font-weight:950;margin-top:4px}
-.match{margin-left:auto;background:#F9F1DC;color:#8A681D;padding:6px 8px;border-radius:99px;font-size:10px;font-weight:950}
-.tabs{display:flex;gap:8px;padding:0 18px 14px;overflow:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{border:1px solid var(--line);background:white;padding:9px 12px;border-radius:999px;white-space:nowrap;font-size:12px;font-weight:900;cursor:pointer}
-.tab.active{background:var(--maroon);color:white;border-color:var(--maroon)}
-.nav{position:absolute;left:0;right:0;bottom:0;height:78px;background:rgba(255,255,255,.96);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:8px 8px 12px;backdrop-filter:blur(12px)}
-.navbtn{border:0;background:transparent;color:#98898B;font-size:10px;font-weight:900;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
-.navbtn .ico{font-size:20px}
-.navbtn.active{color:var(--maroon)}
-.screen{display:none}.screen.active{display:block}
-.ai-card{background:linear-gradient(150deg,#4E0D17,#2F0810);color:#fff;border-radius:22px;padding:17px}
-.ai-card p{font-size:13px;line-height:1.6;color:#F0E7E8}
-.ai-label{font-size:11px;color:var(--gold2);font-weight:900;letter-spacing:.08em;text-transform:uppercase}
-.scoregrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
-.score{background:white;border:1px solid var(--line);border-radius:18px;padding:14px}
-.score b{font-size:22px}.score span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
-.btn{width:100%;border:0;border-radius:16px;padding:14px 16px;font-weight:950;cursor:pointer}
-.btn.primary{background:var(--maroon);color:white}
-.btn.gold{background:var(--gold);color:#2B1F0B}
-.btn.secondary{background:white;border:1px solid var(--line);color:var(--ink)}
-.btn + .btn{margin-top:8px}
-.activity-item{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
-.activity-item:last-child{border-bottom:0}
-.dot{width:10px;height:10px;border-radius:99px;background:var(--gold)}
-.dot.green{background:var(--success)} .dot.gray{background:#BEB4B0}
-.big-profile{text-align:center;padding:8px 18px}
-.big-avatar{width:90px;height:90px;border-radius:30px;margin:0 auto 10px;display:grid;place-items:center;color:white;background:linear-gradient(145deg,var(--maroon2),var(--gold));font-size:30px;font-weight:950}
-.modal{position:absolute;inset:0;background:rgba(42,10,14,.58);display:none;align-items:flex-end;z-index:50}
-.modal.open{display:flex}
-.sheet{background:white;width:100%;border-radius:30px 30px 0 0;padding:22px;max-height:82%;overflow:auto}
-.close{float:right;border:0;background:#F3ECE9;width:36px;height:36px;border-radius:12px;cursor:pointer}
-.hr{border:0;border-top:1px solid var(--line);margin:18px 0}
-.toast{position:absolute;left:50%;bottom:94px;transform:translateX(-50%);background:#2D1115;color:white;padding:10px 14px;border-radius:99px;font-size:12px;font-weight:900;display:none;z-index:60;white-space:nowrap}
-.toast.show{display:block}
-.onboard{position:absolute;inset:0;background:linear-gradient(180deg,#FFFDFB,#FBF8F5 68%);z-index:80;padding:26px;display:flex;flex-direction:column}
-.onboard.hidden{display:none}
-.logo{font-size:22px;font-weight:1000;color:var(--maroon)}
-.logo span{color:var(--gold)}
-.onboard h1{font-size:36px;margin-top:52px}
-.onboard p{color:var(--muted);line-height:1.55}
-.stepdots{display:flex;gap:6px;margin-top:8px}
-.stepdot{width:24px;height:5px;border-radius:99px;background:#E7DBD6}.stepdot.active{background:var(--gold)}
-.connect-list{display:grid;gap:10px;margin:16px 0}
-.connect{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;align-items:center;justify-content:space-between;font-weight:900;cursor:pointer}
-.connect .state{font-size:11px;color:var(--maroon2)}
-.connect.connected{border-color:#DCC16F;background:#FFFCF3}
-.loading{display:none;text-align:center;padding-top:90px}
-.loading.show{display:block}
-.spinner{width:58px;height:58px;border:6px solid #EEE2DE;border-top-color:var(--maroon);border-right-color:var(--gold);border-radius:50%;margin:0 auto 18px;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.analysis-step{background:white;border:1px solid var(--line);border-radius:16px;padding:12px;margin:8px 0;text-align:left;font-size:12px}
-.reveal{display:none}
-.reveal.show{display:block}
-.kicker{font-size:11px;color:var(--gold);font-weight:900;text-transform:uppercase;letter-spacing:.08em}
-.badge{display:inline-block;background:#F5E9C8;color:#704F0C;font-size:10px;font-weight:900;border-radius:99px;padding:6px 8px}
-.empty{padding:30px 10px;text-align:center;color:var(--muted);font-size:13px}
-.filter-summary{margin:0 18px 12px;background:#FFF9E9;border:1px solid #E9D59A;border-radius:16px;padding:12px;font-size:12px;color:#6E5519}
-.toggle{display:flex;gap:8px}
-.toggle button{flex:1;padding:10px;border-radius:14px;border:1px solid var(--line);background:white;font-weight:900;cursor:pointer}
-.toggle button.active{background:var(--maroon);color:white;border-color:var(--maroon)}
-.brand-screen{display:none}.brand-screen.active{display:block}
-.metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.metric{background:white;border:1px solid var(--line);border-radius:18px;padding:14px}
-.metric b{font-size:22px}.metric span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
-@media(max-width:600px){
- .stage{padding:0}.phone{width:100%;min-height:100vh;border:0;border-radius:0;box-shadow:none}.app{min-height:100vh}
-}
-</style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BrandxSociety — Live Interactive Prototype Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #7F1110;        /* Merah Marun Utama */
+      --primary-dark: #580B0A;   /* Marun Gelap */
+      --primary-soft: #F9ECEC;   /* Marun Soft Tint */
+      --secondary: #FCDB00;      /* Kuning Emas Highlight */
+      --secondary-dark: #D4B800; /* Emas Terang Gelap */
+      --secondary-soft: #FFFDE6; /* Soft Gold Tint */
+      --accent: #280605;         /* Coklat Gelap Teks Korporat */
+      --text-muted: #6E5A59;     /* Teks Muted */
+      --line: #EADBDA;           /* Border Line Subtle */
+      --neutral-bg: #F6F4F0;     /* Background Netral Lembut */
+      --white: #FFFFFF;
+      --card-shadow: 0 12px 36px rgba(40, 6, 5, 0.07);
+      --phone-shadow: 0 25px 70px rgba(40, 6, 5, 0.22);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--neutral-bg);
+      background-image: 
+        radial-gradient(circle at 10% 10%, rgba(252, 219, 0, 0.08), transparent 30%),
+        radial-gradient(circle at 90% 90%, rgba(127, 17, 16, 0.07), transparent 35%);
+      color: var(--accent);
+      min-height: 100vh;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Top Bar Header */
+    .top-header {
+      width: 100%;
+      max-width: 1400px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .brand-logo-global {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .brand-logo-global .logo-badge {
+      background: var(--primary);
+      color: var(--secondary);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .demo-tag {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .demo-tag .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2C8A61;
+      box-shadow: 0 0 0 0 rgba(44, 138, 97, 0.7);
+      animation: pulse-green 2s infinite;
+    }
+
+    @keyframes pulse-green {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(44, 138, 97, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(44, 138, 97, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(44, 138, 97, 0); }
+    }
+
+    /* Main 3-Panel Grid Container */
+    .app-container {
+      width: 100%;
+      max-width: 1400px;
+      display: grid;
+      grid-template-columns: 350px 420px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* PANEL 1: DEMO NAVIGATOR */
+    .panel-left {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-height: 860px;
+      overflow-y: auto;
+    }
+
+    .panel-left-header {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 16px;
+    }
+
+    .panel-left-header .sub-badge {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .panel-left-header h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .panel-left-header p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .flow-toggle {
+      display: flex;
+      background: var(--neutral-bg);
+      border: 1px solid var(--line);
+      padding: 4px;
+      border-radius: 14px;
+      gap: 4px;
+    }
+
+    .flow-btn {
+      flex: 1;
+      padding: 10px 12px;
+      border: none;
+      background: transparent;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .flow-btn.active {
+      background: var(--primary);
+      color: var(--white);
+      box-shadow: 0 4px 12px rgba(127, 17, 16, 0.25);
+    }
+
+    .flow-btn .badge-num {
+      background: var(--secondary);
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 99px;
+    }
+
+    .menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .menu-item:hover {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      transform: translateX(3px);
+    }
+
+    .menu-item.active {
+      background: var(--primary);
+      color: var(--white);
+      border-color: var(--primary);
+      box-shadow: 0 6px 18px rgba(127, 17, 16, 0.2);
+    }
+
+    .menu-item .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: var(--neutral-bg);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .menu-item.active .step-num {
+      background: var(--secondary);
+      color: var(--accent);
+    }
+
+    .menu-item .arrow {
+      margin-left: auto;
+      font-size: 14px;
+      opacity: 0.5;
+    }
+
+    .menu-item.active .arrow {
+      opacity: 1;
+      color: var(--secondary);
+    }
+
+    /* PANEL 2: PHONE MOCKUP */
+    .panel-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .phone-frame {
+      width: 400px;
+      height: 840px;
+      background: #1A0A0B;
+      border: 10px solid #280605;
+      border-radius: 46px;
+      box-shadow: var(--phone-shadow);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .phone-status-bar {
+      height: 38px;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--accent);
+      z-index: 20;
+      flex-shrink: 0;
+    }
+
+    .phone-notch {
+      width: 110px;
+      height: 18px;
+      background: #280605;
+      border-radius: 0 0 12px 12px;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 30;
+    }
+
+    .phone-viewport {
+      flex: 1;
+      background: var(--neutral-bg);
+      overflow-y: auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .phone-screen {
+      display: none;
+      padding: 16px;
+      padding-bottom: 80px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      min-height: 100%;
+    }
+
+    .phone-screen.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .phone-nav-bar {
+      height: 66px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 6px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 25;
+    }
+
+    .p-nav-btn {
+      border: none;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .p-nav-btn .icon { font-size: 18px; }
+    .p-nav-btn.active { color: var(--primary); }
+
+    /* UI COMPONENTS INSIDE PHONE MOCKUP */
+    .p-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 16px rgba(40, 6, 5, 0.04);
+    }
+
+    .p-hero-card {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
+      border-radius: 22px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 10px 30px rgba(127, 17, 16, 0.3);
+    }
+
+    .p-hero-card .tag-gold {
+      background: var(--secondary);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 10px;
+      font-weight: 800;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .p-hero-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .p-hero-card p {
+      font-size: 12px;
+      opacity: 0.9;
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+
+    .p-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .p-stat-box {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 8px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .p-stat-box b { display: block; font-size: 15px; font-weight: 800; }
+    .p-stat-box span { font-size: 9px; opacity: 0.8; text-transform: uppercase; font-weight: 700; }
+
+    .btn-primary-p {
+      width: 100%;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 13px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(127, 17, 16, 0.25);
+    }
+
+    .btn-primary-p:hover { background: var(--primary-dark); }
+
+    .btn-gold-p {
+      width: 100%;
+      background: var(--secondary);
+      color: var(--accent);
+      border: none;
+      padding: 13px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(252, 219, 0, 0.3);
+    }
+
+    .btn-secondary-p {
+      width: 100%;
+      background: var(--white);
+      color: var(--accent);
+      border: 1px solid var(--line);
+      padding: 12px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--secondary);
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 99px;
+    }
+
+    .badge-maroon {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 99px;
+    }
+
+    .pill-tag {
+      display: inline-block;
+      background: var(--neutral-bg);
+      border: 1px solid var(--line);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+
+    .opp-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .opp-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--primary);
+      color: var(--secondary);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .opp-info { flex: 1; }
+    .opp-info h4 { font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 2px; }
+    .opp-info p { font-size: 11px; color: var(--text-muted); }
+    .opp-info .money { font-size: 13px; font-weight: 800; color: var(--primary); margin-top: 4px; }
+
+    /* Progress bar smooth animation */
+    .progress-bar-container {
+      height: 8px;
+      background: var(--line);
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary), var(--primary));
+      width: 0%;
+      border-radius: 99px;
+      transition: width 0.3s ease;
+    }
+
+    /* PANEL 3: LIVE BUSINESS PROCESS */
+    .panel-right {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      min-height: 840px;
+    }
+
+    .panel-right-header .tag-process {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .panel-right-header h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .panel-right-header p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .breakdown-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .breakdown-card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--neutral-bg);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .breakdown-card .num-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      background: var(--primary);
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .breakdown-card .content { flex: 1; }
+    .breakdown-card .content h4 { font-size: 14px; font-weight: 800; color: var(--accent); margin-bottom: 2px; }
+    .breakdown-card .content .journey-tag { font-size: 10px; font-weight: 700; color: var(--primary); margin-bottom: 4px; display: block; }
+    .breakdown-card .content p { font-size: 12px; color: var(--text-muted); line-height: 1.45; }
+
+    .system-log-box {
+      background: #180504;
+      border: 1px solid #3A0C09;
+      border-radius: 18px;
+      padding: 16px;
+      color: #E2D5D4;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .system-log-box .log-title {
+      color: var(--secondary);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .system-log-box .log-title .pulse-log {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--secondary);
+    }
+
+    .log-entries {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 130px;
+      overflow-y: auto;
+    }
+
+    .log-line { line-height: 1.4; }
+    .log-line .ts { color: #8C7270; }
+    .log-line .highlight { color: var(--secondary); }
+
+    @media (max-width: 1200px) {
+      .app-container { grid-template-columns: 1fr; max-width: 500px; }
+      .panel-left, .panel-right { max-height: none; }
+    }
+  </style>
 </head>
 <body>
-<div class="stage"><div class="phone"><div class="app">
-  <div class="onboard" id="onboard">
-    <div class="logo">Brandx<span>Society</span></div>
-    <div class="stepdots"><div class="stepdot active"></div><div class="stepdot"></div><div class="stepdot"></div></div>
-    <div id="ob1">
-      <h1>Your online identity can become economic value.</h1>
-      <p>Hubungkan akun sosialmu. Brandx AI akan membaca pola konten, gaya komunikasi, interest, audience signals, dan commercial fit.</p>
-      <div class="connect-list">
-        <div class="connect connected" onclick="toggleConnect(this)">Instagram <span class="state">Connected ✓</span></div>
-        <div class="connect connected" onclick="toggleConnect(this)">TikTok <span class="state">Connected ✓</span></div>
-        <div class="connect" onclick="toggleConnect(this)">X <span class="state">Connect</span></div>
-        <div class="connect" onclick="toggleConnect(this)">YouTube <span class="state">Connect</span></div>
+
+  <!-- Top Global Header -->
+  <header class="top-header">
+    <a href="#" class="brand-logo-global">
+      Brandx<span class="logo-badge">Society</span>
+    </a>
+    <div class="demo-tag">
+      <span class="pulse"></span>
+      <span>Live Interactive Prototype Demo — 10 Step Customer & 10 Step Brand Flow</span>
+    </div>
+  </header>
+
+  <!-- 3 Panel Layout Container -->
+  <main class="app-container">
+
+    <!-- PANEL 1: DEMO NAVIGATOR (LEFT) -->
+    <section class="panel-left">
+      <div class="panel-left-header">
+        <span class="sub-badge">Demo Navigator</span>
+        <h2>UI/UX bisa diklik, bukan mockup kaku.</h2>
+        <p>Pilih alur demo di bawah. Panel kanan akan menjelaskan proses bisnisnya secara real-time.</p>
       </div>
-      <button class="btn primary" onclick="goAnalyze()">Analyze my accounts</button>
-    </div>
-    <div class="loading" id="loading">
-      <div class="spinner"></div>
-      <h2>Brandx AI is analyzing you</h2>
-      <p>Prototype simulation — no real social data is accessed.</p>
-      <div class="analysis-step" id="a1">01 · Reading content patterns…</div>
-      <div class="analysis-step" id="a2">02 · Mapping personality & communication style…</div>
-      <div class="analysis-step" id="a3">03 · Estimating audience & brand affinity…</div>
-      <div class="analysis-step" id="a4">04 · Creating your AI Resume…</div>
-    </div>
-    <div class="reveal" id="reveal">
-      <div style="margin-top:34px" class="kicker">AI Resume ready</div>
-      <h1 style="margin-top:8px">Meet your digital identity.</h1>
-      <div class="ai-card">
-        <div class="ai-label">Brandx AI Summary</div>
-        <p><b>Raka is a relatable lifestyle storyteller</b> with strong affinity toward automotive, practical tech, and campus culture. His communication is casual, humorous, and socially engaging. He is most suitable for brands that need authentic short-form content rather than polished celebrity-style endorsement.</p>
-        <span class="badge">Lifestyle</span> <span class="badge">Automotive</span> <span class="badge">Tech</span>
+
+      <!-- Flow Toggle Switch -->
+      <div class="flow-toggle">
+        <button class="flow-btn active" id="btnPeopleFlow" onclick="switchFlow('people')">
+          <span>👤 Customer Flow</span>
+          <span class="badge-num">10</span>
+        </button>
+        <button class="flow-btn" id="btnBrandFlow" onclick="switchFlow('brand')">
+          <span>🏢 Brand Flow</span>
+          <span class="badge-num">10</span>
+        </button>
       </div>
-      <div class="scoregrid">
-        <div class="score"><b>92</b><span>Identity completeness</span></div>
-        <div class="score"><b>88</b><span>Authenticity signal</span></div>
+
+      <!-- Step Menu List -->
+      <div class="menu-list" id="menuList"></div>
+    </section>
+
+    <!-- PANEL 2: PHONE MOCKUP (CENTER) -->
+    <section class="panel-center">
+      <div class="phone-frame">
+        <div class="phone-status-bar">
+          <span>09:41</span>
+          <div class="phone-notch"></div>
+          <span>5G · 98%</span>
+        </div>
+
+        <div class="phone-viewport" id="phoneViewport"></div>
+
+        <nav class="phone-nav-bar" id="phoneNav">
+          <button class="p-nav-btn active" data-target="home" onclick="navToStep(0)">
+            <span class="icon">⌂</span>
+            <span>Home</span>
+          </button>
+          <button class="p-nav-btn" data-target="explore" onclick="navToStep(5)">
+            <span class="icon">✦</span>
+            <span>Explore</span>
+          </button>
+          <button class="p-nav-btn" data-target="identity" onclick="navToStep(3)">
+            <span class="icon">◉</span>
+            <span>Identity</span>
+          </button>
+          <button class="p-nav-btn" data-target="activity" onclick="navToStep(7)">
+            <span class="icon">✓</span>
+            <span>Activity</span>
+          </button>
+          <button class="p-nav-btn" data-target="profile" onclick="navToStep(4)">
+            <span class="icon">☺</span>
+            <span>Profile</span>
+          </button>
+        </nav>
       </div>
-      <button class="btn gold" style="margin-top:14px" onclick="finishOnboard()">Enter BrandxSociety</button>
-    </div>
-  </div>
+    </section>
 
-  <div class="status"><span>9:41</span><span>5G · 96%</span></div>
-
-  <section class="screen active" id="home">
-    <div class="top"><div><div class="eyebrow">People side</div><h1>Hi, Raka 👋</h1></div><button class="iconbtn" onclick="toast('No new notifications')">🔔</button></div>
-    <div class="hero">
-      <small>Your online identity</small><h2>92% complete</h2><p>Lifestyle × Automotive × Tech</p>
-      <div class="hero-grid"><div class="hero-stat"><b>4.8K</b><span>Digital reach</span></div><div class="hero-stat"><b>18</b><span>Brand matches</span></div><div class="hero-stat"><b>Rp850K</b><span>Earnings</span></div></div>
-    </div>
-    <div class="section">
-      <div class="section-head"><h3>AI Resume</h3><span class="link" onclick="showScreen('identity')">View full</span></div>
-      <div class="card identity-row">
-        <div class="avatar">RP</div>
-        <div class="grow"><div class="name">Raka Pratama</div><div class="sub">Relatable lifestyle storyteller • Casual • Humorous</div><span class="pill">Lifestyle</span><span class="pill">Automotive</span><span class="pill">Tech</span><div class="progress"><div class="bar" style="width:92%"></div></div></div>
+    <!-- PANEL 3: LIVE BUSINESS PROCESS (RIGHT) -->
+    <section class="panel-right">
+      <div class="panel-right-header">
+        <span class="tag-process">Live Business Process</span>
+        <h2 id="rightStepTitle">01. Create Identity</h2>
+        <p id="rightStepDesc">User mengisi data dasar untuk memulai pembuatan profil identitas digital komersial.</p>
       </div>
-    </div>
-    <div class="section">
-      <div class="section-head"><h3>Best opportunities</h3><span class="link" onclick="showScreen('opportunities')">See all</span></div>
-      <div id="homeOpps"></div>
-    </div>
-    <div class="section">
-      <div class="card">
-        <div class="section-head" style="margin-top:0"><h3>Demo switch</h3></div>
-        <div class="sub" style="margin-bottom:10px">See how the ecosystem looks from the Brand / Company side.</div>
-        <button class="btn secondary" onclick="openBrandMode()">Open Brand Dashboard</button>
+
+      <div class="breakdown-list" id="rightBreakdown"></div>
+
+      <div class="system-log-box">
+        <div class="log-title">
+          <span>System Log — Real-time Event</span>
+          <span class="pulse-log"></span>
+        </div>
+        <div class="log-entries" id="systemLogEntries"></div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="screen" id="opportunities">
-    <div class="top"><div><div class="eyebrow">Explore</div><h1>Opportunities</h1></div><button class="iconbtn" onclick="toast('Search opened')">⌕</button></div>
-    <div class="tabs" id="tabs">
-      <button class="tab active" data-cat="All" onclick="filterCat('All',this)">For You</button>
-      <button class="tab" data-cat="Campaign" onclick="filterCat('Campaign',this)">Campaign</button>
-      <button class="tab" data-cat="Affiliate" onclick="filterCat('Affiliate',this)">Affiliate</button>
-      <button class="tab" data-cat="UGC" onclick="filterCat('UGC',this)">UGC</button>
-      <button class="tab" data-cat="Event" onclick="filterCat('Event',this)">Events</button>
-      <button class="tab" data-cat="Ambassador" onclick="filterCat('Ambassador',this)">Ambassador</button>
-    </div>
-    <div class="filter-summary" id="filterSummary">Showing AI-ranked opportunities based on your Online Identity.</div>
-    <div class="section" id="oppList"></div>
-  </section>
+  </main>
 
-  <section class="screen" id="identity">
-    <div class="top"><div><div class="eyebrow">AI Resume</div><h1>Identity</h1></div><button class="iconbtn" onclick="toast('Public identity link copied')">↗</button></div>
-    <div class="big-profile"><div class="big-avatar">RP</div><div class="name" style="font-size:21px">Raka Pratama</div><div class="sub">@rakapr • Jakarta • Public identity</div></div>
-    <div class="section">
-      <div class="ai-card">
-        <div class="ai-label">AI Summary</div>
-        <p><b>Raka is a relatable lifestyle storyteller</b> whose strongest themes are automotive, practical tech, and everyday youth culture. His tone is casual, humorous, and approachable. He tends to perform best when content feels spontaneous and useful rather than overly scripted.</p>
-        <div class="ai-label">Commercial positioning</div>
-        <p style="margin-bottom:0">Best for: F&B, mobility, gadgets, campus activations, local events, product trials, UGC, and affiliate campaigns.</p>
-      </div>
-      <div class="scoregrid">
-        <div class="score"><b>92</b><span>Identity completeness</span></div>
-        <div class="score"><b>81</b><span>Influence signal</span></div>
-        <div class="score"><b>88</b><span>Authenticity signal</span></div>
-        <div class="score"><b>76</b><span>Commercial signal</span></div>
-      </div>
-    </div>
-    <div class="section">
-      <div class="section-head"><h3>Personality map</h3></div>
-      <div class="card">
-        <span class="pill">Curious 92%</span><span class="pill">Humorous 86%</span><span class="pill">Social 82%</span><span class="pill">Practical 79%</span><span class="pill">Energetic 74%</span>
-      </div>
-    </div>
-    <div class="section">
-      <div class="section-head"><h3>Connected account signals</h3></div>
-      <div class="card">
-        <div class="activity-item"><div class="grow"><b>Instagram</b><div class="sub">Visual lifestyle • Stories • Automotive interest</div></div><span class="badge">Analyzed</span></div>
-        <div class="activity-item"><div class="grow"><b>TikTok</b><div class="sub">Short-form humor • Tech tips • Campus content</div></div><span class="badge">Analyzed</span></div>
-      </div>
-    </div>
-    <div class="section"><button class="btn secondary" onclick="openEditSummary()">Edit & confirm AI Summary</button></div>
-  </section>
+  <script>
+    // DATA MODEL FOR BOTH 10-STEP FLOWS
+    const peopleFlowData = [
+      {
+        id: 1,
+        title: "Create Identity",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <span class="badge-maroon" style="margin-bottom:8px;">Langkah 1 dari 10</span>
+            <h2 style="font-size:20px;font-weight:800;margin-bottom:4px;">Buat Identitas Digital</h2>
+            <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">Masukkan data profil dasar untuk inisiasi AI Resume.</p>
+            
+            <div class="p-card">
+              <label style="font-size:11px;font-weight:700;display:block;margin-bottom:4px;">Nama Lengkap:</label>
+              <input type="text" value="Rani Maharani" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:12px;margin-bottom:10px;" readonly>
 
-  <section class="screen" id="activity">
-    <div class="top"><div><div class="eyebrow">Work & earnings</div><h1>Activity</h1></div><button class="iconbtn" onclick="toast('Activity filter opened')">☷</button></div>
-    <div class="tabs">
-      <button class="tab active" onclick="activityTab('Active',this)">Active</button>
-      <button class="tab" onclick="activityTab('Applied',this)">Applied</button>
-      <button class="tab" onclick="activityTab('Completed',this)">Completed</button>
-    </div>
-    <div class="section"><div class="card" id="activityList"></div></div>
-    <div class="section">
-      <div class="hero" style="margin:0">
-        <small>Available balance</small><h2>Rp850.000</h2><p>Rp350.000 pending approval</p>
-        <button class="btn gold" onclick="toast('Withdraw flow opened')">Withdraw earnings</button>
-      </div>
-    </div>
-  </section>
+              <label style="font-size:11px;font-weight:700;display:block;margin-bottom:4px;">Username Handle:</label>
+              <input type="text" value="@ranimahr" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:12px;margin-bottom:10px;" readonly>
 
-  <section class="screen" id="profile">
-    <div class="top"><div><div class="eyebrow">Account</div><h1>Profile</h1></div><button class="iconbtn" onclick="toast('Settings opened')">⚙</button></div>
-    <div class="section"><div class="card identity-row"><div class="avatar">RP</div><div class="grow"><div class="name">Raka Pratama</div><div class="sub">@rakapr • Jakarta</div><span class="pill">Verified email</span></div></div></div>
-    <div class="section">
-      <div class="card">
-        <div class="activity-item" onclick="toast('Connected account manager opened')"><div class="grow"><b>Connected accounts</b><div class="sub">Instagram, TikTok</div></div><b>›</b></div>
-        <div class="activity-item" onclick="showScreen('identity')"><div class="grow"><b>AI Resume & Online Identity</b><div class="sub">View or edit summary</div></div><b>›</b></div>
-        <div class="activity-item" onclick="toast('Public identity link copied')"><div class="grow"><b>Public identity link</b><div class="sub">brandx.id/raka</div></div><b>›</b></div>
-        <div class="activity-item" onclick="toast('Payments profile opened')"><div class="grow"><b>Payments & tax</b><div class="sub">Payout details</div></div><b>›</b></div>
-        <div class="activity-item" onclick="toast('Privacy controls opened')"><div class="grow"><b>Privacy & AI controls</b><div class="sub">Consent, visibility, data usage</div></div><b>›</b></div>
-      </div>
-    </div>
-  </section>
+              <label style="font-size:11px;font-weight:700;display:block;margin-bottom:4px;">Kategori Utama:</label>
+              <div style="margin-bottom:12px;">
+                <span class="pill-tag" style="background:var(--primary);color:white;">#Lifestyle</span>
+                <span class="pill-tag" style="background:var(--primary);color:white;">#Coffee</span>
+                <span class="pill-tag">#PracticalTech</span>
+              </div>
 
-  <section class="screen" id="brand">
-    <div class="top"><div><div class="eyebrow">Brand side</div><h1>Brand Dashboard</h1></div><button class="iconbtn" onclick="showScreen('home')">×</button></div>
-    <div class="section">
-      <div class="toggle"><button class="active">Overview</button><button onclick="brandAction('Campaign Builder')">Campaign Builder</button></div>
-    </div>
-    <div class="section">
-      <div class="metric-grid">
-        <div class="metric"><b>12</b><span>Active campaigns</span></div>
-        <div class="metric"><b>486</b><span>Matched identities</span></div>
-        <div class="metric"><b>Rp128M</b><span>Campaign GMV</span></div>
-        <div class="metric"><b>4.6x</b><span>Avg engagement lift*</span></div>
-      </div>
-    </div>
-    <div class="section">
-      <div class="section-head"><h3>AI Match preview</h3><span class="link" onclick="brandAction('People Search')">People Search</span></div>
-      <div class="card">
-        <div class="sub">Prompt</div><b>“Find 100 university students in Jabodetabek interested in coffee, lifestyle and productivity.”</b>
-        <div class="progress"><div class="bar" style="width:84%"></div></div>
-        <div class="sub" style="margin-top:8px">486 potential matches found • 84% average fit</div>
-        <button class="btn primary" style="margin-top:12px" onclick="brandAction('Match AI results')">View matched identities</button>
-      </div>
-    </div>
-    <div class="section"><div class="card">
-      <div class="activity-item" onclick="brandAction('Campaign Builder')"><div class="grow"><b>AI Campaign Builder</b><div class="sub">Generate brief, budget mix, deliverables</div></div><b>›</b></div>
-      <div class="activity-item" onclick="brandAction('People Search')"><div class="grow"><b>People Search</b><div class="sub">Search by identity, niche, location, audience</div></div><b>›</b></div>
-      <div class="activity-item" onclick="brandAction('Campaign Management')"><div class="grow"><b>Campaign Management</b><div class="sub">Select, approve, monitor, payout</div></div><b>›</b></div>
-      <div class="activity-item" onclick="brandAction('Analytics')"><div class="grow"><b>Analytics</b><div class="sub">Performance, reach, conversion, learnings</div></div><b>›</b></div>
-    </div></div>
-  </section>
+              <button class="btn-primary-p" onclick="navToStep(1)">Simpan & Lanjut Connect Sosmed →</button>
+            </div>
+          </div>
+        `,
+        rightTitle: "01. Create Identity (Inisiasi Profil)",
+        rightDesc: "Customer (Creator) memasukkan informasi awal untuk membuat akun identitas digital yang akan terverifikasi.",
+        breakdowns: [
+          { num: "1", title: "Registrasi Profil Mandiri", tag: "Part of the user journey", desc: "Creator mengisikan nama, handle unik, dan kategori minat utama." },
+          { num: "2", title: "Tag Kategori Awal", tag: "Visible in prototype", desc: "Penentuan klaster konten utama yang akan mendasari analisis AI." },
+          { num: "3", title: "Sertifikasi Akun Baru", tag: "Identity Initialization", desc: "Menerbitkan ID identitas unik terenkripsi untuk tiap pendaftar." }
+        ],
+        logs: [
+          "[09:41:01] Customer identity created: Rani Maharani (@ranimahr).",
+          "[09:41:02] Primary categories assigned: Lifestyle, Coffee Culture, Practical Tech."
+        ]
+      },
+      {
+        id: 2,
+        title: "Connect Social Media",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <span class="badge-maroon" style="margin-bottom:8px;">Langkah 2 dari 10</span>
+            <h2 style="font-size:20px;font-weight:800;margin-bottom:4px;">Hubungkan Sosmed</h2>
+            <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">Makin banyak akun terhubung, skor keaslian identitas makin tinggi.</p>
 
-  <nav class="nav" id="nav">
-    <button class="navbtn active" data-screen="home" onclick="showScreen('home')"><span class="ico">⌂</span>Home</button>
-    <button class="navbtn" data-screen="opportunities" onclick="showScreen('opportunities')"><span class="ico">✦</span>Explore</button>
-    <button class="navbtn" data-screen="identity" onclick="showScreen('identity')"><span class="ico">◉</span>Identity</button>
-    <button class="navbtn" data-screen="activity" onclick="showScreen('activity')"><span class="ico">✓</span>Activity</button>
-    <button class="navbtn" data-screen="profile" onclick="showScreen('profile')"><span class="ico">☺</span>Profile</button>
-  </nav>
+            <div class="p-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+              <div><b>Instagram</b><div style="font-size:11px;color:var(--text-muted);">@ranimahr • 12.4K Follower</div></div>
+              <span class="badge-status">Connected ✓</span>
+            </div>
+            <div class="p-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+              <div><b>TikTok</b><div style="font-size:11px;color:var(--text-muted);">@ranimahr.daily • 24.1K Follower</div></div>
+              <span class="badge-status">Connected ✓</span>
+            </div>
+            <div class="p-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+              <div><b>X / Twitter</b><div style="font-size:11px;color:var(--text-muted);">@ranimahr_tweet • 5.8K Follower</div></div>
+              <span class="badge-status">Connected ✓</span>
+            </div>
+            <div class="p-card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;opacity:0.7;">
+              <div><b>YouTube</b><div style="font-size:11px;color:var(--text-muted);">Belum terhubung</div></div>
+              <span class="badge-maroon">+ Connect</span>
+            </div>
 
-  <div class="modal" id="oppModal" onclick="if(event.target===this)closeModal('oppModal')"><div class="sheet">
-    <button class="close" onclick="closeModal('oppModal')">×</button>
-    <div class="sub" id="mbrand"></div><h2 id="mtitle"></h2><div class="pill" id="mmatch"></div>
-    <h3 id="mreward" style="font-size:27px;margin:16px 0 3px"></h3><div class="sub">Reward / earning potential</div>
-    <hr class="hr"><b>Deliverables</b><p class="sub" id="mdeliv"></p><b>Campaign brief</b><p class="sub" id="mdesc"></p><b>Why you match</b><p class="sub" id="mwhy"></p>
-    <button class="btn primary" onclick="applyOpportunity()">Apply with my Online Identity</button>
-  </div></div>
+            <button class="btn-primary-p" onclick="startAiBuildProcess()">Hubungkan & Proses AI Resume ✨</button>
+          </div>
+        `,
+        rightTitle: "02. Connect Social Media (Multi-Channel Ingestion)",
+        rightDesc: "Menghubungkan API media sosial untuk mengklaim jejak digital asli secara otomatis.",
+        breakdowns: [
+          { num: "1", title: "OAuth 2.0 Ingestion", tag: "Part of the user journey", desc: "Autentikasi 1-tap aman ke Instagram, TikTok, dan Twitter/X." },
+          { num: "2", title: "Pengumpulan Sinyal Konten", tag: "Visible in prototype", desc: "Membaca caption unggahan, hashtag populer, dan tingkat interaksi." },
+          { num: "3", title: "Jaminan Keamanan Privasi", tag: "Data Governance", desc: "Hanya mengakses data analitik publik tanpa membaca pesan pribadi." }
+        ],
+        logs: [
+          "[09:41:05] Multi-platform OAuth tokens verified.",
+          "[09:41:06] Scanned 142 Instagram posts, 88 TikTok videos, and 320 tweets."
+        ]
+      },
+      {
+        id: 3,
+        title: "AI Builds Digital Resume",
+        phoneUI: `
+          <div style="padding:10px 0;text-align:center;" id="aiLoadingBox">
+            <div class="ai-spinner-box" style="padding:10px 0;">
+              <div class="ai-spinner"></div>
+              <h2 style="font-size:18px;font-weight:800;margin-bottom:4px;">AI Sedang Membangun Resume</h2>
+              <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Menganalisis pola komunikasi, keaslian & commercial fit...</p>
+            </div>
 
-  <div class="modal" id="editModal" onclick="if(event.target===this)closeModal('editModal')"><div class="sheet">
-    <button class="close" onclick="closeModal('editModal')">×</button>
-    <div class="kicker">AI Resume control</div><h2>Edit your summary</h2>
-    <p class="sub">In the real product, users should be able to correct or hide AI-generated attributes.</p>
-    <div class="card" style="margin-bottom:12px"><b>Primary identity</b><p class="sub">Relatable lifestyle storyteller with automotive, practical tech, and campus-culture affinity.</p></div>
-    <div class="card" style="margin-bottom:12px"><b>Visibility</b><p class="sub">Brand-facing: personality, interests, content themes, commercial-fit signals.</p></div>
-    <button class="btn gold" onclick="closeModal('editModal');toast('AI Resume changes saved')">Save & confirm</button>
-  </div></div>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="aiProgressBar"></div>
+            </div>
 
-  <div class="modal" id="brandModal" onclick="if(event.target===this)closeModal('brandModal')"><div class="sheet">
-    <button class="close" onclick="closeModal('brandModal')">×</button>
-    <div class="kicker">Brand workflow</div><h2 id="brandModalTitle">Feature</h2>
-    <p class="sub" id="brandModalText"></p>
-    <button class="btn primary" onclick="closeModal('brandModal')">Continue demo</button>
-  </div></div>
+            <div class="p-card" style="text-align:left;font-size:12px;">
+              <div id="stepCheck1" style="color:#2C8A61;font-weight:800;margin-bottom:6px;">✓ 01 · Membaca topik & kata kunci unggahan</div>
+              <div id="stepCheck2" style="color:#2C8A61;font-weight:800;margin-bottom:6px;">✓ 02 · Mengukur tingkat keaslian engagement</div>
+              <div id="stepCheck3" style="color:var(--primary);font-weight:800;margin-bottom:6px;">⏳ 03 · Memetakan kepribadian & gaya bahasa</div>
+              <div id="stepCheck4" style="color:var(--text-muted);margin-bottom:4px;">⚪ 04 · Menyusun komersial positioning vector</div>
+            </div>
 
-  <div class="toast" id="toast"></div>
-</div></div></div>
+            <div id="aiDoneBtnBox" style="margin-top:14px;">
+              <button class="btn-gold-p" onclick="navToStep(3)">Lihat AI Resume Saya →</button>
+            </div>
+          </div>
+        `,
+        rightTitle: "03. AI Builds Digital Resume (Automated Engine)",
+        rightDesc: "Engine AI mengolah jutaan titik data jejak digital menjadi satu resume komersial ringkas.",
+        breakdowns: [
+          { num: "1", title: "Natural Language Processing", tag: "AI Engine", desc: "Menganalisis karakteristik penulisan cerita (relatable, humorous, cozy)." },
+          { num: "2", title: "Authenticity Guard Filter", tag: "Bot Detection", desc: "Memverifikasi bahwa interaksi berasal dari audiens manusia asli." },
+          { num: "3", title: "Commercial Positioning", tag: "Output Model", desc: "Mengkategorikan creator ke industri paling menguntungkan." }
+        ],
+        logs: [
+          "[09:41:09] AI Pipeline analysis complete — Identity score: 94%.",
+          "[09:41:10] Authenticity score: 91.2%. Commercial vector finalized."
+        ]
+      },
+      {
+        id: 4,
+        title: "Review Identity",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <div class="p-hero-card" style="margin-bottom:10px;">
+              <span class="tag-gold">AI Resume Hasil Analisis</span>
+              <h3>Rani Maharani</h3>
+              <p>@ranimahr • Relatable Lifestyle & Coffee Storyteller</p>
+              <div class="p-stat-grid">
+                <div class="p-stat-box"><b>94%</b><span>Match Score</span></div>
+                <div class="p-stat-box"><b>91%</b><span>Authenticity</span></div>
+                <div class="p-stat-box"><b>12.4K</b><span>Audience</span></div>
+              </div>
+            </div>
 
-<script>
-const opps=[
-{id:1,cat:'Campaign',title:'Coffee Campus Launch',brand:'KopiKita',reward:'Rp350.000',match:92,deliver:'1 TikTok + 1 IG Story',desc:'Create casual campus content featuring a new iced coffee.',why:'Food, campus culture, lifestyle storytelling',logo:'KK'},
-{id:2,cat:'UGC',title:'Weekend Ride UGC',brand:'VeloMoto',reward:'Rp500.000',match:88,deliver:'2 short videos',desc:'Create authentic weekend-ride UGC with natural product placement.',why:'Automotive interest, casual short-form style',logo:'VM'},
-{id:3,cat:'Ambassador',title:'Campus Ambassador',brand:'NexPay',reward:'Rp1.200.000',match:84,deliver:'4-week activation',desc:'Represent NexPay in your campus community.',why:'Student community, social personality, event fit',logo:'NP'},
-{id:4,cat:'Affiliate',title:'Tech Accessory Affiliate',brand:'Gearloop',reward:'Up to 12%',match:79,deliver:'Affiliate link + optional content',desc:'Promote selected mobile accessories.',why:'Tech interest, practical content behavior',logo:'GL'},
-{id:5,cat:'Event',title:'Sneaker Pop-up Night',brand:'District87',reward:'Invite + Rp250.000',match:82,deliver:'Attend + 3 story frames',desc:'Join and cover a youth-culture pop-up event.',why:'Lifestyle, social personality, local event fit',logo:'D8'},
-{id:6,cat:'Campaign',title:'Daily Ride Challenge',brand:'UrbanFuel',reward:'Rp425.000',match:86,deliver:'1 Reel + 1 photo',desc:'Show a daily mobility routine with a casual story angle.',why:'Mobility, lifestyle, authentic storytelling',logo:'UF'}
-];
+            <div class="p-card">
+              <h4 style="font-size:13px;margin-bottom:6px;">Peta Kepribadian (Personality Signal)</h4>
+              <div>
+                <span class="pill-tag">Curious 94%</span>
+                <span class="pill-tag">Social 88%</span>
+                <span class="pill-tag">Practical 82%</span>
+                <span class="pill-tag">Cozy 79%</span>
+              </div>
+              <hr style="border:0;border-top:1px solid var(--line);margin:10px 0;">
+              <h4 style="font-size:13px;margin-bottom:4px;">Kesesuaian Brand (Commercial Fit)</h4>
+              <p style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">Sangat cocok untuk F&B (Coffee Shop), Practical Tech, Daily Wear & Youth Events.</p>
+              <button class="btn-gold-p" onclick="navToStep(4)">Konfirmasi & Publish Profil →</button>
+            </div>
+          </div>
+        `,
+        rightTitle: "04. Review Identity (Human-in-the-Loop Validation)",
+        rightDesc: "Creator dapat meninjau, mengonfirmasi, dan menyempurnakan atribut identitas sebelum dipublikasikan.",
+        breakdowns: [
+          { num: "1", title: "Peta Kepribadian Visual", tag: "Part of the user journey", desc: "Menampilkan atribut dominan yang terdeteksi dari gaya konten." },
+          { num: "2", title: "Kesesuaian Sektor Brand", tag: "Visible in prototype", desc: "Menyoroti industri yang paling cocok melamar campaign." },
+          { num: "3", title: "Kontrol Kustomisasi Creator", tag: "User Control", desc: "Creator berhak menyetujui atau menyesuaikan tag identitas." }
+        ],
+        logs: [
+          "[09:41:14] Identity attributes confirmed by user @ranimahr.",
+          "[09:41:15] Personality map validated & locked for publishing."
+        ]
+      },
+      {
+        id: 5,
+        title: "Publish Profile",
+        phoneUI: `
+          <div style="padding:10px 0;text-align:center;">
+            <div style="font-size:38px;margin-bottom:6px;">🎉</div>
+            <h2 style="font-size:20px;font-weight:800;margin-bottom:4px;">Profil Publik Aktif!</h2>
+            <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">Identitas digitalmu kini resmi terindeks dan bisa ditemukan brand.</p>
+            
+            <div class="p-card" style="text-align:left;">
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Handle Link Publik Anda:</div>
+              <div style="background:var(--neutral-bg);padding:10px;border-radius:10px;font-weight:800;font-size:13px;color:var(--primary);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
+                <span>brandx.id/ranimahr</span>
+                <span style="font-size:11px;color:var(--accent);">Salin 📋</span>
+              </div>
+              <div style="font-size:11px;color:var(--text-muted);line-height:1.4;">
+                Dapat dipasang di bio Instagram/TikTok sebagai portofolio resmi bernilai komersial tinggi.
+              </div>
+            </div>
 
-function oppCard(o){
-return `<div class="card opp" onclick="openOpportunity(${o.id})">
-<div class="brandlogo">${o.logo}</div><div class="grow"><h4>${o.title}</h4><div class="sub">${o.brand} • ${o.cat}</div><div class="money">${o.reward}</div></div><div class="match">${o.match}%</div></div>`;
-}
-function renderHome(){document.getElementById('homeOpps').innerHTML=opps.slice(0,2).map(oppCard).join('')}
-function filterCat(cat,btn){
- document.querySelectorAll('#tabs .tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
- const list=cat==='All'?opps:opps.filter(o=>o.cat===cat);
- document.getElementById('oppList').innerHTML=list.length?list.map(oppCard).join(''):`<div class="empty">Belum ada opportunity di kategori ini.</div>`;
- document.getElementById('filterSummary').textContent=cat==='All'?'Showing AI-ranked opportunities based on your Online Identity.':`Showing ${cat} opportunities ranked by your AI Match.`;
-}
-function openOpportunity(id){
- const o=opps.find(x=>x.id===id);
- mbrand.textContent=o.brand+' • '+o.cat;mtitle.textContent=o.title;mreward.textContent=o.reward;mmatch.textContent=o.match+'% AI MATCH';
- mdeliv.textContent=o.deliver;mdesc.textContent=o.desc;mwhy.textContent=o.why+' — derived from your AI Resume and connected-account signals.';
- oppModal.classList.add('open');
-}
-function applyOpportunity(){closeModal('oppModal');toast('Application sent using your Online Identity')}
-function closeModal(id){document.getElementById(id).classList.remove('open')}
-function showScreen(id){
- document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');
- document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.screen===id));
- document.getElementById('nav').style.display=id==='brand'?'none':'grid';
-}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
-function toggleConnect(el){el.classList.toggle('connected');el.querySelector('.state').textContent=el.classList.contains('connected')?'Connected ✓':'Connect'}
-function goAnalyze(){
- document.getElementById('ob1').style.display='none';document.getElementById('loading').classList.add('show');
- const ids=['a1','a2','a3','a4'];ids.forEach((id,i)=>setTimeout(()=>document.getElementById(id).innerHTML='✓ '+document.getElementById(id).textContent.replace(/^\d+\s·\s/,'') ,450*(i+1)));
- setTimeout(()=>{document.getElementById('loading').classList.remove('show');document.getElementById('reveal').classList.add('show')},2300)
-}
-function finishOnboard(){document.getElementById('onboard').classList.add('hidden')}
-function openEditSummary(){document.getElementById('editModal').classList.add('open')}
-function activityTab(type,btn){
- document.querySelectorAll('#activity .tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
- const data={
- Active:[['green','KopiKita Campus Launch','Accepted • Brief ready','Rp350K'],['','VeloMoto Weekend Ride','Content under review','Rp500K']],
- Applied:[['gray','NexPay Ambassador','Applied • Waiting for brand','Rp1.2M'],['gray','District87 Pop-up','Applied • Waiting','Rp250K']],
- Completed:[['green','UrbanFuel Daily Ride','Completed • Paid','Rp425K']]
- }[type];
- document.getElementById('activityList').innerHTML=data.map(x=>`<div class="activity-item"><div class="dot ${x[0]}"></div><div class="grow"><b>${x[1]}</b><div class="sub">${x[2]}</div></div><b>${x[3]}</b></div>`).join('');
-}
-function openBrandMode(){showScreen('brand')}
-function brandAction(name){
- const desc={
- 'Campaign Builder':'AI turns a marketing objective into a campaign brief, recommended people mix, deliverables, budget allocation and KPI structure.',
- 'People Search':'Brands search identities by location, niche, interests, personality, audience signals, content style, engagement and performance history.',
- 'Campaign Management':'Manage invitation, application, selection, content approval, publishing status, payout and dispute workflow in one workspace.',
- 'Analytics':'Measure reach, engagement, content completion, conversions, affiliate sales and campaign learnings.',
- 'Match AI results':'View ranked people with an explanation of why each identity fits the campaign.'
- }[name]||'Interactive brand workflow.';
- document.getElementById('brandModalTitle').textContent=name;document.getElementById('brandModalText').textContent=desc;document.getElementById('brandModal').classList.add('open');
-}
-renderHome();filterCat('All',document.querySelector('#tabs .tab'));
-activityTab('Active',document.querySelector('#activity .tab'));
-</script>
+            <button class="btn-primary-p" onclick="navToStep(5)">Cari Matching Opportunity →</button>
+          </div>
+        `,
+        rightTitle: "05. Publish Profile (Live Portfolio)",
+        rightDesc: "Menghasilkan profil publik dengan link unik yang bisa diakses langsung oleh brand penyedia campaign.",
+        breakdowns: [
+          { num: "1", title: "Direct Handle brandx.id", tag: "Part of the user journey", desc: "Portofolio digital yang ringkas dan estetis untuk dipasang di bio sosial." },
+          { num: "2", title: "Auto-Updated Metrics", tag: "Visible in prototype", desc: "Data pengikut dan engagement ter-update otomatis tanpa perlu diedit manual." },
+          { num: "3", title: "Penayangan di Marketplace", tag: "Brand Exposure", desc: "Profil langsung masuk ke direktori pencarian pencocokan brand." }
+        ],
+        logs: [
+          "[09:41:18] Public Identity Handle deployed: brandx.id/ranimahr.",
+          "[09:41:19] Marketplace search index updated."
+        ]
+      },
+      {
+        id: 6,
+        title: "Find Matching Opportunity",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <div>
+                <h3 style="font-size:16px;font-weight:800;">Opportunity Feed</h3>
+                <p style="font-size:11px;color:var(--text-muted);">Diurutkan berdasarkan skor AI Match</p>
+              </div>
+              <span class="badge-status">14 Match Cocok</span>
+            </div>
+
+            <div class="opp-item" onclick="navToStep(6)">
+              <div class="opp-logo">KK</div>
+              <div class="opp-info">
+                <h4>Aren Kenangan Campus Launch</h4>
+                <p>KopiKenangan • Campaign</p>
+                <div class="money">Rp 850.000</div>
+              </div>
+              <span class="badge-status">95% Match</span>
+            </div>
+
+            <div class="opp-item" onclick="navToStep(6)">
+              <div class="opp-logo" style="background:#280605;">ST</div>
+              <div class="opp-info">
+                <h4>Daily Glow UGC Video</h4>
+                <p>Somethinc • UGC</p>
+                <div class="money">Rp 600.000</div>
+              </div>
+              <span class="badge-status">91% Match</span>
+            </div>
+
+            <div class="opp-item" onclick="navToStep(6)">
+              <div class="opp-logo" style="background:#8C1D18;">ER</div>
+              <div class="opp-info">
+                <h4>Streetwear Lifestyle Reel</h4>
+                <p>Erigo Official • Ambassador</p>
+                <div class="money">Rp 1.200.000</div>
+              </div>
+              <span class="badge-maroon">86% Match</span>
+            </div>
+          </div>
+        `,
+        rightTitle: "06. Find Matching Opportunity (AI Matchmaking)",
+        rightDesc: "Algoritma mencocokkan identitas unik creator dengan campaign yang sedang membuka slot pendaftaran.",
+        breakdowns: [
+          { num: "1", title: "Ranking Berbasis Skor AI Match", tag: "Part of the user journey", desc: "Pekerjaan diurutkan berdasarkan kesesuaian identitas, bukan hanya waktu posting." },
+          { num: "2", title: "Rincian Reward Transparan", tag: "Visible in prototype", desc: "Nominal kompensasi langsung tertera di awal tanpa negosiasi panjang." },
+          { num: "3", title: "Kategori Pekerjaan Beragam", tag: "Marketplace Feed", desc: "Menyediakan pilihan Campaign, UGC, Affiliate, dan Events." }
+        ],
+        logs: [
+          "[09:41:22] AI Match engine query executed for user @ranimahr.",
+          "[09:41:23] Top recommendation: 'KopiKenangan Aren Launch' (95.4% match)."
+        ]
+      },
+      {
+        id: 7,
+        title: "Apply Campaign",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <div class="p-card">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                <div class="opp-logo">KK</div>
+                <div>
+                  <h3 style="font-size:15px;font-weight:800;">Aren Kenangan Campus Launch</h3>
+                  <div style="font-size:11px;color:var(--text-muted);">KopiKenangan • Campaign Spesial</div>
+                </div>
+              </div>
+              <span class="badge-status" style="margin-bottom:10px;">95% AI Match — Highly Recommended</span>
+              <div style="font-size:18px;font-weight:800;color:var(--primary);margin-bottom:10px;">Rp 850.000</div>
+              
+              <hr style="border:0;border-top:1px solid var(--line);margin:10px 0;">
+              
+              <div style="font-size:12px;margin-bottom:8px;"><b>Deliverables:</b> 1 TikTok Video + 1 IG Story Frame</div>
+              <div style="font-size:12px;color:var(--text-muted);line-height:1.4;margin-bottom:12px;">
+                Buat konten ulasan jujur mengenai pengalaman mencoba varian Aren Kenangan di sekitar kampus/area nongkrongmu.
+              </div>
+
+              <button class="btn-primary-p" onclick="navToStep(7)">Apply 1-Click dengan AI Resume →</button>
+            </div>
+          </div>
+        `,
+        rightTitle: "07. Apply Campaign (Single-Tap Application)",
+        rightDesc: "Melamar campaign secara instan memanfaatkan data terverifikasi dalam AI Resume tanpa perlu proposal manual.",
+        breakdowns: [
+          { num: "1", title: "Aplikasi 1-Click", tag: "Part of the user journey", desc: "Mengirimkan profil lengkap beserta sinyal keaslian hanya dengan satu tombol." },
+          { num: "2", title: "Ringkasan Brief Jelas", tag: "Visible in prototype", desc: "Ekspektasi konten dan bentuk kompensasi tercantum transparan." },
+          { num: "3", title: "Prioritas AI Matching", tag: "Conversion Booster", desc: "Pelamar dengan skor match tinggi otomatis berada di barisan teratas peninjauan brand." }
+        ],
+        logs: [
+          "[09:41:26] Application submitted to Campaign #KP-882 (KopiKenangan).",
+          "[09:41:27] Candidate record generated with 95.4% AI Match attached."
+        ]
+      },
+      {
+        id: 8,
+        title: "Complete Task",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <span class="badge-status" style="margin-bottom:8px;">Status: Approved — Upload Draft</span>
+            <h3 style="font-size:16px;font-weight:800;margin-bottom:4px;">Submit Draft Konten</h3>
+            <p style="font-size:11px;color:var(--text-muted);margin-bottom:12px;">Unggah link draft video untuk pengecekan AI & persetujuan brand.</p>
+
+            <div class="p-card">
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Link Draft Video (TikTok/Drive):</div>
+              <input type="text" value="tiktok.com/@ranimahr/video/73918239" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:12px;margin-bottom:10px;" readonly>
+              
+              <div style="background:var(--primary-soft);border:1px solid var(--line);padding:10px;border-radius:10px;font-size:11px;color:var(--primary);margin-bottom:12px;">
+                <b>✓ AI Compliance Check:</b> Logo brand terlihat, Hashtag #ArenKenangan terdeteksi, Audio jernih.
+              </div>
+
+              <button class="btn-primary-p" onclick="navToStep(8)">Kirim Draft untuk Review Brand →</button>
+            </div>
+          </div>
+        `,
+        rightTitle: "08. Complete Task (Content Submission & Pre-Scan)",
+        rightDesc: "Creator mengunggah draft video untuk diperiksa kelayakannya oleh AI sebelum ditinjau brand.",
+        breakdowns: [
+          { num: "1", title: "AI Pre-Compliance Check", tag: "Automated Safety Check", desc: "Memastikan video memenuhi syarat singkat brief sebelum ditinjau brand." },
+          { num: "2", title: "Form Submission Ringkas", tag: "Part of the user journey", desc: "Mendukung tautan privat TikTok/Instagram maupun Google Drive." },
+          { num: "3", title: "Pelacakan Workflow Real-time", tag: "Visible in prototype", desc: "Menghindari miskomunikasi mengenai revisi atau persetujuan konten." }
+        ],
+        logs: [
+          "[09:41:31] Draft video uploaded: tiktok.com/@ranimahr/video/73918239.",
+          "[09:41:32] AI Vision & Speech Check: PASSED. Sent to Brand Studio for approval."
+        ]
+      },
+      {
+        id: 9,
+        title: "Receive Payment",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <div class="p-hero-card" style="margin-bottom:12px;">
+              <span class="tag-gold">Saldo Siap Ditarik</span>
+              <h2 style="font-size:24px;font-weight:800;margin-top:2px;">Rp 2.450.000</h2>
+              <p style="margin-bottom:10px;font-size:11px;">Rp 850.000 baru saja disetujui oleh KopiKenangan</p>
+              <button class="btn-gold-p" onclick="alert('Penarikan instan Rp 2.450.000 berhasil dikirim ke BCA ****8812')">Tarik Dana Instan ke Bank 🏦</button>
+            </div>
+
+            <div class="p-card">
+              <h4 style="font-size:13px;margin-bottom:10px;">Riwayat Transaksi</h4>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:8px;">
+                <div><b>KopiKenangan Launch</b><div style="font-size:10px;color:var(--text-muted);">Hari ini • Approved</div></div>
+                <div style="font-weight:800;color:#2C8A61;">+Rp 850.000</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;">
+                <div><b>Somethinc UGC Video</b><div style="font-size:10px;color:var(--text-muted);">14 Sep 2026 • Paid</div></div>
+                <div style="font-weight:800;color:#2C8A61;">+Rp 600.000</div>
+              </div>
+            </div>
+
+            <button class="btn-secondary-p" onclick="navToStep(9)">Lihat Skor Reputasi Saya →</button>
+          </div>
+        `,
+        rightTitle: "09. Receive Payment (Instant Escrow Payout)",
+        rightDesc: "Pencairan dana otomatis secara langsung ke rekening bank creator setelah konten disetujui.",
+        breakdowns: [
+          { num: "1", title: "Automated Escrow Payout", tag: "Part of the user journey", desc: "Dana dijamin aman di rekening penampung sejak campaign dimulai." },
+          { num: "2", title: "Transfer Real-time Bank Lokal", tag: "Visible in prototype", desc: "Penarikan ke BCA, Mandiri, BRI, maupun E-Wallet tanpa biaya tersembunyi." },
+          { num: "3", title: "Catatan Keuangan Transparan", tag: "Financial Ledger", desc: "Riwayat pendapatan lengkap untuk laporan keuangan creator." }
+        ],
+        logs: [
+          "[09:41:36] Escrow payout released: Rp 850.000 via Midtrans Disburse.",
+          "[09:41:37] Bank BCA account ****8812 credited. Transaction settlement: SUCCESS."
+        ]
+      },
+      {
+        id: 10,
+        title: "Build Reputation",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <div class="p-card" style="text-align:center;padding:20px 14px;">
+              <div style="width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;display:grid;place-items:center;font-size:26px;font-weight:800;margin:0 auto 10px;">⭐</div>
+              <span class="badge-status" style="margin-bottom:6px;">Level 4 Top Creator</span>
+              <h3 style="font-size:18px;font-weight:800;margin-bottom:2px;">Rani Maharani</h3>
+              <p style="font-size:11px;color:var(--text-muted);margin-bottom:14px;">Rating Brand: 4.9★ (14 Campaign Selesai)</p>
+              
+              <div class="p-stat-grid" style="margin-bottom:14px;">
+                <div class="p-stat-box" style="background:var(--neutral-bg);border-color:var(--line);"><b>4.9★</b><span style="color:var(--accent);">Brand Rating</span></div>
+                <div class="p-stat-box" style="background:var(--neutral-bg);border-color:var(--line);"><b>100%</b><span style="color:var(--accent);">On-Time</span></div>
+                <div class="p-stat-box" style="background:var(--neutral-bg);border-color:var(--line);"><b>Rp18.5M</b><span style="color:var(--accent);">Earned</span></div>
+              </div>
+
+              <button class="btn-gold-p" onclick="alert('Lencana Verified Top Creator aktif!')">Lihat Benefit Level Berikutnya 🏆</button>
+            </div>
+          </div>
+        `,
+        rightTitle: "10. Build Reputation (Creator Level & Trust)",
+        rightDesc: "Setiap kampanye selesai membangun reputasi yang meningkatkan prioritas di kampanye bernilai tinggi.",
+        breakdowns: [
+          { num: "1", title: "Sistem Level & Badging", tag: "Part of the user journey", desc: "Meningkatkan kepercayaan brand seiring bertambahnya penyelesaian campaign." },
+          { num: "2", title: "Rating Kinerja dari Brand", tag: "Visible in prototype", desc: "Penilaian obyektif berbasis ketepatan waktu dan kualitas konten." },
+          { num: "3", title: "Prioritas Undangan Premium", tag: "Long-term Value", desc: "Top Creator mendapatkan akses eksklusif ke brand ambassador berbayar mahal." }
+        ],
+        logs: [
+          "[09:41:40] Reputation score recalculated: 4.9★ rating.",
+          "[09:41:41] Level 4 Top Creator status unlocked for @ranimahr."
+        ]
+      }
+    ];
+
+    const brandFlowData = [
+      {
+        id: 1,
+        title: "Create Brand Account",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <span class="badge-maroon" style="margin-bottom:8px;">Portal Bisnis B2B</span>
+            <h2 style="font-size:20px;font-weight:800;margin-bottom:4px;">Buat Akun Perusahaan</h2>
+            <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">Registrasi akun resmi brand untuk otentikasi escrow.</p>
+
+            <div class="p-card">
+              <label style="font-size:11px;font-weight:700;display:block;margin-bottom:4px;">Nama Perusahaan / Brand:</label>
+              <input type="text" value="KopiKenangan (PT Bumi Kopi Indonesia)" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:12px;margin-bottom:10px;" readonly>
+              
+              <label style="font-size:11px;font-weight:700;display:block;margin-bottom:4px;">Email Bisnis Terverifikasi:</label>
+              <input type="text" value="brand@kopikenangan.com" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:12px;margin-bottom:12px;" readonly>
+
+              <button class="btn-primary-p" onclick="navToStep(1)">Registrasi Brand & Lanjut →</button>
+            </div>
+          </div>
+        `,
+        rightTitle: "01. Create Brand Account (B2B Onboarding)",
+        rightDesc: "Verifikasi akun bisnis untuk keamanan transaksi escrow dan penerbitan faktur pajak resmi.",
+        breakdowns: [
+          { num: "1", title: "Verifikasi Badan Usaha", tag: "Part of the user journey", desc: "Memastikan keamanan legalitas transaksi antara brand dan creator." },
+          { num: "2", title: "Email Domain Validation", tag: "Visible in prototype", desc: "Memastikan pendaftar berasal dari perwakilan resmi perusahaan." },
+          { num: "3", title: "Kesiapan Transaksi Escrow", tag: "Financial Compliance", desc: "Menyiapkan sistem penampungan dana aman sebelum campaign dimulai." }
+        ],
+        logs: [
+          "[09:42:01] Corporate brand registered: PT Bumi Kopi Indonesia (KopiKenangan).",
+          "[09:42:02] Tax ID & Corporate MX record verified."
+        ]
+      },
+      {
+        id: 2,
+        title: "Set Campaign Goal",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <span class="badge-maroon" style="margin-bottom:8px;">Langkah 2 dari 10</span>
+            <h2 style="font-size:20px;font-weight:800;margin-bottom:4px;">Tentukan Goal Campaign</h2>
+            <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Pilih objektif utama untuk penyesuaian strategi AI.</p>
+
+            <div class="p-card" style="margin-bottom:8px;border-color:var(--primary);background:var(--primary-soft);">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="font-size:22px;">🎯</div>
+                <div><b>Drive Sales & Conversions</b><div style={{fontSize:'10px',color:'var(--text-muted)'}}>Fokus ke penjualan varian Aren Kenangan</div></div>
+              </div>
+            </div>
+
+            <div class="p-card" style="margin-bottom:8px;opacity:0.7;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="font-size:22px;">🚀</div>
+                <div><b>Brand Awareness & Reach</b><div style={{fontSize:'10px',color:'var(--text-muted)'}}>Mencapai 500K+ tayangan video</div></div>
+              </div>
+            </div>
+
+            <div class="p-card" style="margin-bottom:14px;opacity:0.7;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="font-size:22px;">🎥</div>
+                <div><b>UGC Content Library</b><div style={{fontSize:'10px',color:'var(--text-muted)'}}>Pengumpulan materi video autentik</div></div>
+              </div>
+            </div>
+
+            <button class="btn-primary-p" onclick="navToStep(2)">Set Goal & Buat Brief →</button>
+          </div>
+        `,
+        rightTitle: "02. Set Campaign Goal (Marketing Objective)",
+        rightDesc: "Menentukan indikator kinerja utama (KPI) agar rekomendasi brief dan pencarian creator presisi.",
+        breakdowns: [
+          { num: "1", title: "Penetapan KPI Utama", tag: "Part of the user journey", desc: "Memilih apakah fokus utama pada penjualan, jangkauan, atau aset UGC." },
+          { num: "2", title: "Targeting Parameter", tag: "Visible in prototype", desc: "Menentukan segmen pasar dan wilayah geografis target." },
+          { num: "3", title: "Optimasi Matriks AI", tag: "Objective Mapping", desc: "Sistem menyesuaikan kriteria creator yang paling relevan." }
+        ],
+        logs: [
+          "[09:42:05] Campaign Goal set: Campus Launch & Sales Drive.",
+          "[09:42:06] KPI target configured: 450,000 estimated impressions."
+        ]
+      },
+      {
+        id: 3,
+        title: "Create AI Campaign Brief",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <span class="badge-maroon" style="margin-bottom:8px;">Generative AI Brief</span>
+            <h3 style="font-size:16px;font-weight:800;margin-bottom:4px;">Buat Brief Campaign</h3>
+            <p style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">Ketik tujuan marketing dalam bahasa sehari-hari.</p>
+
+            <div class="p-card">
+              <label style="font-size:11px;font-weight:700;display:block;margin-bottom:4px;">Prompt Bahasa Alami:</label>
+              <textarea style="width:100%;height:64px;padding:10px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:12px;margin-bottom:10px;" readonly>Cari 50 mahasiswa Jabodetabek penggemar kopi & lifestyle untuk promosi peluncuran varian Aren Kenangan.</textarea>
+              
+              <div style="background:var(--neutral-bg);padding:10px;border-radius:10px;font-size:11px;margin-bottom:12px;">
+                <b>🤖 Output Brief AI:</b> Target 50 Creators • Budget Rp 42.500.000 • Deliverables 1 Video + 1 Story.
+              </div>
+
+              <button class="btn-gold-p" onclick="navToStep(3)">Generate & Cari Creator →</button>
+            </div>
+          </div>
+        `,
+        rightTitle: "03. Create AI Campaign Brief (Generative Input)",
+        rightDesc: "Mengubah instruksi sederhana menjadi struktur brief kerja dan alokasi anggaran yang optimal.",
+        breakdowns: [
+          { num: "1", title: "Briefing Bahasa Alami", tag: "Part of the user journey", desc: "Brand tidak perlu menyusun dokumen manual yang memakan waktu." },
+          { num: "2", title: "Perhitungan Budget AI", tag: "Visible in prototype", desc: "Estimasi biaya kompensasi ideal untuk jangkauan maksimal." },
+          { num: "3", title: "Definisi Deliverables", tag: "Smart Briefing", desc: "Otomatisasi kebutuhan format konten video dan story." }
+        ],
+        logs: [
+          "[09:42:09] AI Prompt parsed: Target 'Coffee, Campus, Lifestyle'.",
+          "[09:42:10] AI Brief generated: Target 50 creators, Budget Rp 42.5M."
+        ]
+      },
+      {
+        id: 4,
+        title: "Search Creator Identity",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <h3 style="font-size:15px;font-weight:800;">Identity Search</h3>
+              <span class="badge-status">486 Identity Found</span>
+            </div>
+
+            <div style="margin-bottom:10px;">
+              <span class="pill-tag" style="background:var(--primary);color:white;">#Coffee</span>
+              <span class="pill-tag" style="background:var(--primary);color:white;">#Jabodetabek</span>
+              <span class="pill-tag">Authenticity > 90%</span>
+            </div>
+
+            <div class="p-card" style="margin-bottom:8px;padding:12px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div><b>Rani Maharani</b><div style="font-size:11px;color:var(--text-muted);">@ranimahr • Lifestyle & Coffee</div></div>
+                <span class="badge-status">95% Match</span>
+              </div>
+            </div>
+
+            <div class="p-card" style="margin-bottom:8px;padding:12px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div><b>Raka Pratama</b><div style="font-size:11px;color:var(--text-muted);">@rakapr • Lifestyle & Tech</div></div>
+                <span class="badge-status">92% Match</span>
+              </div>
+            </div>
+
+            <button class="btn-primary-p" style="margin-top:6px;" onclick="navToStep(4)">Shortlist & Filter Creator →</button>
+          </div>
+        `,
+        rightTitle: "04. Search Creator Identity (Signal Discovery)",
+        rightDesc: "Pencarian creator presisi berbasis gaya hidup dan relevansi nyata daripada sekadar jumlah pengikut.",
+        breakdowns: [
+          { num: "1", title: "Filter Sinyal Identitas", tag: "Part of the user journey", desc: "Mencari creator berdasarkan topik aktif dan demografi audiens." },
+          { num: "2", title: "Indeks Keaslian Engagement", tag: "Visible in prototype", desc: "Menyoroti creator dengan pengikut manusia asli dan reaksi organik." },
+          { num: "3", title: "Peringkat Berbasis Relevansi", tag: "Discovery Engine", desc: "Creator paling cocok ditampilkan di daftar paling atas." }
+        ],
+        logs: [
+          "[09:42:14] Discovery query executed: 486 creator identities retrieved.",
+          "[09:42:15] Average match score: 88.4%."
+        ]
+      },
+      {
+        id: 5,
+        title: "Match & Shortlist Creator",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <h3 style="font-size:15px;font-weight:800;">Shortlist Terpilih</h3>
+              <span class="badge-maroon">15 Creator Terpilih</span>
+            </div>
+
+            <div class="p-card" style="margin-bottom:8px;padding:10px;display:flex;align-items:center;gap:10px;">
+              <input type="checkbox" checked readonly>
+              <div style="flex:1;"><b>Rani Maharani</b><div style="font-size:10px;color:var(--text-muted);">@ranimahr • Rp 850.000</div></div>
+              <span class="badge-status">95%</span>
+            </div>
+
+            <div class="p-card" style="margin-bottom:8px;padding:10px;display:flex;align-items:center;gap:10px;">
+              <input type="checkbox" checked readonly>
+              <div style="flex:1;"><b>Raka Pratama</b><div style="font-size:10px;color:var(--text-muted);">@rakapr • Rp 850.000</div></div>
+              <span class="badge-status">92%</span>
+            </div>
+
+            <div class="p-card" style="margin-bottom:14px;padding:10px;display:flex;align-items:center;gap:10px;">
+              <input type="checkbox" checked readonly>
+              <div style="flex:1;"><b>Dimas Setiawan</b><div style="font-size:10px;color:var(--text-muted);">@dimasset • Rp 850.000</div></div>
+              <span class="badge-status">89%</span>
+            </div>
+
+            <button class="btn-primary-p" onclick="navToStep(5)">Konfirmasi Shortlist (15 Creator) →</button>
+          </div>
+        `,
+        rightTitle: "05. Match & Shortlist Creator (Batch Curation)",
+        rightDesc: "Brand menyeleksi batch creator kandidat dan mengonfirmasi estimasi total biaya kompensasi.",
+        breakdowns: [
+          { num: "1", title: "Batch Selection Checkbox", tag: "Part of the user journey", desc: "Pemasar dapat memilih kombinasi creator terbaik dalam satu daftar." },
+          { num: "2", title: "Kalkulasi Anggaran Real-time", tag: "Visible in prototype", desc: "Total biaya kompensasi langsung terakumulasi secara transparan." },
+          { num: "3", title: "Rekomendasi Kombinasi AI", tag: "Portfolio Optimization", desc: "Menyarankan variasi creator nano untuk cakupan jangkauan terbaik." }
+        ],
+        logs: [
+          "[09:42:18] 15 top creators shortlisted.",
+          "[09:42:19] Total budget allocation: Rp 12.750.000 calculated."
+        ]
+      },
+      {
+        id: 6,
+        title: "Invite Collaboration",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <span class="badge-status" style="margin-bottom:8px;">Ready to Send</span>
+            <h3 style="font-size:16px;font-weight:800;margin-bottom:4px;">Kirim Undangan Massal</h3>
+            <p style="font-size:11px;color:var(--text-muted);margin-bottom:12px;">Undangan dan dana escrow akan dikunci untuk 15 creator terpilih.</p>
+
+            <div class="p-card">
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">Status Dana Escrow:</div>
+              <div style="background:var(--primary-soft);padding:10px;border-radius:10px;font-size:12px;color:var(--primary);font-weight:800;margin-bottom:12px;">
+                🔒 Dana Escrow Terkunci: Rp 12.750.000 (Garansi Keamanan)
+              </div>
+              <button class="btn-gold-p" onclick="navToStep(6)">Kirim Batch Invitation Sekarang 🚀</button>
+            </div>
+          </div>
+        `,
+        rightTitle: "06. Invite Collaboration (Escrow Dispatch)",
+        rightDesc: "Mengirim notifikasi penawaran ke aplikasi creator secara serentak sambil mengamankan dana escrow.",
+        breakdowns: [
+          { num: "1", title: "Undangan Massal Otomatis", tag: "Part of the user journey", desc: "Mengirim notifikasi ke aplikasi creator tanpa pesan manual satu per satu." },
+          { num: "2", title: "Penguncian Dana Escrow", tag: "Visible in prototype", desc: "Memberikan kepastian pembayaran bagi creator sekaligus keamanan bagi brand." },
+          { num: "3", title: "Tracking Respon Real-time", tag: "Dispatch Monitor", desc: "Memantau creator yang menerima atau menolak undangan." }
+        ],
+        logs: [
+          "[09:42:22] Batch invitation dispatched to 15 creators via push & email.",
+          "[09:42:23] Escrow funds locked: Rp 12.750.000."
+        ]
+      },
+      {
+        id: 7,
+        title: "Review Content",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <span class="badge-status" style="margin-bottom:8px;">Content Review Queue</span>
+            <h3 style="font-size:16px;font-weight:800;margin-bottom:4px;">Review Konten Creator</h3>
+            <p style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">Review draft video sebelum dipublikasikan secara publik.</p>
+
+            <div class="p-card">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                <div style="width:36px;height:36px;border-radius:10px;background:var(--primary);color:white;display:grid;place-items:center;font-weight:800;">RM</div>
+                <div><b>Rani Maharani (@ranimahr)</b><div style="font-size:10px;color:var(--text-muted);">Draft TikTok Video • 45 Detik</div></div>
+              </div>
+
+              <div style="background:#000;color:white;height:110px;border-radius:12px;display:grid;place-items:center;font-size:12px;margin-bottom:10px;">
+                ▶ Preview Video Draft (Aren Kenangan)
+              </div>
+
+              <div style="display:flex;gap:8px;">
+                <button class="btn-primary-p" style="flex:1;" onclick="navToStep(7)">Approve Konten ✓</button>
+                <button class="btn-secondary-p" style="flex:1;" onclick="alert('Catatan revisi dikirim')">Minta Revisi</button>
+              </div>
+            </div>
+          </div>
+        `,
+        rightTitle: "07. Review Content (Quality Approval Workspace)",
+        rightDesc: "Area persetujuan bagi brand untuk meninjau hasil video creator sebelum ditayangkan ke publik.",
+        breakdowns: [
+          { num: "1", title: "Video Player In-App", tag: "Part of the user journey", desc: "Memutar video draft tanpa perlu mengunduh file fisik." },
+          { num: "2", title: "Persetujuan 1-Click", tag: "Visible in prototype", desc: "Menyetujui konten dan memberi sinyal creator untuk publish." },
+          { num: "3", title: "Catatan Revisi Terstruktur", tag: "Quality Control", desc: "Memberikan umpan balik instan jika ada penyesuaian detail brief." }
+        ],
+        logs: [
+          "[09:42:27] Draft video reviewed by PT Bumi Kopi Indonesia.",
+          "[09:42:28] Content status: APPROVED. Creator notified to publish live."
+        ]
+      },
+      {
+        id: 8,
+        title: "Track Performance",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <div>
+                <h3 style="font-size:16px;font-weight:800;">Live Performance</h3>
+                <p style="font-size:11px;color:var(--text-muted);">Aren Kenangan Launch</p>
+              </div>
+              <span class="badge-status">Active Tracking</span>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px;">
+              <div class="p-card" style="margin-bottom:0;padding:12px;">
+                <b style="font-size:18px;color:var(--primary);">342.5K</b>
+                <span style="display:block;font-size:10px;color:var(--text-muted);margin-top:2px;">Total Impressions</span>
+              </div>
+              <div class="p-card" style="margin-bottom:0;padding:12px;">
+                <b style="font-size:18px;color:#2C8A61;">9.2%</b>
+                <span style="display:block;font-size:10px;color:var(--text-muted);margin-top:2px;">Engagement Rate</span>
+              </div>
+            </div>
+
+            <div class="p-card">
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Status Posting Creator:</div>
+              <div style="font-size:12px;font-weight:800;color:var(--primary);">15 dari 15 Creator Sudah Tayang ✓</div>
+            </div>
+
+            <button class="btn-primary-p" onclick="navToStep(8)">Lihat Report Akhir & ROI →</button>
+          </div>
+        `,
+        rightTitle: "08. Track Performance (Real-time Analytics)",
+        rightDesc: "Memantau secara langsung jangkauan tayangan dan interaksi audiens dari seluruh video creator yang tayang.",
+        breakdowns: [
+          { num: "1", title: "Pelacakan Impresi Real-time", tag: "Part of the user journey", desc: "Data tayangan video diambil langsung dari API media sosial." },
+          { num: "2", title: "Monitoring Status Tayang", tag: "Visible in prototype", desc: "Memastikan seluruh creator yang di-invite telah menyelesaikan tugas." },
+          { num: "3", title: "Tingkat Interaksi Organik", tag: "Analytics Feed", desc: "Mengukur rasio like, comment, dan share secara obyektif." }
+        ],
+        logs: [
+          "[09:42:31] Live tracking active: 342,500 impressions recorded.",
+          "[09:42:32] All 15 creator posts verified live."
+        ]
+      },
+      {
+        id: 9,
+        title: "Generate Report",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <div>
+                <h3 style="font-size:16px;font-weight:800;">Campaign Report</h3>
+                <p style="font-size:11px;color:var(--text-muted);">Aren Kenangan Launch</p>
+              </div>
+              <span class="badge-status">Completed</span>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px;">
+              <div class="p-card" style="margin-bottom:0;padding:12px;">
+                <b style="font-size:18px;color:var(--accent);">1,420</b>
+                <span style="display:block;font-size:10px;color:var(--text-muted);margin-top:2px;">Conversions</span>
+              </div>
+              <div class="p-card" style="margin-bottom:0;padding:12px;">
+                <b style="font-size:18px;color:var(--primary);">4.8x</b>
+                <span style="display:block;font-size:10px;color:var(--text-muted);margin-top:2px;">Campaign ROI</span>
+              </div>
+            </div>
+
+            <div class="p-card" style="margin-bottom:12px;">
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:2px;">Top Performer:</div>
+              <b>🥇 Rani Maharani (@ranimahr)</b>
+              <div style="font-size:10px;color:var(--text-muted);">48.2K Views • 12.4% ER • 320 Sales</div>
+            </div>
+
+            <button class="btn-gold-p" onclick="navToStep(9)">Luncurkan Repeat Campaign →</button>
+          </div>
+        `,
+        rightTitle: "09. Generate Report (Commercial Attribution)",
+        rightDesc: "Menyusun laporan akhir mengenai dampak penjualan, ROI campaign, dan ranking creator terbaik.",
+        breakdowns: [
+          { num: "1", title: "Kalkulasi ROI Komersial", tag: "Part of the user journey", desc: "Mengukur rasio pendapatan penjualan dibanding total biaya campaign." },
+          { num: "2", title: "Identifikasi Top Performer", tag: "Visible in prototype", desc: "Menyoroti creator dengan tingkat konversi dan interaksi tertinggi." },
+          { num: "3", title: "Ekspor PDF Eksekutif", tag: "Executive Summary", desc: "Laporan siap pakai untuk presentasi jajaran manajemen." }
+        ],
+        logs: [
+          "[09:42:35] Campaign report compiled. Total ROI: 4.8x calculated.",
+          "[09:42:36] Top performer identified: Rani Maharani (@ranimahr)."
+        ]
+      },
+      {
+        id: 10,
+        title: "Repeat Campaign",
+        phoneUI: `
+          <div style="padding:4px 0;">
+            <div class="p-hero-card" style="margin-bottom:12px;background:linear-gradient(135deg,var(--primary-dark),var(--primary));">
+              <span class="tag-gold">Scale Up Campaign</span>
+              <h3>Luncurkan Phase 2</h3>
+              <p>Re-hire 5 creator terbaik dari kampanye sebelumnya dengan 1-click duplicate.</p>
+              <button class="btn-gold-p" onclick="alert('Campaign Phase 2 berhasil diluncurkan!')">Luncurkan Campaign Phase 2 🚀</button>
+            </div>
+
+            <div class="p-card">
+              <h4 style="font-size:13px;margin-bottom:6px;">Re-engagement Retensi</h4>
+              <p style="font-size:11px;color:var(--text-muted);line-height:1.4;">
+                Mempertahankan hubungan kolaborasi jangka panjang dengan creator terbukti berkinerja tinggi.
+              </p>
+            </div>
+          </div>
+        `,
+        rightTitle: "10. Repeat Campaign (Scale & Retention)",
+        rightDesc: "Menutup siklus dengan merekrut kembali creator terbaik untuk kampanye lanjutan secara lebih efisien.",
+        breakdowns: [
+          { num: "1", title: "Re-hire 1-Click Creator Best", tag: "Part of the user journey", desc: "Memperpanjang kontrak kerja dengan creator yang sudah terbukti mendatangkan hasil." },
+          { num: "2", title: "Duplicate Settings Campaign", tag: "Visible in prototype", desc: "Mengulang struktur campaign sukses tanpa perlu menyusun brief dari awal." },
+          { num: "3", title: "Pertumbuhan Kemitraan Jangka Panjang", tag: "Brand Ambassador Loop", desc: "Mengubah nano creator menjadi Duta Brand resmi berkelanjutan." }
+        ],
+        logs: [
+          "[09:42:40] Repeat campaign template initialized.",
+          "[09:42:41] Auto-reinvite sent to Top 5 performers."
+        ]
+      }
+    ];
+
+    // APPLICATION STATE
+    let currentFlow = 'people'; // 'people' or 'brand'
+    let currentStepIndex = 0;
+    let aiProgressInterval = null;
+
+    // RENDER MENU ITEMS (PANEL 1)
+    function renderMenu() {
+      const menuContainer = document.getElementById('menuList');
+      const data = currentFlow === 'people' ? peopleFlowData : brandFlowData;
+
+      menuContainer.innerHTML = data.map((item, idx) => `
+        <button class="menu-item ${idx === currentStepIndex ? 'active' : ''}" onclick="selectStep(${idx})">
+          <span class="step-num">${item.id}</span>
+          <span style="flex:1;">${item.title}</span>
+          <span class="arrow">›</span>
+        </button>
+      `).join('');
+    }
+
+    // RENDER PHONE CONTENT (PANEL 2)
+    function renderPhone() {
+      const phoneViewport = document.getElementById('phoneViewport');
+      const data = currentFlow === 'people' ? peopleFlowData : brandFlowData;
+      const stepData = data[currentStepIndex];
+
+      phoneViewport.innerHTML = `
+        <div class="phone-screen active">
+          ${stepData.phoneUI}
+        </div>
+      `;
+
+      // Handle Step 3 loading progress if in Customer flow
+      if (currentFlow === 'people' && currentStepIndex === 2) {
+        startAiProgressAnimation();
+      }
+    }
+
+    // RENDER RIGHT PANEL (PANEL 3)
+    function renderRightPanel() {
+      const data = currentFlow === 'people' ? peopleFlowData : brandFlowData;
+      const stepData = data[currentStepIndex];
+
+      document.getElementById('rightStepTitle').textContent = stepData.rightTitle;
+      document.getElementById('rightStepDesc').textContent = stepData.rightDesc;
+
+      const breakdownContainer = document.getElementById('rightBreakdown');
+      breakdownContainer.innerHTML = stepData.breakdowns.map(item => `
+        <div class="breakdown-card">
+          <div class="num-badge">${item.num}</div>
+          <div class="content">
+            <h4>${item.title}</h4>
+            <span class="journey-tag">${item.tag}</span>
+            <p>${item.desc}</p>
+          </div>
+        </div>
+      `).join('');
+
+      const logContainer = document.getElementById('systemLogEntries');
+      logContainer.innerHTML = stepData.logs.map(log => `
+        <div class="log-line">
+          <span class="ts">${log.substring(0, 10)}</span> 
+          <span class="highlight">${log.substring(10)}</span>
+        </div>
+      `).join('');
+    }
+
+    // ANIMATION FOR AI LOADING STEP (STEP 3 CUSTOMER)
+    function startAiProgressAnimation() {
+      const bar = document.getElementById('aiProgressBar');
+      if (!bar) return;
+
+      clearInterval(aiProgressInterval);
+      let progress = 0;
+      bar.style.width = '0%';
+
+      aiProgressInterval = setInterval(() => {
+        progress += 10;
+        if (progress > 100) progress = 100;
+        bar.style.width = progress + '%';
+
+        if (progress >= 40) {
+          const s3 = document.getElementById('stepCheck3');
+          if (s3) { s3.style.color = '#2C8A61'; s3.innerHTML = '✓ 03 · Memetakan kepribadian & gaya bahasa'; }
+        }
+        if (progress >= 80) {
+          const s4 = document.getElementById('stepCheck4');
+          if (s4) { s4.style.color = '#2C8A61'; s4.innerHTML = '✓ 04 · Menyusun komersial positioning vector'; }
+        }
+
+        if (progress >= 100) {
+          clearInterval(aiProgressInterval);
+        }
+      }, 150);
+    }
+
+    function startAiBuildProcess() {
+      selectStep(2);
+    }
+
+    // SELECT STEP ACTION
+    function selectStep(index) {
+      currentStepIndex = index;
+      renderMenu();
+      renderPhone();
+      renderRightPanel();
+      updatePhoneBottomNav();
+    }
+
+    // SWITCH FLOW (PEOPLE vs BRAND)
+    function switchFlow(flow) {
+      currentFlow = flow;
+      currentStepIndex = 0;
+
+      document.getElementById('btnPeopleFlow').classList.toggle('active', flow === 'people');
+      document.getElementById('btnBrandFlow').classList.toggle('active', flow === 'brand');
+
+      selectStep(0);
+    }
+
+    // NAVIGATE VIA BUTTON CLICK INSIDE PHONE OR BOT NAV
+    function navToStep(index) {
+      const data = currentFlow === 'people' ? peopleFlowData : brandFlowData;
+      if (index < data.length) {
+        selectStep(index);
+      }
+    }
+
+    // SYNC BOTTOM NAV HIGHLIGHT
+    function updatePhoneBottomNav() {
+      const navBtns = document.querySelectorAll('.p-nav-btn');
+      navBtns.forEach((btn, i) => {
+        btn.classList.toggle('active', i === (currentStepIndex % 5));
+      });
+    }
+
+    // INITIALIZATION
+    selectStep(0);
+  </script>
 </body>
 </html>
