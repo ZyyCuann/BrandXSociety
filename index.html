@@ -1,16 +1,2949 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BrandxSociety — Interactive AI Resume & Creator Marketplace Demo</title>
-  <meta name="description" content="Platform Online Identity & AI Resume untuk Creator & Brand Marketplace. Interactive 3-Panel Prototype.">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrandxSociety - Live Interactive Demo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #7F1110;
+      --primary-dark: #580B0A;
+      --secondary: #FCDB00;
+      --secondary-hover: #e5c700;
+      --accent: #280605;
+      --neutral: #FFFFFF;
+      --bg: #fffaf4;
+      --card-bg: #FFFFFF;
+      --soft: #fff3d0;
+      --soft-red: #fff0ef;
+      --line: rgba(127, 17, 16, .16);
+      --line-subtle: #f0dfd9;
+      --muted: #7b6765;
+      --ink: #280605;
+      --shadow: 0 18px 50px rgba(40, 6, 5, .12);
+      --card-shadow: 0 8px 24px rgba(40, 6, 5, .06);
+      --success: #1b873f;
+      --success-bg: #eafaf1;
+    }
+
+    * {
+      box-sizing: border-box;
+      /* Completely eliminate browser scrollbars and scrolling buttons */
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+
+    *::-webkit-scrollbar,
+    *::-webkit-scrollbar-button,
+    *::-webkit-scrollbar-track,
+    *::-webkit-scrollbar-thumb {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 10% 15%, rgba(252, 219, 0, .10), transparent 25%),
+        radial-gradient(circle at 90% 85%, rgba(127, 17, 16, .08), transparent 30%),
+        linear-gradient(135deg, #fdfbf7 0%, #f7f1eb 100%);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      padding: 16px 0;
+      user-select: none;
+    }
+
+    button { font: inherit; }
+
+    .shell {
+      width: min(1200px, calc(100vw - 36px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 248px 342px 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .panel {
+      background: var(--neutral);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(40, 6, 5, .09);
+    }
+
+    .navigator, .process {
+      height: 720px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navigator { padding: 18px; }
+    .process { padding: 22px; }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--primary);
+      color: var(--secondary);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      box-shadow: 0 6px 14px rgba(127, 17, 16, .25);
+    }
+
+    .brand strong {
+      display: block;
+      color: var(--primary);
+      font-size: 19px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .brand span {
+      display: block;
+      color: var(--muted);
+      font-size: 9.5px;
+      font-weight: 700;
+      margin-top: 4px;
+      letter-spacing: 0.2px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.22;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .intro {
+      margin: 10px 0 14px;
+      color: var(--muted);
+      font-size: 10.5px;
+      line-height: 1.55;
+    }
+
+    .switcher {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      background: #f8ece7;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 5px;
+      margin-bottom: 12px;
+    }
+
+    .switcher button {
+      border: 0;
+      border-radius: 10px;
+      padding: 8px 6px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+
+    .switcher button.active {
+      background: var(--primary);
+      color: var(--neutral);
+      box-shadow: 0 4px 12px rgba(127, 17, 16, .24);
+    }
+
+    /* Steps list without scrolling buttons - native manual touch/drag */
+    .steps {
+      padding-right: 0;
+      overflow-y: auto;
+      scrollbar-width: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: grab;
+    }
+
+    .steps:active { cursor: grabbing; }
+
+    .step-btn {
+      width: 100%;
+      border: 1px solid transparent;
+      background: transparent;
+      display: grid;
+      grid-template-columns: 1fr 28px;
+      gap: 8px;
+      text-align: left;
+      align-items: center;
+      padding: 9px 10px;
+      border-radius: 12px;
+      color: var(--accent);
+      cursor: pointer;
+      transition: background .18s ease, border .18s ease;
+    }
+
+    .step-btn:hover { background: #fff8e8; }
+
+    .step-btn.active {
+      background: #fffdf8;
+      border-color: rgba(127, 17, 16, .28);
+      box-shadow: 0 3px 10px rgba(40, 6, 5, .04);
+    }
+
+    .step-no {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: #f6e8e4;
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 800;
+      grid-column: 2;
+      grid-row: 1;
+      transition: all .2s ease;
+    }
+
+    .step-btn.active .step-no {
+      background: var(--secondary);
+      color: var(--accent);
+      box-shadow: 0 2px 8px rgba(252, 219, 0, .4);
+    }
+
+    .step-title {
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.25;
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .stage {
+      display: grid;
+      place-items: center;
+    }
+
+    /* Modern Phone Frame */
+    .phone {
+      width: 342px;
+      height: 720px;
+      border-radius: 38px;
+      background: linear-gradient(145deg, #2b0c0a 0%, #170403 100%);
+      padding: 9px;
+      box-shadow: 0 25px 65px rgba(35, 5, 4, .32), 0 0 0 1px rgba(252, 219, 0, .2) inset;
+      position: relative;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 13px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 78px;
+      height: 5px;
+      background: #0f0202;
+      border-radius: 999px;
+      z-index: 20;
+    }
+
+    .screen {
+      height: 100%;
+      overflow: hidden;
+      border-radius: 30px;
+      background: var(--neutral);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      touch-action: pan-y;
+      cursor: default;
+    }
+
+    .status {
+      height: 40px;
+      padding: 10px 18px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--accent);
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+    }
+
+    .icons {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .signal {
+      width: 15px;
+      height: 9px;
+      border-left: 2.5px solid var(--accent);
+      border-bottom: 2.5px solid var(--accent);
+      transform: skew(-18deg);
+    }
+
+    .battery {
+      width: 20px;
+      height: 10px;
+      border: 1.8px solid var(--accent);
+      border-radius: 3.5px;
+      position: relative;
+    }
+    .battery::after {
+      content: "";
+      position: absolute;
+      right: -4px;
+      top: 2px;
+      width: 2.5px;
+      height: 3.5px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+
+    /* Phone content without scrolling buttons - native manual touch/drag */
+    .phone-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 16px 18px;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .18s ease, transform .18s ease;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .phone-content:active { cursor: grabbing; }
+
+    .phone-content.swap {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    /* Gesture Indicator bar at bottom of mobile screen */
+    .gesture-bar {
+      position: absolute;
+      bottom: 59px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 38px;
+      height: 3px;
+      background: rgba(127, 17, 16, .2);
+      border-radius: 999px;
+      z-index: 18;
+      pointer-events: none;
+      transition: width .2s ease, background .2s ease;
+    }
+
+    .gesture-active .gesture-bar {
+      width: 52px;
+      background: var(--secondary);
+    }
+
+    /* Bottom Navigation with Rich Interactive Icons */
+    .bottom-nav {
+      height: 60px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-top: 1px solid var(--line-subtle);
+      background: rgba(255, 255, 255, .98);
+      backdrop-filter: blur(14px);
+      z-index: 15;
+      padding-bottom: 2px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      color: #927b78;
+      font-size: 9px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.18s ease;
+      user-select: none;
+      position: relative;
+    }
+
+    .nav-item:active {
+      transform: scale(0.85);
+    }
+
+    .nav-item:hover { color: var(--primary); }
+
+    .nav-item.active {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .nav-icon {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      transition: transform .22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-item.active .nav-icon {
+      transform: translateY(-2px) scale(1.12);
+    }
+
+    .nav-svg {
+      width: 22px;
+      height: 22px;
+      transition: transform .2s ease;
+    }
+
+    /* Active Indicator Pill under tab */
+    .nav-indicator {
+      position: absolute;
+      bottom: 2px;
+      width: 14px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--secondary);
+      box-shadow: 0 1px 4px rgba(252, 219, 0, 0.6);
+      opacity: 0;
+      transform: scaleX(0.2);
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-item.active .nav-indicator {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    /* App Header */
+    .app-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+
+    .app-head-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .app-head strong {
+      display: block;
+      font-size: 14.5px;
+      line-height: 1.15;
+      color: var(--accent);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 800;
+    }
+
+    .app-head span {
+      display: block;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 700;
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .app-head-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .round-action {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: #fff6d8;
+      border: 1px solid #eed9ca;
+      color: var(--primary);
+      cursor: pointer;
+      transition: all .18s ease;
+      position: relative;
+    }
+
+    .round-action:hover {
+      background: #ffeeb0;
+      transform: translateY(-1px);
+    }
+
+    .round-action:active { transform: scale(0.92); }
+
+    .round-action.has-badge::after {
+      content: "";
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 7px;
+      height: 7px;
+      background: #e02424;
+      border-radius: 50%;
+      border: 1.5px solid #fff6d8;
+    }
+
+    /* SVG Icon styles */
+    .ico {
+      width: 17px;
+      height: 17px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    /* Cards & Components */
+    .hero-card {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: var(--neutral);
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 10px 24px rgba(127, 17, 16, .22);
+    }
+
+    .hello {
+      font-size: 12.5px;
+      opacity: .9;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-card h2, .plain h2 {
+      margin: 6px 0 8px;
+      font-size: 17px;
+      line-height: 1.2;
+      letter-spacing: -0.2px;
+      font-weight: 800;
+    }
+
+    .hero-card p, .plain p {
+      margin: 0;
+      font-size: 9.7px;
+      line-height: 1.55;
+      color: inherit;
+      opacity: .9;
+    }
+
+    .cta {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      background: var(--secondary);
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 12px;
+      padding: 11px 14px;
+      margin-top: 10px;
+      box-shadow: 0 6px 16px rgba(252, 219, 0, .32);
+      cursor: pointer;
+      transition: all .18s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+    }
+
+    .cta:hover {
+      background: var(--secondary-hover);
+      transform: translateY(-1px);
+    }
+
+    .cta:active { transform: scale(0.97); }
+
+    .white-cta {
+      background: var(--primary);
+      color: var(--neutral);
+      box-shadow: 0 6px 16px rgba(127, 17, 16, .25);
+    }
+
+    .white-cta:hover {
+      background: #921413;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .mini-card, .card {
+      background: var(--neutral);
+      border: 1px solid var(--line-subtle);
+      border-radius: 14px;
+      padding: 11px;
+      box-shadow: var(--card-shadow);
+      transition: border-color .18s ease, transform .18s ease;
+    }
+
+    .mini-card strong {
+      display: block;
+      color: var(--accent);
+      font-size: 16px;
+      line-height: 1;
+      margin-bottom: 5px;
+      font-weight: 800;
+    }
+
+    .mini-card span, .muted {
+      color: var(--muted);
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 12px 0 8px;
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border-radius: 999px;
+      background: var(--secondary);
+      color: var(--accent);
+      padding: 3.5px 8px;
+      font-size: 8.5px;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+    }
+
+    .badge-success {
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid rgba(27, 135, 63, .2);
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .chip {
+      border-radius: 999px;
+      border: 1px solid #ebd8d2;
+      padding: 5px 9px;
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--accent);
+      background: #fffdf9;
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+
+    .chip:hover {
+      background: #fff5e0;
+      border-color: #dfbe6b;
+    }
+
+    .chip.selected {
+      background: var(--secondary);
+      border-color: #d1b400;
+      color: var(--accent);
+    }
+
+    /* Opportunity Card */
+    .opportunity {
+      display: grid;
+      grid-template-columns: 40px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .opportunity:hover {
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .brand-icon-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: #fff7e4;
+      border: 1px solid #ebd7cd;
+      color: var(--primary);
+      box-shadow: 0 3px 8px rgba(40, 6, 5, .04);
+    }
+
+    .brand-icon-badge svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .opportunity h3, .card h3 {
+      margin: 0 0 4px;
+      font-size: 12px;
+      line-height: 1.25;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .opportunity p, .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+
+    .amount {
+      color: var(--primary);
+      font-size: 11.5px;
+      font-weight: 900;
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .progress {
+      height: 8px;
+      background: #f2e2dc;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 10px 0 4px;
+    }
+
+    .bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary) 0%, #e6a800 100%);
+      border-radius: 999px;
+      transition: width .4s ease;
+    }
+
+    /* Avatar & Profile visual */
+    .avatar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 58px;
+      height: 58px;
+      flex-shrink: 0;
+    }
+
+    .avatar-img {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #7F1110 0%, #3e0908 100%);
+      color: #fff;
+      font-weight: 900;
+      font-size: 20px;
+      border: 2px solid #fff;
+      box-shadow: 0 6px 16px rgba(127, 17, 16, .25);
+      overflow: hidden;
+    }
+
+    .avatar-img svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .verified-badge {
+      position: absolute;
+      bottom: -3px;
+      right: -3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--secondary);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,.15);
+    }
+
+    .verified-badge svg {
+      width: 10px;
+      height: 10px;
+      stroke-width: 3;
+    }
+
+    .input {
+      background: #fffdf9;
+      border: 1px solid #ebd7cd;
+      border-radius: 13px;
+      padding: 11px 13px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 11.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+
+    .input:hover {
+      border-color: var(--primary);
+      background: #fffbf5;
+    }
+
+    .social {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid var(--line-subtle);
+      border-radius: 14px;
+      margin-bottom: 8px;
+      background: var(--neutral);
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+
+    .social:hover {
+      border-color: var(--primary);
+      background: #fffefb;
+    }
+
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      background: var(--soft-red);
+      color: var(--primary);
+      box-shadow: 0 3px 8px rgba(127, 17, 16, .08);
+    }
+
+    .social-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--success);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    /* Video Submission Player Mockup */
+    .video-mockup {
+      border-radius: 16px;
+      background: linear-gradient(180deg, #381211 0%, #1a0504 100%);
+      color: #fff;
+      overflow: hidden;
+      margin-bottom: 10px;
+      box-shadow: 0 10px 24px rgba(40, 6, 5, .2);
+      border: 1px solid rgba(252, 219, 0, .2);
+    }
+
+    .video-thumb {
+      height: 120px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px;
+      background: radial-gradient(circle at 70% 30%, rgba(252, 219, 0, .25), transparent 60%),
+                  linear-gradient(135deg, #501311 0%, #200605 100%);
+    }
+
+    .video-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .22);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, .5);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .video-play-btn:hover {
+      transform: translate(-50%, -50%) scale(1.08);
+      background: rgba(255, 255, 255, .32);
+    }
+
+    .video-pill {
+      background: rgba(0, 0, 0, .6);
+      backdrop-filter: blur(4px);
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 9px;
+      font-weight: 800;
+      color: #fff;
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .video-caption {
+      padding: 10px 12px;
+      font-size: 10px;
+      line-height: 1.4;
+      background: rgba(20, 4, 3, .8);
+    }
+
+    .video-caption strong {
+      display: block;
+      color: #ffd642;
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+
+    /* Score Ring */
+    .score-ring {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 10px auto;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(var(--secondary) 0 92%, #f0dfd9 92% 100%);
+      position: relative;
+      box-shadow: 0 8px 20px rgba(252, 219, 0, .2);
+    }
+
+    .score-ring::after {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border-radius: 50%;
+      background: var(--neutral);
+    }
+
+    .score-ring-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .score-ring-content strong {
+      display: block;
+      font-size: 30px;
+      color: var(--primary);
+      line-height: 1;
+      font-weight: 800;
+    }
+
+    .score-ring-content span {
+      display: block;
+      font-size: 8px;
+      font-weight: 800;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    /* Quick Grid */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+      margin: 10px 0;
+    }
+
+    .quick {
+      min-height: 56px;
+      border: 1px solid #ebd7cd;
+      background: #fffdf9;
+      border-radius: 13px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(40, 6, 5, .04);
+      cursor: pointer;
+      transition: all .15s ease;
+      padding: 6px 2px;
+      user-select: none;
+    }
+
+    .quick:hover {
+      background: #fff8e8;
+      border-color: #d8b871;
+      transform: translateY(-1px);
+    }
+
+    .quick:active { transform: scale(0.93); }
+
+    .quick-icon-box {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--soft-red);
+      color: var(--primary);
+    }
+
+    .quick-icon-box svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .quick span {
+      color: var(--accent);
+      font-size: 8px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    /* Dense list */
+    .dense-list {
+      display: grid;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .dense-row {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--line-subtle);
+      background: #fffdf9;
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+
+    .dense-row:hover {
+      border-color: var(--primary);
+      background: #fffaf5;
+      transform: translateX(2px);
+    }
+
+    .dense-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--primary);
+      color: var(--secondary);
+      font-weight: 800;
+    }
+
+    .dense-icon svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .dense-row strong {
+      display: block;
+      font-size: 10.5px;
+      line-height: 1.2;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .dense-row span {
+      display: block;
+      color: var(--muted);
+      font-size: 8.5px;
+      line-height: 1.35;
+      margin-top: 1px;
+    }
+
+    .dense-value {
+      color: var(--primary);
+      font-size: 9.5px;
+      font-weight: 800;
+      white-space: nowrap;
+      background: #fbf0ec;
+      padding: 3px 7px;
+      border-radius: 6px;
+    }
+
+    .rail {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin: 8px 0 10px;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .rail::-webkit-scrollbar { display: none; }
+
+    .story {
+      min-width: 70px;
+      border: 1px solid var(--line-subtle);
+      background: #fffdf9;
+      border-radius: 14px;
+      padding: 8px 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .15s ease;
+      flex-shrink: 0;
+    }
+
+    .story:hover {
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .story-icon {
+      width: 32px;
+      height: 32px;
+      margin: 0 auto 5px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--secondary);
+      color: var(--accent);
+    }
+
+    .story-icon svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .story span {
+      display: block;
+      color: var(--accent);
+      font-size: 8.5px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .tab-strip {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      margin-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .tab-strip::-webkit-scrollbar { display: none; }
+
+    .mini-tab {
+      border: 1px solid var(--line-subtle);
+      background: #fffdfa;
+      border-radius: 999px;
+      padding: 5px 11px;
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all .15s ease;
+    }
+
+    .mini-tab:hover {
+      background: #fff5e0;
+      color: var(--accent);
+    }
+
+    .mini-tab.active {
+      background: var(--primary);
+      color: var(--neutral);
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(127, 17, 16, .2);
+    }
+
+    .compact-card {
+      border: 1px solid var(--line-subtle);
+      background: #fffdfa;
+      border-radius: 14px;
+      padding: 9px 11px;
+      margin-top: 8px;
+    }
+
+    .compact-card h4 {
+      margin: 0 0 6px;
+      color: var(--accent);
+      font-size: 10.5px;
+      font-weight: 800;
+    }
+
+    .metric-line {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3.5px 0;
+      border-top: 1px solid rgba(127, 17, 16, .08);
+    }
+
+    .metric-line:first-of-type { border-top: 0; }
+    .metric-line b { color: var(--accent); font-weight: 800; }
+
+    /* Process sidebar */
+    .process h2 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      line-height: 1.2;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .process .summary {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+      margin: 0 0 14px;
+    }
+
+    .journey {
+      counter-reset: item;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      overflow-y: auto;
+      max-height: 280px;
+      scrollbar-width: none;
+    }
+
+    .journey li {
+      counter-increment: item;
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 10px;
+      align-items: start;
+      border: 1px solid #ebdcd7;
+      background: #fffdfb;
+      border-radius: 12px;
+      padding: 9px 10px;
+      color: var(--muted);
+      font-size: 10.5px;
+      line-height: 1.45;
+    }
+
+    .journey li::before {
+      content: counter(item);
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--secondary);
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 11px;
+    }
+
+    /* System log - Palette synchronized */
+    .log {
+      margin-top: auto;
+      background: linear-gradient(135deg, #2b0b0a 0%, #1d0504 100%);
+      color: #ffeec1;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 9.5px;
+      line-height: 1.65;
+      border: 1px solid rgba(252, 219, 0, .25);
+      box-shadow: 0 8px 20px rgba(40, 6, 5, .15);
+    }
+
+    .log-title {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      color: var(--secondary);
+      font-weight: 800;
+      font-size: 11.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .log-line { color: #ffd642; }
+    .log-line span { color: #fff6da; }
+
+    /* Interactive Mobile Toast */
+    .phone-toast {
+      position: absolute;
+      top: 48px;
+      left: 14px;
+      right: 14px;
+      background: #280605;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 10.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      transform: translateY(-80px);
+      opacity: 0;
+      transition: all .25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 50;
+      pointer-events: none;
+      border: 1px solid rgba(252, 219, 0, .3);
+    }
+
+    .phone-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .toast-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--secondary);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    /* Interactive Mobile Modal Drawer */
+    .phone-drawer {
+      position: absolute;
+      inset: 0;
+      background: rgba(40, 6, 5, .6);
+      backdrop-filter: blur(4px);
+      z-index: 40;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+
+    .phone-drawer.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer-body {
+      background: #fff;
+      border-radius: 24px 24px 0 0;
+      padding: 18px 16px 20px;
+      transform: translateY(100%);
+      transition: transform .25s cubic-bezier(0.16, 1, 0.3, 1);
+      max-height: 85%;
+      overflow-y: auto;
+    }
+
+    .phone-drawer.open .drawer-body {
+      transform: translateY(0);
+    }
+
+    .drawer-handle {
+      width: 36px;
+      height: 4px;
+      background: #dfccc6;
+      border-radius: 999px;
+      margin: 0 auto 14px;
+    }
+
+    .drawer-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--accent);
+      margin: 0 0 6px;
+    }
+
+    .drawer-desc {
+      font-size: 10px;
+      color: var(--muted);
+      margin: 0 0 14px;
+      line-height: 1.45;
+    }
+
+    .radio-card {
+      border: 1.5px solid var(--line-subtle);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+
+    .radio-card.active {
+      border-color: var(--primary);
+      background: #fff8f6;
+    }
+
+    .radio-card strong {
+      display: block;
+      font-size: 11px;
+      color: var(--accent);
+    }
+
+    .radio-card span {
+      display: block;
+      font-size: 9px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 1120px) {
+      .shell {
+        grid-template-columns: 1fr;
+        width: min(760px, calc(100vw - 24px));
+      }
+      .navigator, .process { height: auto; min-height: 0; }
+      .steps { max-height: 280px; }
+      .phone { margin: 16px auto; }
+    }
+  </style>
 </head>
 <body>
-  <div id="app"></div>
-  <script type="module" src="/src/main.js"></script>
+  <main class="shell">
+    <!-- Left Panel: Navigator -->
+    <aside class="panel navigator">
+      <div class="brand">
+        <div class="mark">Bx</div>
+        <div>
+          <strong>BrandxSociety</strong>
+          <span>Live interactive prototype</span>
+        </div>
+      </div>
+      <h1>UI/UX interaktif & siap diuji langsung.</h1>
+      <p class="intro">Klik tombol, tab, kartu, dan menu langsung pada mockup handphone di tengah. Navigasi sinkron otomatis ke seluruh panel penjelasan.</p>
+      <div class="switcher" role="tablist" aria-label="Demo flow">
+        <button class="active" data-flow="people" id="flowPeopleBtn">People demo</button>
+        <button data-flow="brand" id="flowBrandBtn">Brand demo</button>
+      </div>
+      <div class="steps" id="steps"></div>
+    </aside>
+
+    <!-- Center Panel: Mobile Phone Prototype -->
+    <section class="stage" aria-label="Phone mockup">
+      <div class="phone">
+        <div class="screen" id="phoneScreen">
+          <!-- Status Bar -->
+          <div class="status">
+            <span id="statusBarTime">09:41</span>
+            <div class="icons">
+              <span class="signal"></span>
+              <span style="font-size: 9px; font-weight: 800;">5G</span>
+              <span class="battery"></span>
+            </div>
+          </div>
+
+          <!-- Toast Notification -->
+          <div class="phone-toast" id="phoneToast">
+            <div class="toast-icon" id="toastIcon"></div>
+            <span id="toastMsg">Notifikasi</span>
+          </div>
+
+          <!-- Interactive Bottom Sheet Drawer -->
+          <div class="phone-drawer" id="phoneDrawer">
+            <div class="drawer-body" id="drawerBody"></div>
+          </div>
+
+          <!-- Phone Main Content (scrollable via direct touch/drag) -->
+          <div class="phone-content" id="phoneContent"></div>
+
+          <!-- Subtle iOS-style gesture indicator bar -->
+          <div class="gesture-bar"></div>
+
+          <!-- Bottom Navigation Bar with Distinct Signature Icons -->
+          <nav class="bottom-nav" id="bottomNav"></nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Panel: Explanation & System Log -->
+    <aside class="panel process">
+      <h2 id="processTitle"></h2>
+      <p class="summary" id="processSummary"></p>
+      <ol class="journey" id="journey"></ol>
+      <div class="log">
+        <div class="log-title" id="logTitle">
+          <svg class="ico" style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+          System Event Trace
+        </div>
+        <div id="systemLog"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    // SIGNATURE BOTTOM NAVIGATION ICONS (COMPLETELY DISTINCT BY UTILITY & STATE)
+    function resolveNavIcon(name, isActive) {
+      const n = String(name).toLowerCase();
+      if (n === "home") {
+        if (isActive) {
+          // Solid maroon home with golden accent door
+          return `<svg class="nav-svg" viewBox="0 0 24 24" fill="#7F1110"><path d="M12 2.2L2.2 10.2a1 1 0 0 0 1.2 1.6L5 10.6V20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9.4l1.6 1.2a1 1 0 0 0 1.2-1.6L12 2.2z"/><rect x="10" y="14" width="4" height="8" rx="1" fill="#FCDB00"/></svg>`;
+        }
+        return `<svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9.5 9-7 9 7v10.5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
+      }
+      if (n === "feed") {
+        if (isActive) {
+          // Radiant discovery radar with gold compass needle
+          return `<svg class="nav-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#7F1110"/><polygon points="16.5 7.5 13.8 13.8 7.5 16.5 10.2 10.2 16.5 7.5" fill="#FCDB00" stroke="#FCDB00" stroke-width="1.2"/><circle cx="12" cy="12" r="2" fill="#7F1110"/></svg>`;
+        }
+        return `<svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`;
+      }
+      if (n === "identity") {
+        if (isActive) {
+          // Digital credential badge with gold verification star
+          return `<svg class="nav-svg" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="3" fill="#7F1110"/><circle cx="9" cy="10" r="2.5" fill="#FCDB00"/><path d="M5.5 17a4 4 0 0 1 7 0" fill="#FCDB00"/><line x1="14" y1="9" x2="18" y2="9" stroke="#FCDB00" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="13" x2="18" y2="13" stroke="#FCDB00" stroke-width="2" stroke-linecap="round"/><circle cx="17.5" cy="17.5" r="2.5" fill="#FCDB00"/><path d="m16.5 17.5.8.8 1.4-1.4" stroke="#7F1110" stroke-width="1.2" stroke-linecap="round"/></svg>`;
+        }
+        return `<svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2.5"/><line x1="14" y1="9" x2="18" y2="9"/><line x1="14" y1="13" x2="18" y2="13"/><path d="M5.5 17a4 4 0 0 1 7 0"/></svg>`;
+      }
+      if (n === "rewards") {
+        if (isActive) {
+          // Leather wallet with protruding gold coin
+          return `<svg class="nav-svg" viewBox="0 0 24 24" fill="none"><path d="M3 6a2 2 0 0 1 2-2h14a1 1 0 0 1 1 1v2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2H5" fill="#7F1110"/><rect x="14" y="10" width="8" height="6" rx="2" fill="#FCDB00"/><circle cx="18" cy="13" r="1.2" fill="#7F1110"/><circle cx="9" cy="3" r="2" fill="#FCDB00"/></svg>`;
+        }
+        return `<svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/><circle cx="17.5" cy="12.5" r="1.5"/></svg>`;
+      }
+      if (n === "profile") {
+        if (isActive) {
+          // Professional user portrait with golden verification ring
+          return `<svg class="nav-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#FCDB00" stroke-width="1.8"/><circle cx="12" cy="8" r="3.5" fill="#7F1110"/><path d="M5.5 19.5a7 7 0 0 1 13 0" fill="#7F1110"/></svg>`;
+        }
+        return `<svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/></svg>`;
+      }
+      return "";
+    }
+
+    // COMPLETE PROFESSIONAL SVG ICONS FOR ALL FEATURES & UTILITIES
+    const ICONS = {
+      bell: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>`,
+      back: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>`,
+      check: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+      check_circle: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>`,
+      sparkles: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/><path d="M19 3v4"/><path d="M21 5h-4"/></svg>`,
+      instagram: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>`,
+      tiktok: `<svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743 2.91 2.91 0 0 1 2.316-4.636c.32 0 .632.052.923.148V9.38a6.374 6.374 0 0 0-.923-.066 6.333 6.333 0 0 0-6.333 6.333 6.333 6.333 0 0 0 6.333 6.333 6.34 6.34 0 0 0 6.333-6.333V9.01a8.17 8.17 0 0 0 4.767 1.52v-3.45a4.75 4.75 0 0 1-1-.394z"/></svg>`,
+      youtube: `<svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M21.582 6.186a2.506 2.506 0 0 0-1.768-1.782C18.254 4 12 4 12 4s-6.254 0-7.814.404a2.506 2.506 0 0 0-1.768 1.782A26.31 26.31 0 0 0 2 12c0 2.015.138 3.93.418 5.814a2.506 2.506 0 0 0 1.768 1.782C5.746 20 12 20 12 20s6.254 0 7.814-.404a2.506 2.506 0 0 0 1.768-1.782c.28-1.884.418-3.799.418-5.814 0-2.015-.138-3.93-.418-5.814zM9.8 15.45V8.55L15.8 12l-6 3.45z"/></svg>`,
+      x_twitter: `<svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+      whatsapp: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>`,
+      google: `<svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12.24 10.285V14.4h6.887C18.2 16.88 15.65 18.72 12.24 18.72a6.72 6.72 0 1 1 0-13.44c1.8 0 3.44.66 4.72 1.76l3.12-3.12C18.16 2.14 15.38 1.2 12.24 1.2 6.27 1.2 1.44 6.03 1.44 12s4.83 10.8 10.8 10.8c6.24 0 10.4-4.39 10.4-10.58 0-.71-.07-1.4-.2-1.935H12.24z"/></svg>`,
+      shield: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>`,
+      briefcase: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+      wallet: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>`,
+      dollar: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>`,
+      chart: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>`,
+      video: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect width="14" height="12" x="1" y="6" rx="2"/></svg>`,
+      document: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>`,
+      lock: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
+      pin: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`,
+      mail: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`,
+      link: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`,
+      download: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>`,
+      upload: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>`,
+      send: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>`,
+      chat: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+      coffee: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" x2="6" y1="1" y2="4"/><line x1="10" x2="10" y1="1" y2="4"/></svg>`,
+      sun: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`,
+      bag: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+      building: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M8 10h.01"/><path d="M16 10h.01"/></svg>`,
+      users: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+      user: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/></svg>`,
+      tag: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m20.59 13.41-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" x2="7.01" y1="7" y2="7"/></svg>`,
+      award: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>`,
+      search: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>`,
+      clock: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+      zap: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+      refresh: `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>`
+    };
+
+    // Helper: Map identifiers to professional SVG icons (GUARANTEED NO STARS AS FALLBACK)
+    function resolveIcon(key) {
+      if (!key) return ICONS.sparkles;
+      const k = String(key).toLowerCase().trim();
+      
+      // Socials
+      if (k === "ig" || k === "instagram") return ICONS.instagram;
+      if (k === "tt" || k === "tiktok") return ICONS.tiktok;
+      if (k === "yt" || k === "youtube") return ICONS.youtube;
+      if (k === "x" || k === "twitter") return ICONS.x_twitter;
+      if (k === "wa" || k === "whatsapp") return ICONS.whatsapp;
+      if (k === "g" || k === "google") return ICONS.google;
+      
+      // Profiles, Identity & Bio
+      if (k === "id" || k === "bio" || k === "user" || k === "role" || k === "pic") return ICONS.user;
+      if (k === "tag" || k === "tags" || k === "niche") return ICONS.tag;
+      if (k === "proof" || k === "verified" || k === "award" || k === "top") return ICONS.award;
+      if (k === "preview") return ICONS.search;
+      
+      // Finance, Rate & Payments
+      if (k === "rate" || k === "fee" || k === "pay" || k === "bal" || k === "bill" || k === "cost" || k === "dollar" || k === "saldo") return ICONS.dollar;
+      if (k === "fast" || k === "fast pay") return ICONS.zap;
+      if (k === "bank" || k === "co" || k === "br" || k === "building" || k === "company") return ICONS.building;
+      if (k === "inv" || k === "invoice" || k === "tax" || k === "pajak" || k === "receipt") return ICONS.document;
+      if (k === "ktp" || k === "doc" || k === "document" || k === "pdf" || k === "resume") return ICONS.document;
+      
+      // Work, Jobs & Production
+      if (k === "job" || k === "work" || k === "camp" || k === "ugc" || k === "campaign" || k === "port" || k === "portfolio" || k === "works") return ICONS.briefcase;
+      if (k === "brief" || k === "req" || k === "rules" || k === "obj" || k === "checklist" || k === "claim" || k === "cap") return ICONS.document;
+      if (k === "shot" || k === "draft" || k === "video" || k === "konten") return ICONS.video;
+      if (k === "upload") return ICONS.upload;
+      if (k === "download" || k === "export") return ICONS.download;
+      if (k === "refresh" || k === "revision" || k === "rev" || k === "batch" || k === "next" || k === "sync") return ICONS.refresh;
+      
+      // Communication & Links
+      if (k === "link" || k === "share" || k === "qr" || k === "share link") return ICONS.link;
+      if (k === "send" || k === "post") return ICONS.send;
+      if (k === "chat" || k === "msg" || k === "inbox") return ICONS.chat;
+      if (k === "email" || k === "mail" || k === "help") return ICONS.mail;
+      if (k === "city") return ICONS.pin;
+      if (k === "pin" || k === "lock") return ICONS.lock;
+      
+      // Metrics & Safety
+      if (k === "score" || k === "stats" || k === "er" || k === "chart" || k === "reach" || k === "roi" || k === "engage") return ICONS.chart;
+      if (k === "safe" || k === "risk" || k === "policy") return ICONS.shield;
+      if (k === "check" || k === "appr" || k === "approved" || k === "done") return ICONS.check_circle;
+      if (k === "clock" || k === "due" || k === "date" || k === "deadline" || k === "near") return ICONS.clock;
+      
+      // AI & Products
+      if (k === "pitch" || k === "ai" || k === "magic" || k === "sparkles" || k === "tone" || k === "endorse") return ICONS.sparkles;
+      if (k === "shop" || k === "aff" || k === "affiliate" || k === "bag" || k === "lt") return ICONS.bag;
+      if (k === "sun" || k === "gd") return ICONS.sun;
+      if (k === "coffee" || k === "ks") return ICONS.coffee;
+      if (k === "cr" || k === "team" || k === "aud" || k === "users" || k === "audience") return ICONS.users;
+      if (k === "search" || k === "find") return ICONS.search;
+      
+      return ICONS.sparkles;
+    }
+
+    // Professional SVG Avatar Generator
+    function getAvatarSVG(initial, color = "#7F1110") {
+      return `
+        <svg viewBox="0 0 40 40" fill="none" style="width:100%;height:100%">
+          <rect width="40" height="40" rx="12" fill="${color}"/>
+          <circle cx="20" cy="15" r="7" fill="#FCDB00" opacity="0.95"/>
+          <path d="M8 35c0-6.627 5.373-12 12-12s12 5.373 12 12" fill="#FCDB00" opacity="0.8"/>
+        </svg>
+      `;
+    }
+
+    // Modular components for feature grids, dense rows, tabs, and metrics
+    function featureGrid(items) {
+      return `
+        <div class="quick-grid">
+          ${items.map(item => `
+            <div class="quick" ${item[2] !== undefined ? `data-go="${item[2]}"` : `onclick="showToast('${item[1]} siap diakses')"`}>
+              <div class="quick-icon-box">${resolveIcon(item[0])}</div>
+              <span>${item[1]}</span>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function denseRows(items) {
+      return `
+        <div class="dense-list">
+          ${items.map(item => `
+            <div class="dense-row" ${item[4] !== undefined ? `data-go="${item[4]}"` : `onclick="showToast('${item[1]}: ${item[2]}')"`}>
+              <div class="dense-icon">${resolveIcon(item[0])}</div>
+              <div>
+                <strong>${item[1]}</strong>
+                <span>${item[2]}</span>
+              </div>
+              <div class="dense-value">${item[3] || "›"}</div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function tabs(items, active = 0) {
+      return `
+        <div class="tab-strip">
+          ${items.map((item, idx) => `
+            <button class="mini-tab ${idx === active ? "active" : ""}" ${item[1] !== undefined ? `data-go="${item[1]}"` : `onclick="selectTab(this, '${item[0]}')"`}>${item[0]}</button>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function selectTab(btn, name) {
+      btn.parentElement.querySelectorAll(".mini-tab").forEach(t => t.classList.remove("active"));
+      btn.classList.add("active");
+      showToast("Kategori: " + name);
+    }
+
+    function metrics(title, items) {
+      return `
+        <div class="compact-card">
+          <h4>${title}</h4>
+          ${items.map(item => `
+            <div class="metric-line">
+              <span>${item[0]}</span>
+              <b>${item[1]}</b>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // STEPS DATA FOR PEOPLE DEMO (10 STEPS)
+    const people = [
+      {
+        title: "Landing & pilih jalur",
+        nav: "Home",
+        summary: "Rani memilih jalur creator dan melihat janji utama BrandxSociety: identitas digital yang bisa dipakai untuk kerja brand.",
+        parts: ["Hero menjelaskan nilai AI Resume dari jejak digital.", "CTA tunggal mengarahkan Rani masuk ke flow creator.", "Ringkasan potensi income memberi konteks kenapa profil perlu dilengkapi."],
+        logs: ["[09:41] Session started - visitor_type unknown", "[09:41] Path selected - people", "[09:41] Demo state synced to phone viewport"],
+        html: `
+          <div class="hero-card">
+            <div class="hello">
+              <span style="color:#FCDB00">${ICONS.sparkles}</span> Hi, Rani
+            </div>
+            <h2>Ubah jejak digitalmu jadi profil kerja yang dipercaya brand.</h2>
+            <p>BrandxSociety membaca sinyal konten, audiens, dan konsistensi untuk membuat AI Resume creator.</p>
+            <button class="cta" data-go="1">
+              <span>Mulai bangun AI Resume</span>
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+            </button>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-card"><strong>18.4K</strong><span>Total audiens sosial</span></div>
+            <div class="mini-card"><strong>7.8%</strong><span>Engagement rata-rata</span></div>
+          </div>
+          <div class="section-title">Peluang minggu ini <span class="badge">${ICONS.check} Matched</span></div>
+          <div class="card opportunity" data-go="6">
+            <div class="brand-icon-badge">${ICONS.sun}</div>
+            <div>
+              <h3>GlowDaily - UGC Sunscreen</h3>
+              <p>1 video TikTok, morning campus routine.</p>
+            </div>
+            <div class="amount">Rp850K</div>
+          </div>
+          <div class="card opportunity" data-go="6">
+            <div class="brand-icon-badge">${ICONS.coffee}</div>
+            <div>
+              <h3>Kopi Sore - Affiliate</h3>
+              <p>Story IG & link affiliate 14 hari.</p>
+            </div>
+            <div class="amount">15%</div>
+          </div>
+        `
+      },
+      {
+        title: "Sign up/login",
+        nav: "Profile",
+        summary: "Rani membuat akun dengan identitas dasar agar sistem bisa menyimpan resume dan histori peluang.",
+        parts: ["Form singkat mengurangi friksi awal.", "Nama dan kota dipakai untuk personalisasi peluang.", "CTA dominan menjaga fokus ke tahap koneksi akun sosial."],
+        logs: ["[09:41] Form prefilled - rani.putri@email.id", "[09:41] Location signal set - Bandung", "[09:41] Account draft created"],
+        html: `
+          <div class="plain">
+            <h2>Buat akun BrandxSociety</h2>
+            <p>Pakai data yang sama dengan profil kreatormu supaya brand mudah mengenali konteksmu.</p>
+          </div>
+          <div class="section-title">Data dasar</div>
+          <div class="input" onclick="showToast('Nama terverifikasi: Rani Putri Lestari')">
+            <span style="color:var(--primary)">${ICONS.user}</span>
+            <span>Rani Putri Lestari</span>
+          </div>
+          <div class="input" onclick="showToast('Email aktif untuk notifikasi campaign')">
+            <span style="color:var(--primary)">${ICONS.mail}</span>
+            <span>rani.putri@email.id</span>
+          </div>
+          <div class="input" onclick="showToast('Lokasi: Bandung, Jawa Barat')">
+            <span style="color:var(--primary)">${ICONS.pin}</span>
+            <span>Bandung, Jawa Barat</span>
+          </div>
+          <div class="card">
+            <h3>Creator focus</h3>
+            <div class="chip-row">
+              <span class="chip selected" onclick="toggleChip(this)">Beauty</span>
+              <span class="chip selected" onclick="toggleChip(this)">Campus life</span>
+              <span class="chip" onclick="toggleChip(this)">Affordable fashion</span>
+            </div>
+          </div>
+          <button class="cta white-cta" data-go="2">
+            <span>Lanjut connect akun sosial</span>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          </button>
+        `
+      },
+      {
+        title: "Connect akun sosial",
+        nav: "Identity",
+        summary: "Akun sosial dihubungkan agar BrandxSociety bisa membaca sinyal publik dan membangun identitas kerja.",
+        parts: ["Setiap kanal menampilkan status koneksi.", "Angka followers konsisten menjadi input AI Resume.", "Badge keamanan menjelaskan bahwa data hanya dipakai untuk matching."],
+        logs: ["[09:41] Instagram connected - 12.8K followers", "[09:41] TikTok connected - 5.6K followers", "[09:41] Consent scope saved - public profile only"],
+        html: `
+          <div class="plain">
+            <h2>Connect akun sosial</h2>
+            <p>BrandxSociety membaca sinyal publik untuk memetakan niche, gaya konten, dan kualitas audiens.</p>
+          </div>
+          <div class="section-title">Kanal Rani</div>
+          <div class="social" onclick="showToast('Instagram synced: 12.8K followers')">
+            <div class="social-icon" style="background:#fff0ef;color:#E1306C">${ICONS.instagram}</div>
+            <div><strong>Instagram</strong><p class="muted">@raniputri • 12.8K followers</p></div>
+            <div class="check">${ICONS.check_circle} Terhubung</div>
+          </div>
+          <div class="social" onclick="showToast('TikTok synced: 5.6K followers')">
+            <div class="social-icon" style="background:#f4f4f4;color:#000">${ICONS.tiktok}</div>
+            <div><strong>TikTok</strong><p class="muted">@ranicampus • 5.6K followers</p></div>
+            <div class="check">${ICONS.check_circle} Terhubung</div>
+          </div>
+          <div class="social" onclick="showToast('X / Twitter opsional')">
+            <div class="social-icon" style="background:#f4f4f4;color:#111">${ICONS.x_twitter}</div>
+            <div><strong>X / Twitter</strong><p class="muted">1.1K followers</p></div>
+            <div class="check" style="color:var(--muted)">Opsional</div>
+          </div>
+          <div class="card">
+            <span class="badge badge-success">${ICONS.shield} Privasi Aman</span>
+            <p style="margin-top:8px">Kami hanya membaca insight publik dan performa konten, bukan pesan pribadi/DM.</p>
+          </div>
+          <button class="cta white-cta" data-go="3" onclick="simulateAI()">
+            <span>Generate AI Resume</span>
+            <span style="color:#FCDB00">${ICONS.sparkles}</span>
+          </button>
+        `
+      },
+      {
+        title: "AI Resume generation",
+        nav: "Identity",
+        summary: "Sistem mengubah data sosial menjadi resume yang mudah dipahami brand.",
+        parts: ["Skor identitas menunjukkan kesiapan profil.", "Progress bar memberi rasa proses AI sedang berjalan.", "Insight awal membantu Rani memahami positioning dirinya."],
+        logs: ["[09:41] Content clustering complete - 428 posts", "[09:41] AI Resume generated - confidence 92%", "[09:41] 3 opportunity baru cocok dengan profil"],
+        html: `
+          <div class="plain">
+            <h2>AI Resume Rani berhasil dibuat!</h2>
+            <p>Sinyal konten, audiens, tone, dan brand safety telah dianalisis otomatis.</p>
+          </div>
+          <div class="score-ring">
+            <div class="score-ring-content">
+              <strong>92%</strong>
+              <span>Fit Confidence</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Identity Signal Terdeteksi</h3>
+            <p>Affordable beauty, campus lifestyle, review produk jujur, audiens perempuan 18-24 tahun.</p>
+            <div class="progress"><div class="bar" style="width:92%"></div></div>
+            <span class="muted">Skor kecocokan brand tier 1</span>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-card"><strong>428</strong><span>Konten dipindai</span></div>
+            <div class="mini-card"><strong>14</strong><span>Niche signal</span></div>
+          </div>
+          <button class="cta white-cta" data-go="4">
+            <span>Review hasil AI</span>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          </button>
+        `
+      },
+      {
+        title: "Review & edit identity",
+        nav: "Identity",
+        summary: "Rani meninjau identitas yang dibuat AI dan bisa mengoreksi positioning sebelum dipublikasikan.",
+        parts: ["Tag niche bisa diedit untuk menjaga akurasi.", "Bio publik disusun dalam bahasa brand-friendly.", "Brand safety dibuat transparan sebelum profil diterbitkan."],
+        logs: ["[09:41] User opened identity editor", "[09:41] Suggested niche accepted - affordable beauty", "[09:41] Public bio updated"],
+        html: `
+          <div class="avatar-row">
+            <div class="avatar-wrapper">
+              <div class="avatar-img">${getAvatarSVG("R")}</div>
+              <div class="verified-badge">${ICONS.check}</div>
+            </div>
+            <div>
+              <h2 style="margin:0;font-size:18px">Rani Putri</h2>
+              <p class="muted" style="margin-top:2px">Beauty & campus lifestyle creator • Bandung</p>
+            </div>
+          </div>
+          <div class="card" onclick="openBioEditor()">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <h3>Bio AI Resume</h3>
+              <span style="font-size:9px;color:var(--primary);font-weight:800">Edit</span>
+            </div>
+            <p id="bioText">Rani membuat konten beauty hemat dan daily campus life dengan gaya hangat, jujur, dan mudah diikuti.</p>
+          </div>
+          <div class="section-title">Identity tags <span class="badge">${ICONS.check} Editable</span></div>
+          <div class="chip-row">
+            <span class="chip selected" onclick="toggleChip(this)">Affordable beauty</span>
+            <span class="chip selected" onclick="toggleChip(this)">Skincare routine</span>
+            <span class="chip selected" onclick="toggleChip(this)">Campus life</span>
+            <span class="chip selected" onclick="toggleChip(this)">Soft review</span>
+            <span class="chip" onclick="toggleChip(this)">Daily vlog</span>
+          </div>
+          <div class="card" style="margin-top:10px">
+            <span class="badge badge-success">${ICONS.shield} Low Risk</span>
+            <h3 style="margin-top:6px">Brand Safety Verified</h3>
+            <p>Tidak ada deteksi konten sensitif atau copyright claim dalam 180 hari terakhir.</p>
+          </div>
+          <button class="cta white-cta" data-go="5" onclick="showToast('Profil publik berhasil dipublikasikan!')">
+            <span>Publish profil publik</span>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          </button>
+        `
+      },
+      {
+        title: "Publish profil publik",
+        nav: "Profile",
+        summary: "Profil publik siap dibagikan ke brand, lengkap dengan sinyal identitas dan bukti performa.",
+        parts: ["Kartu profil menonjolkan niche dan performa utama.", "Link publik memudahkan brand membuka resume.", "Status Published memberi kepastian bahwa profil sudah aktif."],
+        logs: ["[09:41] Public profile slug reserved - /rani-putri", "[09:41] Profile published", "[09:41] Brand discovery enabled"],
+        html: `
+          <div class="card" style="text-align:center;padding:16px 12px">
+            <div class="avatar-wrapper" style="margin:0 auto 8px">
+              <div class="avatar-img">${getAvatarSVG("R")}</div>
+              <div class="verified-badge">${ICONS.check}</div>
+            </div>
+            <h2 style="margin:0 0 4px;font-size:18px">Rani Putri</h2>
+            <p>Beauty hemat dan campus lifestyle untuk audiens perempuan muda.</p>
+            <div class="chip-row" style="justify-content:center;margin-top:8px">
+              <span class="chip selected">12.8K IG</span>
+              <span class="chip selected">5.6K TikTok</span>
+              <span class="chip selected">92 Score</span>
+            </div>
+          </div>
+          <div class="section-title">Public share link <span class="badge badge-success">${ICONS.check} Live</span></div>
+          <div class="input" onclick="navigator.clipboard && navigator.clipboard.writeText('brandxsociety.id/rani-putri'); showToast('Link profil tersalin ke clipboard!')">
+            <span style="color:var(--primary)">${ICONS.link}</span>
+            <span style="flex:1">brandxsociety.id/rani-putri</span>
+            <span style="color:var(--primary);font-size:9.5px">Salin</span>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-card"><strong>4</strong><span>Brand views hari ini</span></div>
+            <div class="mini-card"><strong>3</strong><span>Match baru masuk</span></div>
+          </div>
+          <button class="cta white-cta" data-go="6">
+            <span>Lihat opportunity feed</span>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          </button>
+        `
+      },
+      {
+        title: "Opportunity feed",
+        nav: "Feed",
+        summary: "Rani melihat daftar peluang yang sudah difilter berdasarkan identitas dan kapasitasnya.",
+        parts: ["Match score membantu memprioritaskan peluang.", "Budget dan deadline terlihat sejak awal.", "Badge status memberi sinyal apakah slot hampir penuh."],
+        logs: ["[09:41] Feed ranked by identity fit", "[09:41] 8 campaigns available", "[09:41] Highest match - GlowDaily 94%"],
+        html: `
+          <div class="plain">
+            <h2>Opportunity untuk Rani</h2>
+            <p>Diurutkan berdasarkan kecocokan niche, tone, dan kesiapan audiens.</p>
+          </div>
+          <div class="card opportunity" data-go="7">
+            <div class="brand-icon-badge" style="background:#fff6e0;color:#d97706">${ICONS.sun}</div>
+            <div>
+              <span class="badge">94% Matched</span>
+              <h3 style="margin-top:4px">GlowDaily - UGC Sunscreen</h3>
+              <p>1 video TikTok, konsep morning campus routine.</p>
+            </div>
+            <div class="amount">Rp850K</div>
+          </div>
+          <div class="card opportunity" data-go="7">
+            <div class="brand-icon-badge" style="background:#f5efe6;color:#854d0e">${ICONS.coffee}</div>
+            <div>
+              <span class="badge" style="background:#ffeaa7">Slot Hampir Penuh</span>
+              <h3 style="margin-top:4px">Kopi Sore - Affiliate</h3>
+              <p>Story IG dan link komisi 14 hari.</p>
+            </div>
+            <div class="amount">15%</div>
+          </div>
+          <div class="card opportunity" data-go="7">
+            <div class="brand-icon-badge" style="background:#faeae7;color:#991b1b">${ICONS.bag}</div>
+            <div>
+              <span class="badge">88% Matched</span>
+              <h3 style="margin-top:4px">Loka Tote Bag</h3>
+              <p>Konten estetika kampus dengan produk lokal.</p>
+            </div>
+            <div class="amount">Rp600K</div>
+          </div>
+        `
+      },
+      {
+        title: "Apply opportunity",
+        nav: "Feed",
+        summary: "Rani melamar campaign dengan proposal singkat yang sudah dibantu AI.",
+        parts: ["Brief campaign ditampilkan padat.", "AI membantu draft pitch sesuai gaya Rani.", "CTA tunggal mengirim aplikasi ke brand."],
+        logs: ["[09:41] Campaign opened - GlowDaily Sunscreen", "[09:41] AI pitch drafted from identity profile", "[09:41] Application ready"],
+        html: `
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <span class="badge">94% Matched</span>
+              <div class="brand-icon-badge" style="width:32px;height:32px">${ICONS.sun}</div>
+            </div>
+            <h2 style="font-size:18px;margin:8px 0 4px">GlowDaily Sunscreen</h2>
+            <p>Brand mencari konten natural untuk rutinitas kampus pagi tanpa whitecast.</p>
+            <div class="mini-grid" style="margin-top:8px">
+              <div class="mini-card"><strong>1</strong><span>Video TikTok (30s)</span></div>
+              <div class="mini-card"><strong>Rp850K</strong><span>Fixed creator fee</span></div>
+            </div>
+          </div>
+          <div class="section-title">Pitch otomatis dari AI <span style="color:#FCDB00">${ICONS.sparkles}</span></div>
+          <div class="input" style="line-height:1.45;font-size:10.5px" onclick="showToast('Pitch AI siap dikirim')">
+            "Aku akan membuat video morning routine dari kos ke kampus, memperlihatkan sunscreen GlowDaily sebagai langkah proteksi simpel sebelum beraktivitas."
+          </div>
+          <button class="cta white-cta" data-go="8" onclick="showToast('Aplikasi & Pitch berhasil dikirim ke Brand!')">
+            <span>Kirim aplikasi</span>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          </button>
+        `
+      },
+      {
+        title: "Submission",
+        nav: "Feed",
+        summary: "Setelah diterima, Rani mengirim draft konten dan memantau status approval brand.",
+        parts: ["Checklist deliverable membuat ekspektasi jelas.", "Status review mengurangi chat bolak-balik.", "Feedback brand tampil ringkas dan actionable."],
+        logs: ["[09:41] Submission uploaded - draft_v1.mp4", "[09:41] Brand review SLA - 24 hours", "[09:41] Status changed - Waiting approval"],
+        html: `
+          <div class="plain">
+            <h2>Submission GlowDaily</h2>
+            <p>Draft video sudah dikirim dan lolos AI brief check otomatis.</p>
+          </div>
+          <!-- Professional Video Mockup Player -->
+          <div class="video-mockup">
+            <div class="video-thumb">
+              <div class="video-pill">
+                <svg class="ico" style="width:12px;height:12px" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                00:34 • 1080p
+              </div>
+              <div class="video-play-btn" onclick="showToast('Memutar preview video draft_v1.mp4...')">
+                <svg class="ico" style="width:20px;height:20px;margin-left:2px" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <div class="video-pill" style="align-self:flex-end;background:rgba(127,17,16,.75)">
+                #GlowDailyPartner
+              </div>
+            </div>
+            <div class="video-caption">
+              <strong>draft_v1.mp4</strong>
+              <span class="muted" style="color:#fff7d6">Morning campus routine • Scene produk 00:08 - 00:16</span>
+            </div>
+          </div>
+          <div class="section-title">Checklist Brief Deliverable</div>
+          <div class="social">
+            <div class="social-icon" style="background:#eafaf1;color:#1b873f">${ICONS.check}</div>
+            <div><strong>Produk terlihat jelas</strong><p class="muted">Scene 00:08 - 00:16</p></div>
+            <div class="check">${ICONS.check_circle} Lolos</div>
+          </div>
+          <div class="social">
+            <div class="social-icon" style="background:#eafaf1;color:#1b873f">${ICONS.check}</div>
+            <div><strong>Caption disclosure</strong><p class="muted">#GlowDailyPartner terverifikasi</p></div>
+            <div class="check">${ICONS.check_circle} Lolos</div>
+          </div>
+          <button class="cta white-cta" data-go="9">
+            <span>Lihat status approval & payout</span>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          </button>
+        `
+      },
+      {
+        title: "Payout & riwayat",
+        nav: "Rewards",
+        summary: "Rani melihat pembayaran, reward score, dan riwayat campaign yang sudah selesai.",
+        parts: ["Saldo pending dan tersedia dipisahkan jelas.", "Riwayat campaign memberi bukti kerja untuk peluang berikutnya.", "Score meningkat setelah campaign selesai tepat waktu."],
+        logs: ["[09:41] Campaign completed - GlowDaily", "[09:41] Payout scheduled - Rp850.000", "[09:41] Creator score updated - 92 to 94"],
+        html: `
+          <div class="hero-card">
+            <div class="hello">
+              <span style="color:#FCDB00">${ICONS.wallet}</span> Saldo tersedia
+            </div>
+            <h2 style="font-size:22px" id="creatorBalance">Rp1.450.000</h2>
+            <p>Termasuk payout GlowDaily (Rp850.000) yang disetujui hari ini.</p>
+            <button class="cta" onclick="openPayoutDrawer()">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+              <span>Tarik ke rekening</span>
+            </button>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-card"><strong>94</strong><span>Creator score (+2)</span></div>
+            <div class="mini-card"><strong>6</strong><span>Campaign selesai</span></div>
+          </div>
+          <div class="section-title">Riwayat transaksi</div>
+          <div class="card opportunity">
+            <div class="brand-icon-badge" style="background:#fff6e0;color:#d97706">${ICONS.sun}</div>
+            <div>
+              <h3>GlowDaily Sunscreen</h3>
+              <p>Disetujui • Payout siap tarik</p>
+            </div>
+            <div class="amount" style="color:var(--success)">+Rp850K</div>
+          </div>
+          <div class="card opportunity">
+            <div class="brand-icon-badge" style="background:#faeae7;color:#991b1b">${ICONS.bag}</div>
+            <div>
+              <h3>Loka Tote Bag</h3>
+              <p>Selesai bulan lalu</p>
+            </div>
+            <div class="amount">+Rp600K</div>
+          </div>
+        `
+      }
+    ];
+
+    // STEPS DATA FOR BRAND DEMO (8 STEPS)
+    const brand = [
+      {
+        title: "Landing brand",
+        nav: "Home",
+        summary: "Tim brand melihat BrandxSociety sebagai cara menemukan creator berdasarkan identitas, bukan hanya followers.",
+        parts: ["Hero menjelaskan matching berbasis AI Resume.", "CTA tunggal membawa brand masuk ke studio.", "Metrik memberi bukti volume creator dan campaign."],
+        logs: ["[09:41] Visitor path selected - brand", "[09:41] Brand intent captured - creator discovery", "[09:41] Studio preview loaded"],
+        html: `
+          <div class="hero-card" style="background:linear-gradient(135deg,#3c0a09 0%,#1e0403 100%)">
+            <div class="hello"><span style="color:#FCDB00">${ICONS.building}</span> Untuk Tim Brand</div>
+            <h2>Temukan creator dari identity signal, bukan spreadsheet followers.</h2>
+            <p>Cari creator yang cocok dengan campaign, tone, audiens, dan brand safety terverifikasi.</p>
+            <button class="cta" data-go="1">
+              <span>Masuk Brand Studio</span>
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+            </button>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-card"><strong>14.2K</strong><span>Creator terverifikasi</span></div>
+            <div class="mini-card"><strong>92%</strong><span>Match confidence</span></div>
+          </div>
+          <div class="card">
+            <span class="badge">${ICONS.sparkles} Solusi Populer</span>
+            <h3 style="margin-top:6px">UGC & Micro Endorsement</h3>
+            <p>Endorsement, sampling, UGC video organik, dan micro campaign nasional dengan tracking performa real-time.</p>
+          </div>
+        `
+      },
+      {
+        title: "Sign up bisnis",
+        nav: "Profile",
+        summary: "Brand membuat workspace agar campaign, brief, dan approval bisa dikelola satu tempat.",
+        parts: ["Data perusahaan membentuk konteks campaign.", "Kategori brand dipakai untuk rekomendasi creator.", "Workspace memisahkan role admin dan reviewer."],
+        logs: ["[09:41] Business account draft created", "[09:41] Brand category set - Beauty & Personal Care", "[09:41] Workspace initialized - GlowDaily"],
+        html: `
+          <div class="plain">
+            <h2>Buat workspace brand</h2>
+            <p>GlowDaily menyiapkan ruang kerja untuk mengelola creator, brief campaign, dan pembayaran escrow.</p>
+          </div>
+          <div class="input" onclick="showToast('Workspace: GlowDaily Indonesia')">
+            <span style="color:var(--primary)">${ICONS.building}</span>
+            <span>GlowDaily Indonesia</span>
+          </div>
+          <div class="input" onclick="showToast('Kategori: Beauty & Personal Care')">
+            <span style="color:var(--primary)">${ICONS.sun}</span>
+            <span>Beauty & Personal Care</span>
+          </div>
+          <div class="input" onclick="showToast('PIC: Maya Sari - Brand Manager')">
+            <span style="color:var(--primary)">${ICONS.user}</span>
+            <span>Maya Sari - Brand Manager</span>
+          </div>
+          <div class="card">
+            <h3>Team access & Escrow</h3>
+            <p>Admin campaign, finance approval, dan reviewer konten terhubung dengan aman.</p>
+          </div>
+          <button class="cta white-cta" data-go="2">
+            <span>Buka Brand Studio</span>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          </button>
+        `
+      },
+      {
+        title: "Brand Studio",
+        nav: "Home",
+        summary: "Brand Studio menjadi pusat campaign aktif, rekomendasi creator, dan performa berjalan.",
+        parts: ["Dashboard menampilkan campaign dan spend.", "Matched creators mempercepat shortlist.", "Alert membantu brand melihat approval yang perlu tindakan."],
+        logs: ["[09:41] Dashboard metrics loaded", "[09:41] Active campaigns - 3", "[09:41] 18 creator recommendations refreshed"],
+        html: `
+          <div class="plain">
+            <h2>Brand Studio</h2>
+            <p>Selamat pagi, Maya. Ada 18 creator baru cocok untuk brief sunscreen.</p>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-card"><strong>3</strong><span>Campaign aktif</span></div>
+            <div class="mini-card"><strong>Rp24.8Jt</strong><span>Monthly spend</span></div>
+          </div>
+          <div class="section-title">Perlu tindakan <span class="badge" style="background:#fee2e2;color:#991b1b">Action needed</span></div>
+          <div class="card opportunity" data-go="6">
+            <div class="brand-icon-badge" style="background:#fee2e2;color:#991b1b">${ICONS.video}</div>
+            <div>
+              <h3>5 draft menunggu review</h3>
+              <p>GlowDaily Sunscreen Batch 2</p>
+            </div>
+            <div class="amount" style="color:#991b1b">Review ›</div>
+          </div>
+          <div class="card opportunity" data-go="4">
+            <div class="brand-icon-badge">${ICONS.users}</div>
+            <div>
+              <span class="badge">94% Matched</span>
+              <h3 style="margin-top:4px">Rani Putri</h3>
+              <p>Beauty hemat, kampus, 18.4K audiens</p>
+            </div>
+            <div class="amount">Lihat ›</div>
+          </div>
+          <button class="cta white-cta" data-go="3">
+            <span>+ Buat campaign baru (AI Brief)</span>
+          </button>
+        `
+      },
+      {
+        title: "Create campaign (AI brief)",
+        nav: "Identity",
+        summary: "Brand membuat brief campaign dengan bantuan AI agar kebutuhan creator lebih jelas dan bisa dicocokkan otomatis.",
+        parts: ["Input objective menjadi dasar rekomendasi.", "AI menyarankan deliverable dan creator criteria.", "Budget dan slot menjaga ekspektasi campaign realistis."],
+        logs: ["[09:41] AI brief assistant started", "[09:41] Objective parsed - awareness + UGC", "[09:41] Creator criteria generated"],
+        html: `
+          <div class="plain">
+            <h2>AI Campaign Brief</h2>
+            <p>GlowDaily ingin mendorong awareness sunscreen harian untuk mahasiswa dan pekerja muda.</p>
+          </div>
+          <div class="input">
+            <span style="color:var(--primary)">${ICONS.briefcase}</span>
+            <span>Obj: UGC awareness sunscreen harian</span>
+          </div>
+          <div class="input">
+            <span style="color:var(--primary)">${ICONS.users}</span>
+            <span>Aud: Perempuan 18-24, Jabodetabek & Bandung</span>
+          </div>
+          <div class="input">
+            <span style="color:var(--primary)">${ICONS.video}</span>
+            <span>Del: 1 TikTok video + raw footage</span>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-card"><strong>20</strong><span>Creator slots</span></div>
+            <div class="mini-card"><strong>Rp850K</strong><span>Fee per creator</span></div>
+          </div>
+          <button class="cta white-cta" data-go="4" onclick="showToast('AI berhasil menemukan 126 creator terverifikasi!')">
+            <span>Generate creator shortlist</span>
+            <span style="color:#FCDB00">${ICONS.sparkles}</span>
+          </button>
+        `
+      },
+      {
+        title: "Search by identity signal",
+        nav: "Feed",
+        summary: "Brand mencari creator berdasarkan sinyal identitas seperti niche, tone, audiens, dan brand safety.",
+        parts: ["Filter bukan hanya demografi, tetapi gaya konten.", "Hasil menampilkan match score dan alasan kecocokan.", "Creator dengan risiko rendah diprioritaskan untuk campaign."],
+        logs: ["[09:41] Identity search executed", "[09:41] Filters - affordable beauty, campus life", "[09:41] 126 creators matched"],
+        html: `
+          <div class="plain">
+            <h2>Search identity signal</h2>
+            <p>Filter creator berdasarkan niche gaya konten, audiens, dan review produk jujur.</p>
+          </div>
+          <div class="chip-row">
+            <span class="chip selected" onclick="toggleChip(this)">Affordable beauty</span>
+            <span class="chip selected" onclick="toggleChip(this)">Campus life</span>
+            <span class="chip selected" onclick="toggleChip(this)">Low risk</span>
+            <span class="chip" onclick="toggleChip(this)">18-24 audiens</span>
+          </div>
+          <div class="section-title">Top matches <span class="badge">${ICONS.sparkles} AI Ranked</span></div>
+          <div class="card opportunity" data-go="5">
+            <div class="avatar-wrapper" style="width:40px;height:40px">
+              <div class="avatar-img" style="width:40px;height:40px">${getAvatarSVG("R")}</div>
+            </div>
+            <div>
+              <span class="badge">94% Match</span>
+              <h3 style="margin-top:4px">Rani Putri</h3>
+              <p>Bandung • soft review, 18.4K audiens</p>
+            </div>
+            <div class="amount">Rp850K</div>
+          </div>
+          <div class="card opportunity" data-go="5">
+            <div class="avatar-wrapper" style="width:40px;height:40px">
+              <div class="avatar-img" style="width:40px;height:40px;background:#551a8b">${getAvatarSVG("A", "#551a8b")}</div>
+            </div>
+            <div>
+              <span class="badge">91% Match</span>
+              <h3 style="margin-top:4px">Alya Nabila</h3>
+              <p>Jakarta • skincare routine, 22.1K audiens</p>
+            </div>
+            <div class="amount">Rp1.1Jt</div>
+          </div>
+        `
+      },
+      {
+        title: "Shortlist & invite",
+        nav: "Feed",
+        summary: "Brand memilih creator yang paling cocok dan mengirim undangan campaign langsung dari platform.",
+        parts: ["Shortlist menunjukkan slot campaign.", "Invite message dibuat personal berdasarkan AI Resume creator.", "Status invite membantu tim brand memantau respons."],
+        logs: ["[09:41] Rani Putri added to shortlist", "[09:41] Invite copy personalized", "[09:41] 12 invites queued"],
+        html: `
+          <div class="plain">
+            <h2>Shortlist campaign</h2>
+            <p>12 dari 20 slot creator sudah dipilih untuk GlowDaily Sunscreen.</p>
+          </div>
+          <div class="progress"><div class="bar" style="width:60%"></div></div>
+          <p class="muted" style="margin-top:4px">12 shortlisted • 8 slots tersisa</p>
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+              <div class="avatar-wrapper" style="width:32px;height:32px">
+                <div class="avatar-img" style="width:32px;height:32px">${getAvatarSVG("R")}</div>
+              </div>
+              <div><strong>Invite untuk Rani Putri</strong><p class="muted">Personalized by AI</p></div>
+            </div>
+            <p style="font-size:10px;line-height:1.4">"Hai Rani, GlowDaily cocok dengan gaya konten morning campus routine kamu. Kami ingin mengundangmu untuk campaign sunscreen harian."</p>
+          </div>
+          <button class="cta white-cta" data-go="6" onclick="showToast('12 Undangan berhasil dikirim ke creator!')">
+            <span>Kirim undangan ke 12 creator</span>
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          </button>
+        `
+      },
+      {
+        title: "Approval & review",
+        nav: "Identity",
+        summary: "Brand meninjau submission creator, memberi catatan, atau menyetujui draft untuk publikasi.",
+        parts: ["Submission card menampilkan deliverable dan status.", "Checklist brief membantu reviewer konsisten.", "Approval action menjadi satu CTA utama."],
+        logs: ["[09:41] Submission received - Rani Putri", "[09:41] AI compliance check passed", "[09:41] Reviewer action pending"],
+        html: `
+          <div class="plain">
+            <h2>Review submission creator</h2>
+            <p>Draft video Rani Putri telah lolos AI compliance check otomatis.</p>
+          </div>
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span class="badge badge-success">${ICONS.check} Ready to approve</span>
+              <span class="muted">SLA: 18 jam lagi</span>
+            </div>
+            <h3 style="margin-top:8px">Rani Putri - draft_v1.mp4</h3>
+            <p>34 detik, campus morning routine, produk tampil di 3 scene.</p>
+          </div>
+          <div class="section-title">Brief checklist verification</div>
+          <div class="social">
+            <div class="social-icon" style="background:#eafaf1;color:#1b873f">${ICONS.check}</div>
+            <div><strong>Produk terlihat jelas</strong><p class="muted">Terdeteksi durasi 8.4 detik</p></div>
+            <div class="check">${ICONS.check_circle} OK</div>
+          </div>
+          <div class="social">
+            <div class="social-icon" style="background:#eafaf1;color:#1b873f">${ICONS.check}</div>
+            <div><strong>Disclosure sponsor</strong><p class="muted">Hashtag #GlowDailyPartner siap</p></div>
+            <div class="check">${ICONS.check_circle} OK</div>
+          </div>
+          <button class="cta white-cta" data-go="7" onclick="showToast('Draft Rani DISETUJUI! Dana Escrow dirilis ke saldo Rani.')">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Approve draft & rilis dana</span>
+          </button>
+        `
+      },
+      {
+        title: "Reporting",
+        nav: "Rewards",
+        summary: "Setelah campaign berjalan, brand membaca performa creator, spending, dan content output dalam satu laporan.",
+        parts: ["Metrik utama membantu evaluasi cepat.", "Creator breakdown menunjukkan siapa yang paling efektif.", "Laporan siap dibagikan ke manajemen."],
+        logs: ["[09:41] Campaign report generated", "[09:41] Total reach calculated - 412K", "[09:41] ROI estimate updated - 2.8x"],
+        html: `
+          <div class="hero-card" style="background:linear-gradient(135deg,#2b0908 0%,#150302 100%)">
+            <div class="hello"><span style="color:#FCDB00">${ICONS.sun}</span> GlowDaily Sunscreen Batch 1</div>
+            <h2 style="font-size:22px">412K Total Reach</h2>
+            <p>Campaign selesai dengan 28 konten dari 20 creator terverifikasi.</p>
+            <button class="cta" onclick="showToast('Report GlowDaily_Campaign.pdf berhasil diexport!')">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              <span>Export Laporan PDF</span>
+            </button>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-card"><strong>7.9%</strong><span>Avg engagement</span></div>
+            <div class="mini-card"><strong>2.8x</strong><span>Est. Campaign ROI</span></div>
+          </div>
+          <div class="section-title">Top Performing Creators</div>
+          <div class="card opportunity">
+            <div class="avatar-wrapper" style="width:36px;height:36px">
+              <div class="avatar-img" style="width:36px;height:36px">${getAvatarSVG("R")}</div>
+            </div>
+            <div>
+              <h3>Rani Putri</h3>
+              <p>Save rate tertinggi & 1.2K komentar organik</p>
+            </div>
+            <div class="amount" style="color:var(--success)">9.1% ER</div>
+          </div>
+          <div class="card opportunity">
+            <div class="avatar-wrapper" style="width:36px;height:36px">
+              <div class="avatar-img" style="width:36px;height:36px;background:#551a8b">${getAvatarSVG("A", "#551a8b")}</div>
+            </div>
+            <div>
+              <h3>Alya Nabila</h3>
+              <p>Reach tertinggi (68K views) dari batch</p>
+            </div>
+            <div class="amount" style="color:var(--success)">68K Views</div>
+          </div>
+        `
+      }
+    ];
+
+    // PEOPLE MODULAR SECTIONS WITH PROFESSIONAL SVG ICONS
+    const peopleModules = [
+      () => `
+        <div class="rail">
+          <div class="story" data-go="3"><div class="story-icon">${resolveIcon("ai")}</div><span>AI Resume</span></div>
+          <div class="story" data-go="6"><div class="story-icon">${resolveIcon("ugc")}</div><span>UGC Jobs</span></div>
+          <div class="story" data-go="6"><div class="story-icon">${resolveIcon("aff")}</div><span>Komisi</span></div>
+          <div class="story" data-go="9"><div class="story-icon">${resolveIcon("pay")}</div><span>Payout</span></div>
+        </div>
+        ${featureGrid([["id","Buat profil",1],["ig","Connect IG",2],["tt","Connect TikTok",2],["job","Cari job",6],["score","Cek skor",4],["safe","Safety",4],["rate","Rate card",4],["pay","Wallet",9]])}
+        <div class="section-title">Jalur yang bisa dipilih</div>
+        ${denseRows([["user","Creator / People","Bangun AI Resume dari jejak digital","Pilih",1],["building","Brand / Business","Cari creator untuk campaign dan UGC","Lihat","brand:0"],["users","Agency / Talent","Kelola beberapa creator sekaligus","Beta","brand:1"],["aff","Affiliate hunter","Prioritas campaign berbasis komisi","Baru",6]])}
+        ${metrics("Kenapa ini relevan", [["Input awal","akun sosial publik"],["Output","profil kerja + match"],["Goal pertama","publish identity"],["Goal akhir","apply dan payout"]])}
+      `,
+      () => `
+        ${tabs([["Akun",1],["Role",1],["Kategori",1],["Privasi",1]], 0)}
+        ${featureGrid([["email","Email",1],["wa","WhatsApp",1],["g","Google",1],["ig","Instagram",2],["ktp","Verifikasi",1],["city","Kota",1],["id","Role",1],["pin","Security",1]])}
+        <div class="section-title">Setup akun</div>
+        ${denseRows([["id","Pilih role creator","Nano creator, reviewer, affiliate, UGC maker","Set",1],["pay","Lengkapi kontak payout","Email, WhatsApp, rekening nanti","Next",9],["tag","Pilih kategori awal","Beauty, food, campus, fashion, tech","Edit",4],["safe","Atur privasi","Data publik untuk matching, bukan DM pribadi","OK",2]])}
+        ${metrics("Trust setup", [["Progress onboarding","35%"],["Data wajib","3 field"],["Estimasi selesai","2 menit"],["Security","PIN aktif"]])}
+      `,
+      () => `
+        ${tabs([["Platform",2],["Permission",2],["Manual input",2],["Sync log",3]], 0)}
+        ${featureGrid([["ig","Instagram",3],["tt","TikTok",3],["x","X",3],["yt","YouTube",3],["shop","Affiliate",6],["doc","Manual",3],["safe","Scope",2],["refresh","Sync",3]])}
+        <div class="section-title">Social import queue</div>
+        ${denseRows([["ig","Instagram connected","12.8K followers, 428 posts scanned","Done",3],["tt","TikTok connected","5.6K followers, 71 videos scanned","Done",3],["x","X optional","1.1K followers, signal terdeteksi","Add",3],["yt","YouTube Shorts","Belum dihubungkan","Add",3]])}
+        ${metrics("Data yang dibaca", [["Public posts","499"],["Audience overlap","18%"],["Private message","Tidak dibaca"],["Consent scope","Public profile"]])}
+      `,
+      () => `
+        ${featureGrid([["video","Konten",3],["sparkles","Gaya",4],["users","Audiens",4],["safe","Safety",4],["tag","Niche",4],["briefcase","Brand Fit",6],["rate","Rate card",4],["doc","Resume",5]])}
+        <div class="section-title">AI analysis pipeline</div>
+        ${denseRows([["sparkles","Content clustering","Beauty hemat, kampus, honest review","100%",4],["users","Audience profiling","Perempuan 18-24, Bandung/Jakarta","100%",4],["safe","Brand safety scan","Low risk, no sensitive trend detected","100%",4],["dollar","Rate suggestion","UGC Rp850K, Story Rp350K","Ready",4],["briefcase","Campaign matching","3 peluang cocok dibuat otomatis","Live",6]])}
+        ${metrics("Hasil AI Resume", [["Confidence","92%"],["Niche signal","14"],["Recommended fee","Rp850K"],["Match engine","Aktif"]])}
+      `,
+      () => `
+        ${tabs([["Identity",4],["Rate Card",4],["Portfolio",4],["Preview",5]], 0)}
+        ${featureGrid([["id","Bio",4],["tag","Tags",4],["rate","Rate",4],["briefcase","Works",5],["safe","Safety",4],["users","Audience",4],["award","Proof",5],["search","Preview",5]])}
+        <div class="section-title">Yang perlu direview Rani</div>
+        ${denseRows([["id","Bio publik","Kalimat positioning untuk brand","Edit",4],["tag","Identity tags","Affordable beauty, campus life, soft review","Edit",4],["dollar","Rate card","UGC video Rp850K, story Rp350K","Edit",4],["chart","Bukti performa","Save rate dan comment quality","View",5]])}
+        ${metrics("Readiness before publish", [["Bio","Siap"],["Rate card","Siap"],["Portfolio","2 contoh aktif"],["Public profile","Draft"]])}
+      `,
+      () => `
+        ${featureGrid([["link","Share link",5],["doc","PDF Resume",5],["briefcase","Portfolio",5],["dollar","Rate",4],["chart","Stats",5],["search","Search",6],["mail","Inbox",6],["award","Verified",5]])}
+        <div class="section-title">Public profile sections</div>
+        ${denseRows([["id","Identity summary","Bio, niche, tone, city","Live",5],["users","Audience snapshot","18.4K total audience, 7.8% ER","Live",5],["video","Portfolio proof","2 sample posts, 1 campaign history","Live",5],["briefcase","Brand contact CTA","Invite to campaign langsung","Live",6]])}
+        ${metrics("Discovery status", [["Brand views","4"],["Search visibility","On"],["Invite inbox","0 baru"],["Profile score","92"]])}
+      `,
+      () => `
+        ${tabs([["For You",6],["UGC",6],["Affiliate",6],["Endorse",6],["Saved",6]], 0)}
+        ${featureGrid([["sparkles","Semua",6],["video","UGC",7],["bag","Affiliate",7],["sparkles","Endorse",7],["sun","GlowDaily",7],["coffee","Kopi Sore",7],["bag","Loka Tote",7],["zap","Fast pay",9]])}
+        <div class="section-title">Opportunity categories</div>
+        ${denseRows([["sun","GlowDaily Sunscreen","UGC video, 94% match, Rp850K","Apply",7],["coffee","Kopi Sore Affiliate","15% commission, campus audience","Apply",7],["bag","Loka Tote Bag","Photo + reel, Rp600K","Apply",7],["tag","SnackNusantara","Sampling story, Rp450K","Apply",7]])}
+        ${metrics("Feed logic", [["Ranking basis","identity fit"],["Open slots","42"],["Top match","94%"],["Fast payout","11 jobs"]])}
+      `,
+      () => `
+        ${featureGrid([["doc","Brief",7],["sparkles","AI pitch",7],["dollar","Fee",7],["clock","Deadline",7],["check","Syarat",7],["safe","Rules",7],["chat","Q&A",8],["send","Apply",8]])}
+        <div class="section-title">Application builder</div>
+        ${denseRows([["sparkles","Campaign fit reason","Beauty hemat + campus routine cocok","OK",7],["doc","AI pitch draft","Personal tapi tetap brand-safe","Edit",7],["video","Deliverable selected","1 TikTok video + raw footage","OK",8],["check","Availability check","Bisa submit 3 hari lagi","OK",8]])}
+        ${metrics("Apply readiness", [["Brief match","94%"],["Estimated effort","2 jam"],["Chance accepted","High"],["Payout term","7 hari"]])}
+      `,
+      () => `
+        ${tabs([["Checklist",8],["Upload",8],["Review",8],["Payment",9]], 0)}
+        ${featureGrid([["video","Shotlist",8],["upload","Upload",8],["doc","Caption",8],["check","Checklist",8],["refresh","Revision",8],["chat","Chat",8],["send","Post",9],["dollar","Payout",9]])}
+        <div class="section-title">Submission workflow</div>
+        ${denseRows([["video","Shotlist approved","Opening, product use, campus exit","Done",8],["upload","Draft uploaded","draft_v1.mp4, 34 detik","Review",8],["doc","Caption disclosure","#GlowDailyPartner siap","OK",8],["clock","Brand feedback","Menunggu approval 24 jam","Wait",9]])}
+        ${metrics("Production status", [["Deliverable","1/1 uploaded"],["Compliance","Passed"],["Revision quota","2 tersisa"],["Payment lock","Setelah approve"]])}
+      `,
+      () => `
+        ${featureGrid([["dollar","Saldo",9],["doc","Riwayat",9],["document","Pajak",9],["bank","Bank",9],["chart","Score",4],["award","Bonus",9],["document","Invoice",9],["mail","Help",9]])}
+        <div class="section-title">Money & reputation</div>
+        ${denseRows([["sun","GlowDaily payout","Rp850K scheduled Jumat","Track",9],["bag","Loka Tote Bag","Rp600K paid minggu lalu","Done",9],["chart","Creator score naik","92 menjadi 94 setelah tepat waktu","View",4],["document","Tax document","Invoice otomatis untuk brand","Ready",9]])}
+        ${metrics("Creator finance", [["Saldo tersedia","Rp1.450.000"],["Pending","Rp850.000"],["Campaign selesai","6"],["On-time rate","100%"]])}
+      `
+    ];
+
+    // BRAND MODULAR SECTIONS WITH PROFESSIONAL SVG ICONS
+    const brandModules = [
+      () => `
+        ${featureGrid([["search","Find creator",4],["doc","AI brief",3],["video","UGC jobs",6],["bag","Affiliate",3],["safe","Safety",4],["dollar","Rate",4],["chart","Report",7],["users","Team",1]])}
+        <div class="section-title">Brand entry points</div>
+        ${denseRows([["search","Discover by identity","Cari creator dari niche, tone, audience","Start",4],["sparkles","Generate campaign brief","Objective jadi deliverable dan criteria","Start",3],["video","UGC production","Kelola content request end-to-end","Start",6],["chart","Performance report","Reach, engagement, ROI estimate","View",7]])}
+        ${metrics("Business promise", [["Search basis","Identity signal"],["Creator pool","14.2K"],["Safety layer","AI + manual"],["Use cases","UGC/Affiliate/Endorse"]])}
+      `,
+      () => `
+        ${featureGrid([["building","Company",1],["sun","Category",1],["id","PIC",1],["document","Tax",1],["users","Team",2],["dollar","Billing",3],["sparkles","Guideline",3],["safe","Policy",4]])}
+        <div class="section-title">Workspace setup</div>
+        ${denseRows([["building","Company profile","GlowDaily Indonesia, beauty care","Done",1],["doc","Brand guideline","Tone, visual do/don't, banned claims","Add",3],["users","Reviewer roles","Maya as admin, finance pending","Invite",2],["dollar","Billing method","Needed before campaign launch","Setup",3]])}
+        ${metrics("Setup progress", [["Workspace","45%"],["Required before launch","Billing"],["Team member","1"],["Brand safety rule","Draft"]])}
+      `,
+      () => `
+        ${tabs([["Overview",2],["Campaign",3],["Creator",4],["Review",6],["Report",7]], 0)}
+        ${featureGrid([["briefcase","Campaign",3],["search","Discover",4],["mail","Invite",5],["check","Review",6],["dollar","Payout",7],["chart","Report",7],["chat","Inbox",6],["video","Assets",6]])}
+        <div class="section-title">Operational dashboard</div>
+        ${denseRows([["video","5 drafts need review","GlowDaily Sunscreen batch 2","Review",6],["users","18 creators matched","Affordable beauty + campus life","Open",4],["mail","12 invites pending","8 slots masih tersedia","Track",5],["dollar","Budget pacing","Rp10.2Jt dari Rp17Jt terpakai","View",7]])}
+        ${metrics("Studio health", [["Active campaigns","3"],["Review SLA","18 jam"],["Acceptance rate","71%"],["Spend month","Rp24.8Jt"]])}
+      `,
+      () => `
+        ${featureGrid([["doc","Objective",3],["users","Audience",3],["video","Deliverable",3],["dollar","Fee",3],["users","Slots",5],["safe","Rights",6],["document","Rules",6],["sparkles","Generate",4]])}
+        <div class="section-title">AI brief builder</div>
+        ${denseRows([["doc","Objective parsed","Awareness + UGC for sunscreen harian","OK",3],["users","Creator criteria","Beauty hemat, campus, perempuan 18-24","OK",4],["video","Deliverable pack","1 TikTok + raw footage + caption","OK",5],["safe","Compliance rules","No SPF medical claim, disclosure required","OK",6]])}
+        ${metrics("Brief output", [["Creator slots","20"],["Fee per creator","Rp850K"],["Usage rights","30 hari"],["Expected reach","350K+"]])}
+      `,
+      () => `
+        ${tabs([["Top match",4],["Nano",4],["UGC",4],["Saved",5],["Invited",5]], 0)}
+        ${featureGrid([["tag","Niche",4],["sparkles","Tone",4],["users","Audience",4],["pin","City",4],["safe","Risk",4],["dollar","Rate",5],["chart","ER",4],["award","Save",5]])}
+        <div class="section-title">Search filters & result</div>
+        ${denseRows([["sun","Rani Putri","94% match, beauty hemat, Bandung","Invite",5],["sparkles","Alya Nabila","91% match, skincare routine, Jakarta","Invite",5],["briefcase","Dimas Yoga","87% match, active lifestyle","Save",5],["tag","Sari Dewi","84% match, mom daily routine","Save",5]])}
+        ${metrics("Search result logic", [["Filters active","8"],["Creators found","126"],["High confidence","31"],["Low risk only","On"]])}
+      `,
+      () => `
+        ${featureGrid([["doc","Shortlist",5],["chat","Invite copy",5],["dollar","Offer",5],["users","Slots",5],["clock","Deadline",5],["refresh","Batch",5],["send","Chat",6],["mail","Send",6]])}
+        <div class="section-title">Invite workflow</div>
+        ${denseRows([["sun","Rani Putri","Personalized invite from AI Resume","Send",6],["sparkles","Alya Nabila","Needs fee confirmation","Edit",5],["briefcase","Dimas Yoga","Saved for batch 3","Hold",4],["users","Batch control","12 ready, 8 remaining slots","Run",6]])}
+        ${metrics("Shortlist readiness", [["Selected","12/20"],["Avg match","91%"],["Budget impact","Rp10.2Jt"],["Invite status","Queued"]])}
+      `,
+      () => `
+        ${tabs([["Drafts",6],["Checklist",6],["Revision",6],["Approved",7]], 0)}
+        ${featureGrid([["video","Drafts",6],["check","Checklist",6],["document","Claims",6],["doc","Caption",6],["refresh","Revision",6],["check_circle","Approve",7],["chat","Chat",6],["video","Asset",7]])}
+        <div class="section-title">Review queue</div>
+        ${denseRows([["sun","Rani draft_v1.mp4","Product visible, disclosure ready","Approve",7],["sparkles","Alya draft_v2.mp4","Needs caption revision","Fix",6],["briefcase","Dimas concept","Awaiting upload","Wait",6],["safe","AI compliance check","No risky claim detected","Pass",7]])}
+        ${metrics("Approval state", [["Drafts waiting","5"],["Passed AI check","4"],["Needs revision","1"],["SLA remaining","18 jam"]])}
+      `,
+      () => `
+        ${featureGrid([["chart","Reach",7],["sparkles","Engage",7],["dollar","ROI",7],["video","Assets",7],["award","Top",4],["dollar","Cost",7],["download","Export",7],["refresh","Next",3]])}
+        <div class="section-title">Campaign report detail</div>
+        ${denseRows([["chart","Campaign total","412K reach, 7.9% avg engagement","View",7],["sun","Rani Putri","Best save rate and organic comments","Top",4],["sparkles","Alya Nabila","Highest reach from batch","Top",4],["tag","Next recommendation","Retarget campus creators batch 2","Plan",3]])}
+        ${metrics("Management summary", [["Content delivered","28"],["Creator completed","20"],["ROI estimate","2.8x"],["Export format","PDF/CSV"]])}
+      `
+    ];
+
+    // APPLICATION STATE
+    const navs = ["Home", "Feed", "Identity", "Rewards", "Profile"];
+    const state = { flow: "people", index: 0 };
+
+    const navTargets = {
+      people: { Home: 0, Feed: 6, Identity: 4, Rewards: 9, Profile: 5 },
+      brand: { Home: 2, Feed: 4, Identity: 3, Rewards: 7, Profile: 1 }
+    };
+
+    const stepsEl = document.getElementById("steps");
+    const phoneEl = document.getElementById("phoneContent");
+    const phoneScreenEl = document.getElementById("phoneScreen");
+    const navEl = document.getElementById("bottomNav");
+    const titleEl = document.getElementById("processTitle");
+    const summaryEl = document.getElementById("processSummary");
+    const journeyEl = document.getElementById("journey");
+    const logEl = document.getElementById("systemLog");
+    const toastEl = document.getElementById("phoneToast");
+    const toastMsgEl = document.getElementById("toastMsg");
+    const toastIconEl = document.getElementById("toastIcon");
+    const drawerEl = document.getElementById("phoneDrawer");
+    const drawerBodyEl = document.getElementById("drawerBody");
+
+    function currentData() {
+      return state.flow === "people" ? people : brand;
+    }
+
+    // Interactive Toast Function
+    let toastTimeout = null;
+    function showToast(msg, iconSvg = ICONS.check) {
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastMsgEl.textContent = msg;
+      toastIconEl.innerHTML = iconSvg;
+      toastEl.classList.add("show");
+      toastTimeout = setTimeout(() => {
+        toastEl.classList.remove("show");
+      }, 2600);
+    }
+
+    // Toggle chip active state
+    function toggleChip(el) {
+      el.classList.toggle("selected");
+      showToast("Filter: " + el.textContent);
+    }
+
+    // Simulate AI Generation with live feedback
+    function simulateAI() {
+      showToast("AI memindai 428 konten sosial...", ICONS.sparkles);
+    }
+
+    // Interactive Bio Editor Drawer
+    function openBioEditor() {
+      drawerBodyEl.innerHTML = `
+        <div class="drawer-handle" onclick="closeDrawer()"></div>
+        <h3 class="drawer-title">Edit Bio AI Resume</h3>
+        <p class="drawer-desc">Sesuaikan positioning diri kamu agar relevan dengan campaign brand impianmu.</p>
+        <textarea id="editBioInput" style="width:100%;height:80px;border-radius:12px;border:1px solid #ebd8d2;padding:10px;font-family:inherit;font-size:11px;color:var(--accent);margin-bottom:12px">Rani membuat konten beauty hemat dan daily campus life dengan gaya hangat, jujur, dan mudah diikuti.</textarea>
+        <button class="cta white-cta" onclick="saveBio()">
+          <span>Simpan Perubahan Bio</span>
+        </button>
+      `;
+      drawerEl.classList.add("open");
+    }
+
+    function saveBio() {
+      const val = document.getElementById("editBioInput").value;
+      const target = document.getElementById("bioText");
+      if (target) target.textContent = val;
+      closeDrawer();
+      showToast("Bio berhasil diperbarui!");
+    }
+
+    // Interactive Payout Drawer
+    function openPayoutDrawer() {
+      drawerBodyEl.innerHTML = `
+        <div class="drawer-handle" onclick="closeDrawer()"></div>
+        <h3 class="drawer-title">Tarik Saldo ke Rekening</h3>
+        <p class="drawer-desc">Pilih rekening tujuan penarikan dana payout BrandxSociety.</p>
+        <div class="radio-card active" onclick="selectBank(this)">
+          <div>
+            <strong>BCA (Bank Central Asia)</strong>
+            <span>8291 •••• •••• - Rani Putri Lestari</span>
+          </div>
+          <span style="color:var(--primary)">${ICONS.check_circle}</span>
+        </div>
+        <div class="radio-card" onclick="selectBank(this)">
+          <div>
+            <strong>Bank Mandiri</strong>
+            <span>1310 •••• •••• - Rani Putri Lestari</span>
+          </div>
+          <span style="color:var(--muted)">${ICONS.building}</span>
+        </div>
+        <div class="radio-card" onclick="selectBank(this)">
+          <div>
+            <strong>GoPay Creator Wallet</strong>
+            <span>0812 •••• 9831</span>
+          </div>
+          <span style="color:var(--muted)">${ICONS.wallet}</span>
+        </div>
+        <div style="background:#fff9e6;border:1px solid #ebd67e;padding:9px 12px;border-radius:10px;margin:10px 0;font-size:9.5px;color:#854d0e">
+          <strong>Biaya Admin: Rp0 (Promo Bebas Biaya)</strong><br>
+          Estimasi dana masuk: Instant (1-5 menit).
+        </div>
+        <button class="cta" onclick="confirmWithdraw()">
+          <span>Konfirmasi Tarik Rp1.450.000</span>
+        </button>
+      `;
+      drawerEl.classList.add("open");
+    }
+
+    function selectBank(card) {
+      document.querySelectorAll(".radio-card").forEach(c => c.classList.remove("active"));
+      card.classList.add("active");
+    }
+
+    function confirmWithdraw() {
+      closeDrawer();
+      const balEl = document.getElementById("creatorBalance");
+      if (balEl) balEl.textContent = "Rp0";
+      showToast("Penarikan Rp1.450.000 ke BCA berhasil dikirim!", ICONS.check_circle);
+    }
+
+    // Interactive Notification Drawer
+    function openNotifications() {
+      drawerBodyEl.innerHTML = `
+        <div class="drawer-handle" onclick="closeDrawer()"></div>
+        <h3 class="drawer-title">Notifikasi Terkini</h3>
+        <p class="drawer-desc">Aktivitas dan pembaruan campaign akun kamu.</p>
+        <div class="social" style="margin-bottom:6px">
+          <div class="social-icon" style="background:#eafaf1;color:#1b873f">${ICONS.check}</div>
+          <div><strong>GlowDaily menyetujui draft kamu</strong><p class="muted">Payout Rp850.000 telah dirilis ke saldo</p></div>
+        </div>
+        <div class="social" style="margin-bottom:6px">
+          <div class="social-icon" style="background:#fff3d0;color:#996515">${ICONS.sparkles}</div>
+          <div><strong>Match baru: Kopi Sore</strong><p class="muted">Komisi 15% untuk nano creator kampus</p></div>
+        </div>
+        <div class="social">
+          <div class="social-icon" style="background:#f0e5fc;color:#6b21a8">${ICONS.chart}</div>
+          <div><strong>Creator score naik ke 94</strong><p class="muted">Karena menyelesaikan submission tepat waktu</p></div>
+        </div>
+        <button class="cta white-cta" style="margin-top:10px" onclick="closeDrawer()">Tutup</button>
+      `;
+      drawerEl.classList.add("open");
+    }
+
+    function closeDrawer() {
+      drawerEl.classList.remove("open");
+    }
+
+    drawerEl.addEventListener("click", e => {
+      if (e.target === drawerEl) closeDrawer();
+    });
+
+    // RENDER STEPS IN LEFT NAVIGATOR
+    function renderSteps() {
+      stepsEl.innerHTML = currentData().map((step, index) => `
+        <button class="step-btn ${index === state.index ? "active" : ""}" data-index="${index}">
+          <span class="step-no">${index + 1}</span>
+          <span class="step-title">${step.title}</span>
+        </button>
+      `).join("");
+    }
+
+    // RENDER MOBILE PHONE SCREEN
+    function renderPhone(step) {
+      phoneEl.classList.add("swap");
+      window.setTimeout(() => {
+        // App header with Back button & Notification bell
+        const hasBack = state.index > 0;
+        const appHeaderHtml = `
+          <div class="app-head">
+            <div class="app-head-left">
+              ${hasBack ? `
+                <div class="round-action" onclick="goBack()" title="Kembali">
+                  ${ICONS.back}
+                </div>
+              ` : ""}
+              <div style="min-width:0">
+                <strong>${state.flow === "people" ? (state.index < 2 ? "Hi, Rani" : "Rani's Creator Hub") : "GlowDaily Studio"}</strong>
+                <span>${step.title}</span>
+              </div>
+            </div>
+            <div class="app-head-actions">
+              <div class="round-action has-badge" onclick="openNotifications()" title="Notifikasi">
+                ${ICONS.bell}
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Render main content combined with rich interactive modules
+        const moduleHtml = state.flow === "people" 
+          ? (peopleModules[state.index] ? peopleModules[state.index]() : "") 
+          : (brandModules[state.index] ? brandModules[state.index]() : "");
+
+        phoneEl.innerHTML = appHeaderHtml + step.html + moduleHtml;
+
+        // Render bottom navigation with completely distinct signature icons & active indicators
+        navEl.innerHTML = navs.map(item => {
+          const isActive = item === step.nav;
+          return `
+            <div class="nav-item ${isActive ? "active" : ""}" data-go="${navTargets[state.flow][item]}">
+              <span class="nav-icon">${resolveNavIcon(item, isActive)}</span>
+              <span>${item}</span>
+              <span class="nav-indicator"></span>
+            </div>
+          `;
+        }).join("");
+
+        phoneEl.scrollTop = 0;
+        phoneEl.classList.remove("swap");
+      }, 140);
+    }
+
+    function goBack() {
+      if (state.index > 0) {
+        goToTarget(state.index - 1);
+      }
+    }
+
+    function goToTarget(rawTarget) {
+      if (rawTarget === undefined || rawTarget === null || rawTarget === "") return;
+      const target = String(rawTarget);
+      if (target.includes(":")) {
+        const [flow, idx] = target.split(":");
+        state.flow = flow;
+        state.index = Number(idx);
+        document.querySelectorAll(".switcher button").forEach(item => item.classList.toggle("active", item.dataset.flow === flow));
+      } else {
+        state.index = Math.max(0, Math.min(Number(target), currentData().length - 1));
+      }
+      render();
+    }
+
+    // RENDER RIGHT PROCESS & LOG
+    function renderProcess(step) {
+      titleEl.textContent = step.title;
+      summaryEl.textContent = step.summary;
+      journeyEl.innerHTML = step.parts.map(part => `<li>${part}</li>`).join("");
+      logEl.innerHTML = step.logs.map(line => {
+        const time = line.slice(0, 7);
+        const text = line.slice(8);
+        return `<div class="log-line">${time} <span>${text}</span></div>`;
+      }).join("");
+    }
+
+    function render() {
+      const step = currentData()[state.index];
+      renderSteps();
+      renderPhone(step);
+      renderProcess(step);
+    }
+
+    // Flow Switcher (People / Brand)
+    document.querySelectorAll(".switcher button").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".switcher button").forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+        state.flow = button.dataset.flow;
+        state.index = 0;
+        render();
+        showToast("Beralih ke " + (state.flow === "people" ? "People Demo" : "Brand Demo"));
+      });
+    });
+
+    // Left Navigator Click
+    stepsEl.addEventListener("click", event => {
+      const button = event.target.closest(".step-btn");
+      if (!button) return;
+      state.index = Number(button.dataset.index);
+      render();
+    });
+
+    // Mobile Phone Screen Interactive Delegations
+    document.querySelector(".screen").addEventListener("click", event => {
+      const target = event.target.closest("[data-go]");
+      if (!target) return;
+      goToTarget(target.dataset.go);
+    });
+
+    // ==========================================
+    // DIRECT TOUCH & MOUSE SWIPE / DRAG GESTURES
+    // (Native App Experience without scroll buttons)
+    // ==========================================
+
+    function setupNativeGestures() {
+      // 1. Phone Screen Horizontal Swipe & Vertical Drag
+      let startX = 0;
+      let startY = 0;
+      let isDraggingPhone = false;
+      let phoneScrollTopStart = 0;
+      let isHorizontalSwipe = false;
+
+      phoneEl.addEventListener("mousedown", e => {
+        if (e.target.closest("button") || e.target.closest(".cta") || e.target.closest(".quick") || e.target.closest(".dense-row") || e.target.closest(".input") || e.target.closest(".chip") || e.target.closest(".round-action") || e.target.closest(".video-play-btn")) {
+          // allow button clicks normally
+        }
+        isDraggingPhone = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        phoneScrollTopStart = phoneEl.scrollTop;
+        isHorizontalSwipe = false;
+      });
+
+      window.addEventListener("mousemove", e => {
+        if (!isDraggingPhone) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        // If dragging more horizontally, indicate horizontal swipe
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 12) {
+          isHorizontalSwipe = true;
+          phoneScreenEl.classList.add("gesture-active");
+        } else if (!isHorizontalSwipe) {
+          // Drag vertical scroll inside phone content
+          phoneEl.scrollTop = phoneScrollTopStart - dy;
+        }
+      });
+
+      window.addEventListener("mouseup", e => {
+        if (!isDraggingPhone) return;
+        isDraggingPhone = false;
+        phoneScreenEl.classList.remove("gesture-active");
+
+        const dx = e.clientX - startX;
+        if (isHorizontalSwipe && Math.abs(dx) > 42) {
+          if (dx < -42) {
+            // Swiped left -> next screen
+            if (state.index < currentData().length - 1) {
+              goToTarget(state.index + 1);
+              showToast("Swipe: " + currentData()[state.index].title);
+            }
+          } else if (dx > 42) {
+            // Swiped right -> previous screen
+            if (state.index > 0) {
+              goToTarget(state.index - 1);
+              showToast("Swipe: " + currentData()[state.index].title);
+            }
+          }
+        }
+      });
+
+      // Touch Events for Mobile / Touchscreen
+      phoneEl.addEventListener("touchstart", e => {
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        phoneScrollTopStart = phoneEl.scrollTop;
+        isHorizontalSwipe = false;
+      }, { passive: true });
+
+      phoneEl.addEventListener("touchmove", e => {
+        const touch = e.touches[0];
+        const dx = touch.clientX - startX;
+        const dy = touch.clientY - startY;
+
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 15) {
+          isHorizontalSwipe = true;
+          phoneScreenEl.classList.add("gesture-active");
+        } else {
+          phoneScreenEl.classList.remove("gesture-active");
+        }
+      }, { passive: true });
+
+      phoneEl.addEventListener("touchend", e => {
+        phoneScreenEl.classList.remove("gesture-active");
+        if (isHorizontalSwipe) {
+          const touch = e.changedTouches[0];
+          const dx = touch.clientX - startX;
+          if (dx < -45 && state.index < currentData().length - 1) {
+            goToTarget(state.index + 1);
+          } else if (dx > 45 && state.index > 0) {
+            goToTarget(state.index - 1);
+          }
+        }
+      });
+
+      // 2. Left Navigator Steps List Drag-to-Scroll
+      let isDraggingSteps = false;
+      let stepsStartY = 0;
+      let stepsScrollTopStart = 0;
+
+      stepsEl.addEventListener("mousedown", e => {
+        isDraggingSteps = true;
+        stepsStartY = e.clientY;
+        stepsScrollTopStart = stepsEl.scrollTop;
+      });
+
+      window.addEventListener("mousemove", e => {
+        if (!isDraggingSteps) return;
+        const dy = e.clientY - stepsStartY;
+        stepsEl.scrollTop = stepsScrollTopStart - dy;
+      });
+
+      window.addEventListener("mouseup", () => {
+        isDraggingSteps = false;
+      });
+    }
+
+    // Initialize UI & Gestures
+    render();
+    setupNativeGestures();
+  </script>
 </body>
 </html>
