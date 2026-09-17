@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BrandxSociety — Live Interactive Prototype Demo</title>
+  <title>BrandxSociety — Interactive Prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -15,14 +15,13 @@
       --primary-soft: #F9ECEC;   /* Marun Soft Tint */
       --secondary: #FCDB00;      /* Kuning Emas Highlight */
       --secondary-dark: #D4B800; /* Emas Terang Gelap */
-      --secondary-soft: #FFFDE6; /* Soft Gold Tint */
       --accent: #280605;         /* Coklat Gelap Teks Korporat */
       --text-muted: #6E5A59;     /* Teks Muted */
-      --line: #EADBDA;           /* Border Line Subtle */
-      --neutral-bg: #F6F4F0;     /* Background Netral Lembut */
+      --line: #E8E4DE;           /* Border Line Warm Light Gray */
+      --neutral-bg: #FDF8F0;     /* Warm Soft Background */
       --white: #FFFFFF;
-      --card-shadow: 0 10px 30px rgba(40, 6, 5, 0.06);
-      --phone-shadow: 0 25px 70px rgba(40, 6, 5, 0.22);
+      --card-shadow: 0px 2px 8px rgba(40, 6, 5, 0.06);
+      --phone-shadow: 0px 16px 48px rgba(40, 6, 5, 0.16);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,59 +30,60 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--neutral-bg);
       background-image: 
-        radial-gradient(circle at 10% 10%, rgba(252, 219, 0, 0.08), transparent 30%),
-        radial-gradient(circle at 90% 90%, rgba(127, 17, 16, 0.07), transparent 35%);
+        radial-gradient(circle at 10% 10%, rgba(252, 219, 0, 0.05), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(127, 17, 16, 0.05), transparent 40%),
+        #FDF8F0;
       color: var(--accent);
       min-height: 100vh;
-      padding: 20px;
+      padding: 32px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
 
-    /* Top Bar Header */
+    /* Top Global Header */
     .top-header {
       width: 100%;
-      max-width: 1400px;
+      max-width: 1440px;
+      margin: 0 auto 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
     }
 
     .brand-logo-global {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       font-weight: 800;
-      font-size: 22px;
+      font-size: 24px;
       color: var(--primary);
       text-decoration: none;
+      letter-spacing: -0.015em;
     }
 
     .brand-logo-global .logo-badge {
       background: var(--primary);
       color: var(--secondary);
-      padding: 4px 10px;
+      padding: 4px 8px;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
-      letter-spacing: -0.5px;
     }
 
     .demo-tag {
       background: var(--white);
       border: 1px solid var(--line);
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: 99px;
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 600;
       color: var(--accent);
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      box-shadow: var(--card-shadow);
     }
 
     .demo-tag .pulse {
@@ -91,67 +91,55 @@
       height: 8px;
       border-radius: 50%;
       background: #2C8A61;
-      box-shadow: 0 0 0 0 rgba(44, 138, 97, 0.7);
-      animation: pulse-green 2s infinite;
     }
 
-    @keyframes pulse-green {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(44, 138, 97, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(44, 138, 97, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(44, 138, 97, 0); }
-    }
-
-    /* Main 3-Panel Grid Container */
+    /* Main 3-Panel Asymmetric Layout Container */
     .app-container {
       width: 100%;
-      max-width: 1400px;
+      max-width: 1440px;
+      margin: 0 auto;
       display: grid;
-      grid-template-columns: 350px 420px 1fr;
-      gap: 20px;
-      align-items: stretch;
+      grid-template-columns: 26% 30% 44%;
+      gap: 24px;
+      align-items: start;
     }
 
-    /* PANEL 1: DEMO NAVIGATOR */
+    /* PANEL 1: DEMO NAVIGATOR (LEFT) */
     .panel-left {
       background: var(--white);
       border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 20px;
+      border-radius: 20px;
+      padding: 32px;
       box-shadow: var(--card-shadow);
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      max-height: 850px;
+      gap: 24px;
+      max-height: 880px;
       overflow-y: auto;
     }
 
-    .panel-left-header {
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 12px;
-    }
-
     .panel-left-header .sub-badge {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
+      font-size: 13px;
+      font-weight: 700;
       text-transform: uppercase;
       color: var(--primary);
-      margin-bottom: 4px;
+      margin-bottom: 8px;
       display: block;
     }
 
     .panel-left-header h2 {
-      font-size: 19px;
+      font-size: 40px;
       font-weight: 800;
       color: var(--accent);
-      line-height: 1.25;
-      margin-bottom: 6px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
     }
 
     .panel-left-header p {
-      font-size: 12px;
+      font-size: 16px;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
     .flow-toggle {
@@ -159,37 +147,36 @@
       background: var(--neutral-bg);
       border: 1px solid var(--line);
       padding: 4px;
-      border-radius: 14px;
+      border-radius: 12px;
       gap: 4px;
     }
 
     .flow-btn {
       flex: 1;
-      padding: 9px 10px;
+      padding: 12px 16px;
       border: none;
       background: transparent;
       border-radius: 10px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--text-muted);
       cursor: pointer;
-      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .flow-btn.active {
       background: var(--primary);
       color: var(--white);
-      box-shadow: 0 4px 12px rgba(127, 17, 16, 0.25);
+      box-shadow: 0px 2px 8px rgba(127, 17, 16, 0.2);
     }
 
     .flow-btn .badge-num {
       background: var(--secondary);
       color: var(--accent);
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 800;
       padding: 2px 6px;
       border-radius: 99px;
@@ -198,41 +185,34 @@
     .menu-list {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 16px;
     }
 
     .menu-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
+      gap: 16px;
+      padding: 12px 16px;
       border-radius: 12px;
       background: var(--white);
       border: 1px solid var(--line);
       color: var(--accent);
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s ease;
       text-align: left;
-    }
-
-    .menu-item:hover {
-      border-color: var(--primary);
-      background: var(--primary-soft);
-      transform: translateX(3px);
     }
 
     .menu-item.active {
       background: var(--primary);
       color: var(--white);
       border-color: var(--primary);
-      box-shadow: 0 6px 18px rgba(127, 17, 16, 0.2);
+      box-shadow: 0px 4px 12px rgba(127, 17, 16, 0.25);
     }
 
     .menu-item .step-num {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       border-radius: 8px;
       background: var(--neutral-bg);
       color: var(--accent);
@@ -249,30 +229,26 @@
       color: var(--accent);
     }
 
-    .menu-item .arrow {
+    .menu-item svg {
       margin-left: auto;
-      font-size: 13px;
-      opacity: 0.5;
+      flex-shrink: 0;
     }
 
-    .menu-item.active .arrow {
-      opacity: 1;
-      color: var(--secondary);
-    }
-
-    /* PANEL 2: PHONE MOCKUP */
+    /* PANEL 2: PHONE MOCKUP (CENTER - ELEVATED VERTICALLY BY -24PX) */
     .panel-center {
       display: flex;
       justify-content: center;
       align-items: center;
+      margin: 0 48px;
+      transform: translateY(-24px); /* Asymmetric Vertical Offset */
     }
 
     .phone-frame {
-      width: 400px;
-      height: 850px;
+      width: 420px;
+      height: 860px;
       background: #1A0A0B;
       border: 10px solid #280605;
-      border-radius: 44px;
+      border-radius: 20px;
       box-shadow: var(--phone-shadow);
       position: relative;
       overflow: hidden;
@@ -281,13 +257,13 @@
     }
 
     .phone-status-bar {
-      height: 36px;
+      height: 38px;
       background: var(--white);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 22px;
-      font-size: 12px;
+      padding: 0 24px;
+      font-size: 13px;
       font-weight: 800;
       color: var(--accent);
       z-index: 20;
@@ -317,8 +293,8 @@
 
     .phone-screen {
       display: none;
-      padding: 14px;
-      padding-bottom: 74px;
+      padding: 16px;
+      padding-bottom: 76px;
       opacity: 0;
       transform: translateY(4px);
       transition: opacity 0.2s ease, transform 0.2s ease;
@@ -333,7 +309,7 @@
     }
 
     .phone-nav-bar {
-      height: 62px;
+      height: 64px;
       background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(12px);
       border-top: 1px solid var(--line);
@@ -355,103 +331,100 @@
       align-items: center;
       justify-content: center;
       gap: 2px;
-      font-size: 10px;
-      font-weight: 800;
+      font-size: 11px;
+      font-weight: 700;
       color: var(--text-muted);
       cursor: pointer;
     }
 
-    .p-nav-btn .icon { font-size: 17px; }
     .p-nav-btn.active { color: var(--primary); }
 
-    /* COLLABSTR-GRADE DENSE UI COMPONENTS */
+    /* CARD COMPONENTS IN PHONE */
     .p-card {
       background: var(--white);
       border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 14px;
-      margin-bottom: 10px;
-      box-shadow: 0 4px 14px rgba(40, 6, 5, 0.03);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: var(--card-shadow);
     }
 
     .p-hero-card {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: var(--white);
       border-radius: 20px;
-      padding: 16px;
-      margin-bottom: 12px;
-      box-shadow: 0 8px 24px rgba(127, 17, 16, 0.25);
+      padding: 32px;
+      margin-bottom: 16px;
+      box-shadow: 0px 8px 24px rgba(127, 17, 16, 0.2);
     }
 
     .p-hero-card .tag-gold {
       background: var(--secondary);
       color: var(--accent);
-      padding: 3px 8px;
+      padding: 4px 8px;
       border-radius: 99px;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 800;
       display: inline-block;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .p-hero-card h3 {
-      font-size: 18px;
+      font-size: 24px;
       font-weight: 800;
-      line-height: 1.25;
-      margin-bottom: 4px;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      margin-bottom: 8px;
     }
 
     .p-hero-card p {
-      font-size: 11px;
+      font-size: 13px;
       opacity: 0.9;
-      line-height: 1.35;
-      margin-bottom: 10px;
+      line-height: 1.4;
+      margin-bottom: 16px;
     }
 
     .p-stat-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
+      gap: 8px;
     }
 
     .p-stat-box {
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 6px;
-      border-radius: 10px;
+      padding: 8px;
+      border-radius: 8px;
       text-align: center;
     }
 
-    .p-stat-box b { display: block; font-size: 14px; font-weight: 800; }
-    .p-stat-box span { font-size: 9px; opacity: 0.85; text-transform: uppercase; font-weight: 700; }
+    .p-stat-box b { display: block; font-size: 16px; font-weight: 800; }
+    .p-stat-box span { font-size: 11px; opacity: 0.85; font-weight: 600; }
 
     .btn-primary-p {
       width: 100%;
       background: var(--primary);
       color: var(--white);
       border: none;
-      padding: 12px;
+      padding: 12px 16px;
       border-radius: 12px;
-      font-size: 12px;
-      font-weight: 800;
+      font-size: 13px;
+      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(127, 17, 16, 0.22);
-      transition: background 0.2s;
+      box-shadow: 0px 4px 12px rgba(127, 17, 16, 0.2);
     }
-
-    .btn-primary-p:hover { background: var(--primary-dark); }
 
     .btn-gold-p {
       width: 100%;
       background: var(--secondary);
       color: var(--accent);
       border: none;
-      padding: 12px;
+      padding: 12px 16px;
       border-radius: 12px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(252, 219, 0, 0.25);
+      box-shadow: 0px 4px 12px rgba(252, 219, 0, 0.25);
     }
 
     .btn-secondary-p {
@@ -459,9 +432,9 @@
       background: var(--white);
       color: var(--accent);
       border: 1px solid var(--line);
-      padding: 11px;
+      padding: 12px 16px;
       border-radius: 12px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
     }
@@ -472,18 +445,18 @@
       gap: 4px;
       background: var(--secondary);
       color: var(--accent);
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 800;
-      padding: 3px 8px;
+      padding: 4px 8px;
       border-radius: 99px;
     }
 
     .badge-maroon {
       background: var(--primary-soft);
       color: var(--primary);
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 800;
-      padding: 3px 8px;
+      padding: 4px 8px;
       border-radius: 99px;
     }
 
@@ -492,30 +465,30 @@
       background: var(--neutral-bg);
       border: 1px solid var(--line);
       color: var(--accent);
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
-      padding: 3px 8px;
+      padding: 4px 8px;
       border-radius: 99px;
-      margin-right: 3px;
+      margin-right: 4px;
       margin-bottom: 4px;
     }
 
     .opp-item {
       display: flex;
-      gap: 10px;
+      gap: 16px;
       align-items: flex-start;
-      padding: 10px;
+      padding: 16px;
       background: var(--white);
       border: 1px solid var(--line);
-      border-radius: 14px;
-      margin-bottom: 8px;
+      border-radius: 12px;
+      margin-bottom: 16px;
       cursor: pointer;
     }
 
     .opp-logo {
       width: 40px;
       height: 40px;
-      border-radius: 10px;
+      border-radius: 8px;
       background: var(--primary);
       color: var(--secondary);
       display: grid;
@@ -526,42 +499,40 @@
     }
 
     .opp-info { flex: 1; }
-    .opp-info h4 { font-size: 12px; font-weight: 800; color: var(--accent); margin-bottom: 1px; }
-    .opp-info p { font-size: 10px; color: var(--text-muted); }
-    .opp-info .money { font-size: 12px; font-weight: 800; color: var(--primary); margin-top: 2px; }
+    .opp-info h4 { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 2px; }
+    .opp-info p { font-size: 11px; color: var(--text-muted); }
+    .opp-info .money { font-size: 13px; font-weight: 800; color: var(--primary); margin-top: 4px; }
 
-    /* Media Thumbnails Grid */
     .media-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
+      gap: 8px;
       margin: 8px 0;
     }
 
     .media-thumb {
-      background: #000;
+      background: #1A0A0B;
       color: #fff;
-      border-radius: 10px;
+      border-radius: 8px;
       height: 70px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
       text-align: center;
       padding: 4px;
     }
 
-    .media-thumb span { font-size: 9px; opacity: 0.8; margin-top: 2px; }
+    .media-thumb span { font-size: 10px; opacity: 0.8; margin-top: 2px; }
 
-    /* Progress bar smooth animation */
     .progress-bar-container {
       height: 8px;
       background: var(--line);
       border-radius: 99px;
       overflow: hidden;
-      margin: 10px 0;
+      margin: 16px 0;
     }
 
     .progress-bar-fill {
@@ -572,58 +543,60 @@
       transition: width 0.3s ease;
     }
 
-    /* PANEL 3: LIVE BUSINESS PROCESS */
+    /* PANEL 3: LIVE BUSINESS PROCESS (RIGHT) */
     .panel-right {
       background: var(--white);
       border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 20px;
+      border-radius: 20px;
+      padding: 32px;
       box-shadow: var(--card-shadow);
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      max-height: 850px;
+      gap: 24px;
+      max-height: 880px;
       overflow-y: auto;
     }
 
     .panel-right-header .tag-process {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
+      font-size: 13px;
+      font-weight: 700;
       text-transform: uppercase;
       color: var(--primary);
-      margin-bottom: 4px;
+      margin-bottom: 8px;
       display: block;
     }
 
     .panel-right-header h2 {
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 800;
       color: var(--accent);
-      margin-bottom: 6px;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      margin-bottom: 8px;
     }
 
     .panel-right-header p {
-      font-size: 12px;
+      font-size: 16px;
       color: var(--text-muted);
-      line-height: 1.45;
+      line-height: 1.5;
+      max-width: 480px; /* Text Density Constraint */
     }
 
     .breakdown-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 16px;
       flex: 1;
     }
 
     .breakdown-card {
       display: flex;
-      gap: 12px;
+      gap: 16px;
       align-items: flex-start;
       background: var(--neutral-bg);
       border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px;
+      border-radius: 12px;
+      padding: 24px;
     }
 
     .breakdown-card .num-badge {
@@ -640,27 +613,26 @@
       flex-shrink: 0;
     }
 
-    .breakdown-card .content { flex: 1; }
-    .breakdown-card .content h4 { font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 1px; }
-    .breakdown-card .content .journey-tag { font-size: 9px; font-weight: 700; color: var(--primary); margin-bottom: 3px; display: block; }
-    .breakdown-card .content p { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+    .breakdown-card .content { flex: 1; max-width: 480px; }
+    .breakdown-card .content h4 { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 4px; line-height: 1.2; }
+    .breakdown-card .content .journey-tag { font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 4px; display: block; }
+    .breakdown-card .content p { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
 
     .system-log-box {
       background: #180504;
       border: 1px solid #3A0C09;
-      border-radius: 16px;
-      padding: 14px;
+      border-radius: 12px;
+      padding: 16px;
       color: #E2D5D4;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
+      font-size: 11px;
     }
 
     .system-log-box .log-title {
       color: var(--secondary);
       font-weight: 700;
       text-transform: uppercase;
-      font-size: 9px;
-      letter-spacing: 0.08em;
+      font-size: 11px;
       margin-bottom: 8px;
       display: flex;
       align-items: center;
@@ -677,17 +649,29 @@
     .log-entries {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
       max-height: 120px;
       overflow-y: auto;
     }
 
-    .log-line { line-height: 1.35; }
+    .log-line { line-height: 1.4; }
     .log-line .ts { color: #8C7270; }
     .log-line .highlight { color: var(--secondary); }
 
+    /* SVG Inline Icon Utilities */
+    .icon-svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
     @media (max-width: 1200px) {
       .app-container { grid-template-columns: 1fr; max-width: 500px; }
+      .panel-center { margin: 0; transform: none; }
       .panel-left, .panel-right { max-height: none; }
     }
   </style>
@@ -701,14 +685,14 @@
     </a>
     <div class="demo-tag">
       <span class="pulse"></span>
-      <span>Live Interactive Prototype Demo — Collabstr-Grade Zero Blank Space UI</span>
+      <span>Live Interactive Prototype Demo — Strict Refactored Design System</span>
     </div>
   </header>
 
   <!-- 3 Panel Layout Container -->
   <main class="app-container">
 
-    <!-- PANEL 1: DEMO NAVIGATOR (LEFT) -->
+    <!-- PANEL 1: DEMO NAVIGATOR (LEFT - 26%) -->
     <section class="panel-left">
       <div class="panel-left-header">
         <span class="sub-badge">Demo Navigator</span>
@@ -719,11 +703,11 @@
       <!-- Flow Toggle Switch -->
       <div class="flow-toggle">
         <button class="flow-btn active" id="btnPeopleFlow" onclick="switchFlow('people')">
-          <span>👤 Customer Flow</span>
+          <span>Customer Flow</span>
           <span class="badge-num">10</span>
         </button>
         <button class="flow-btn" id="btnBrandFlow" onclick="switchFlow('brand')">
-          <span>🏢 Brand Flow</span>
+          <span>Brand Flow</span>
           <span class="badge-num">10</span>
         </button>
       </div>
@@ -731,12 +715,12 @@
       <!-- Step Menu List -->
       <div class="menu-list" id="menuList"></div>
 
-      <div style="background:var(--neutral-bg);border:1px solid var(--line);border-radius:14px;padding:10px;font-size:11px;color:var(--text-muted);line-height:1.4;margin-top:auto;">
-        💡 <b>Tips Demo:</b> Klik langkah mana saja di menu ini atau gunakan tombol di dalam HP untuk melangkah secara interaktif.
+      <div style="background:var(--neutral-bg);border:1px solid var(--line);border-radius:12px;padding:16px;font-size:13px;color:var(--text-muted);line-height:1.4;margin-top:auto;">
+        Klik langkah mana saja di menu ini atau gunakan tombol navigasi di dalam HP untuk melangkah secara interaktif.
       </div>
     </section>
 
-    <!-- PANEL 2: PHONE MOCKUP (CENTER) -->
+    <!-- PANEL 2: PHONE MOCKUP (CENTER - 30%, RAISED -24PX VERTICALLY) -->
     <section class="panel-center">
       <div class="phone-frame">
         <div class="phone-status-bar">
@@ -749,35 +733,35 @@
 
         <nav class="phone-nav-bar" id="phoneNav">
           <button class="p-nav-btn active" data-target="home" onclick="navToStep(0)">
-            <span class="icon">⌂</span>
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
             <span>Home</span>
           </button>
           <button class="p-nav-btn" data-target="explore" onclick="navToStep(5)">
-            <span class="icon">✦</span>
+            <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
             <span>Explore</span>
           </button>
           <button class="p-nav-btn" data-target="identity" onclick="navToStep(3)">
-            <span class="icon">◉</span>
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             <span>Identity</span>
           </button>
           <button class="p-nav-btn" data-target="activity" onclick="navToStep(7)">
-            <span class="icon">✓</span>
+            <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
             <span>Activity</span>
           </button>
           <button class="p-nav-btn" data-target="profile" onclick="navToStep(4)">
-            <span class="icon">☺</span>
+            <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
             <span>Profile</span>
           </button>
         </nav>
       </div>
     </section>
 
-    <!-- PANEL 3: LIVE BUSINESS PROCESS (RIGHT) -->
+    <!-- PANEL 3: LIVE BUSINESS PROCESS (RIGHT - 44%) -->
     <section class="panel-right">
       <div class="panel-right-header">
         <span class="tag-process">Live Business Process</span>
         <h2 id="rightStepTitle">01. Create Identity</h2>
-        <p id="rightStepDesc">User mengisi data dasar untuk memulai pembuatan profil identitas digital komersial.</p>
+        <p id="rightStepDesc">User mengisi data dasar untuk membuat akun identitas digital yang terverifikasi.</p>
       </div>
 
       <div class="breakdown-list" id="rightBreakdown"></div>
@@ -794,42 +778,41 @@
   </main>
 
   <script>
-    // DENSE FULLY-FILLED DATA MODEL FOR BOTH 10-STEP FLOWS (COLLABSTR QUALITY)
+    // DATA MODEL FOR BOTH 10-STEP FLOWS WITH SVG ICONS & STRICT MICRO-COPY
     const peopleFlowData = [
       {
         id: 1,
         title: "Create Identity",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <div style="display:flex;align-items:center;justify-content:space-between;">
               <span class="badge-maroon">Langkah 1 dari 10</span>
-              <span style="font-size:10px;color:var(--text-muted);font-weight:700;">Account Setup</span>
+              <span style="font-size:13px;color:var(--text-muted);font-weight:700;">Account Setup</span>
             </div>
-            <h2 style="font-size:18px;font-weight:800;margin-bottom:2px;">Buat Identitas Digital</h2>
-            <p style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Inisiasi profil creator berdaya saing komersial tinggi.</p>
+            <h2 style="font-size:24px;font-weight:800;margin-bottom:4px;line-height:1.2;">Buat Identitas Digital</h2>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.4;">Inisiasi profil creator berdaya saing komersial tinggi.</p>
             
             <div class="p-card" style="margin-bottom:0;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-                <div style="width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;display:grid;place-items:center;font-size:16px;font-weight:800;">RM</div>
+              <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+                <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;display:grid;place-items:center;font-size:18px;font-weight:800;">RM</div>
                 <div>
                   <b>Rani Maharani</b>
-                  <div style="font-size:10px;color:var(--text-muted);">@ranimahr • Jakarta, ID</div>
+                  <div style="font-size:13px;color:var(--text-muted);">@ranimahr • Jakarta, ID</div>
                 </div>
               </div>
 
-              <label style="font-size:10px;font-weight:700;display:block;margin-bottom:3px;">Bio Singkat & Gaya Konten:</label>
-              <textarea readonly style="width:100%;height:44px;padding:8px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:11px;margin-bottom:8px;">Relatable lifestyle & coffee storyteller. Suka review tempat nongkrong dan gadget praktis.</textarea>
+              <label style="font-size:13px;font-weight:700;display:block;margin-bottom:8px;">Bio Singkat & Gaya Konten:</label>
+              <textarea readonly style="width:100%;height:48px;padding:8px;border:1px solid var(--line);border-radius:12px;font-family:inherit;font-size:13px;margin-bottom:16px;">Relatable lifestyle & coffee storyteller. Suka review tempat nongkrong dan gadget praktis.</textarea>
 
-              <label style="font-size:10px;font-weight:700;display:block;margin-bottom:3px;">Pilih Klaster Kategori Utama:</label>
-              <div style="margin-bottom:8px;">
+              <label style="font-size:13px;font-weight:700;display:block;margin-bottom:8px;">Pilih Kategori Utama:</label>
+              <div style="margin-bottom:16px;">
                 <span class="pill-tag" style="background:var(--primary);color:white;">#Lifestyle</span>
                 <span class="pill-tag" style="background:var(--primary);color:white;">#CoffeeCulture</span>
                 <span class="pill-tag">#PracticalTech</span>
-                <span class="pill-tag">#CampusVibes</span>
               </div>
 
-              <div style="background:var(--neutral-bg);border:1px solid var(--line);padding:8px;border-radius:10px;font-size:10px;color:var(--text-muted);margin-bottom:10px;">
-                📊 <b>Estimasi Jangkauan Awal:</b> ~36.5K Followers Total • 8.8% Engagement Rate
+              <div style="background:var(--neutral-bg);border:1px solid var(--line);padding:16px;border-radius:12px;font-size:13px;color:var(--text-muted);margin-bottom:16px;">
+                <b>Estimasi Jangkauan Awal:</b> ~36.5K Followers Total • 8.8% Engagement Rate
               </div>
 
               <button class="btn-primary-p" onclick="navToStep(1)">Simpan & Lanjut Connect Sosmed →</button>
@@ -837,7 +820,7 @@
           </div>
         `,
         rightTitle: "01. Create Identity (Inisiasi Profil)",
-        rightDesc: "Customer (Creator) memasukkan informasi awal untuk membuat akun identitas digital yang akan terverifikasi.",
+        rightDesc: "Customer (Creator) memasukkan informasi awal untuk membuat akun identitas digital terverifikasi.",
         breakdowns: [
           { num: "1", title: "Registrasi Profil Mandiri", tag: "Part of the user journey", desc: "Creator mengisikan nama, handle unik, bio cerita, dan kategori minat utama." },
           { num: "2", title: "Tag Kategori Awal", tag: "Visible in prototype", desc: "Penentuan klaster konten utama yang mendasari pembacaan awal AI." },
@@ -852,36 +835,32 @@
         id: 2,
         title: "Connect Social Media",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <div style="display:flex;align-items:center;justify-content:space-between;">
               <span class="badge-maroon">Langkah 2 dari 10</span>
-              <span style="font-size:10px;color:var(--text-muted);font-weight:700;">Data Sync</span>
+              <span style="font-size:13px;color:var(--text-muted);font-weight:700;">Data Sync</span>
             </div>
-            <h2 style="font-size:18px;font-weight:800;margin-bottom:2px;">Hubungkan Akun Sosmed</h2>
-            <p style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Hubungkan akun untuk menarik sinyal engagement asli.</p>
+            <h2 style="font-size:24px;font-weight:800;margin-bottom:4px;line-height:1.2;">Hubungkan Akun Sosmed</h2>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.4;">Hubungkan akun untuk menarik sinyal engagement asli.</p>
 
-            <div class="p-card" style="display:flex;align-items:center;justify-content:space-between;padding:10px;margin-bottom:6px;">
-              <div><b>📷 Instagram</b><div style="font-size:10px;color:var(--text-muted);">@ranimahr • 12.4K Follower • 8.4% ER</div></div>
+            <div class="p-card" style="display:flex;align-items:center;justify-content:space-between;padding:16px;margin-bottom:8px;">
+              <div><b>Instagram</b><div style="font-size:13px;color:var(--text-muted);">@ranimahr • 12.4K Follower • 8.4% ER</div></div>
               <span class="badge-status">Connected ✓</span>
             </div>
-            <div class="p-card" style="display:flex;align-items:center;justify-content:space-between;padding:10px;margin-bottom:6px;">
-              <div><b>🎵 TikTok</b><div style="font-size:10px;color:var(--text-muted);">@ranimahr.daily • 24.1K Follower • 9.2% ER</div></div>
+            <div class="p-card" style="display:flex;align-items:center;justify-content:space-between;padding:16px;margin-bottom:8px;">
+              <div><b>TikTok</b><div style="font-size:13px;color:var(--text-muted);">@ranimahr.daily • 24.1K Follower • 9.2% ER</div></div>
               <span class="badge-status">Connected ✓</span>
             </div>
-            <div class="p-card" style="display:flex;align-items:center;justify-content:space-between;padding:10px;margin-bottom:6px;">
-              <div><b>🐦 X / Twitter</b><div style="font-size:10px;color:var(--text-muted);">@ranimahr_tweet • 5.8K Follower</div></div>
+            <div class="p-card" style="display:flex;align-items:center;justify-content:space-between;padding:16px;margin-bottom:8px;">
+              <div><b>X / Twitter</b><div style="font-size:13px;color:var(--text-muted);">@ranimahr_tweet • 5.8K Follower</div></div>
               <span class="badge-status">Connected ✓</span>
             </div>
-            <div class="p-card" style="display:flex;align-items:center;justify-content:space-between;padding:10px;margin-bottom:8px;opacity:0.7;">
-              <div><b>▶ YouTube</b><div style="font-size:10px;color:var(--text-muted);">Rani Vlogs • 2.1K Sub</div></div>
-              <span class="badge-maroon">+ Connect</span>
+
+            <div style="background:var(--primary-soft);border:1px solid var(--line);padding:16px;border-radius:12px;font-size:13px;color:var(--primary);margin-bottom:16px;">
+              <b>Status Scan:</b> 142 IG posts & 88 TikTok videos siap dianalisis oleh AI.
             </div>
 
-            <div style="background:var(--primary-soft);border:1px solid var(--line);padding:8px;border-radius:10px;font-size:10px;color:var(--primary);margin-bottom:8px;">
-              🔍 <b>Status Scan:</b> 142 IG posts & 88 TikTok videos siap dianalisis oleh AI.
-            </div>
-
-            <button class="btn-primary-p" onclick="startAiBuildProcess()">Hubungkan & Generate AI Resume ✨</button>
+            <button class="btn-primary-p" onclick="startAiBuildProcess()">Hubungkan Akun & Generate AI Resume ✨</button>
           </div>
         `,
         rightTitle: "02. Connect Social Media (Multi-Channel Ingestion)",
@@ -900,35 +879,34 @@
         id: 3,
         title: "AI Builds Digital Resume",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;" id="aiLoadingBox">
-            <div class="ai-spinner-box" style="padding:4px 0;text-align:center;">
-              <div class="ai-spinner" style="width:48px;height:48px;margin-bottom:10px;"></div>
-              <h2 style="font-size:17px;font-weight:800;margin-bottom:2px;">AI Membangun Digital Resume</h2>
-              <p style="font-size:11px;color:var(--text-muted);">Menganalisis pola komunikasi, audiens & commercial fit...</p>
+          <div style="display:flex;flex-direction:column;gap:16px;" id="aiLoadingBox">
+            <div style="text-align:center;">
+              <h2 style="font-size:24px;font-weight:800;margin-bottom:4px;line-height:1.2;">AI Membangun Resume</h2>
+              <p style="font-size:13px;color:var(--text-muted);line-height:1.4;">Menganalisis pola komunikasi, audiens & commercial fit...</p>
             </div>
 
             <div class="progress-bar-container">
               <div class="progress-bar-fill" id="aiProgressBar"></div>
             </div>
 
-            <div class="p-card" style="font-size:11px;">
-              <div id="stepCheck1" style="color:#2C8A61;font-weight:800;margin-bottom:5px;">✓ 01 · Membaca topik & kata kunci unggahan</div>
-              <div id="stepCheck2" style="color:#2C8A61;font-weight:800;margin-bottom:5px;">✓ 02 · Mengukur tingkat keaslian engagement</div>
-              <div id="stepCheck3" style="color:var(--primary);font-weight:800;margin-bottom:5px;">⏳ 03 · Memetakan kepribadian & gaya cerita</div>
-              <div id="stepCheck4" style="color:var(--text-muted);margin-bottom:2px;">⚪ 04 · Menyusun komersial positioning vector</div>
+            <div class="p-card" style="font-size:13px;">
+              <div id="stepCheck1" style="color:#2C8A61;font-weight:700;margin-bottom:8px;">✓ 01 · Membaca topik & kata kunci unggahan</div>
+              <div id="stepCheck2" style="color:#2C8A61;font-weight:700;margin-bottom:8px;">✓ 02 · Mengukur tingkat keaslian engagement</div>
+              <div id="stepCheck3" style="color:var(--primary);font-weight:700;margin-bottom:8px;">⏳ 03 · Memetakan kepribadian & gaya cerita</div>
+              <div id="stepCheck4" style="color:var(--text-muted);margin-bottom:4px;">⚪ 04 · Menyusun komersial positioning vector</div>
             </div>
 
-            <div style="background:var(--neutral-bg);border:1px solid var(--line);padding:8px;border-radius:10px;font-size:10px;color:var(--text-muted);">
-              🏷️ <b>Keywords Terdeteksi:</b> #CoffeeCorner #CampusVibes #OOTD #RelatableStory #PracticalTech
+            <div style="background:var(--neutral-bg);border:1px solid var(--line);padding:16px;border-radius:12px;font-size:13px;color:var(--text-muted);">
+              <b>Keywords Terdeteksi:</b> #CoffeeCorner #CampusVibes #OOTD #RelatableStory #PracticalTech
             </div>
 
-            <div id="aiDoneBtnBox" style="margin-top:4px;">
+            <div id="aiDoneBtnBox" style="margin-top:8px;">
               <button class="btn-gold-p" onclick="navToStep(3)">Lihat Hasil AI Resume Saya →</button>
             </div>
           </div>
         `,
         rightTitle: "03. AI Builds Digital Resume (Automated Engine)",
-        rightDesc: "Engine AI mengolah jutaan titik data jejak digital menjadi satu resume komersial ringkas.",
+        rightDesc: "Engine AI mengolah titik data jejak digital menjadi resume komersial ringkas.",
         breakdowns: [
           { num: "1", title: "Natural Language Processing (NLP)", tag: "AI Engine", desc: "Menganalisis karakteristik penulisan cerita (relatable, humorous, cozy)." },
           { num: "2", title: "Authenticity Guard Filter", tag: "Bot Detection", desc: "Memverifikasi bahwa interaksi berasal dari audiens manusia asli." },
@@ -943,9 +921,9 @@
         id: 4,
         title: "Review Identity",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div class="p-hero-card" style="margin-bottom:4px;">
-              <span class="tag-gold">Collabstr Verified Resume</span>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="p-hero-card" style="margin-bottom:8px;">
+              <span class="tag-gold">Verified AI Resume</span>
               <h3>Rani Maharani</h3>
               <p>@ranimahr • Relatable Lifestyle & Coffee Storyteller • Jakarta, ID</p>
               <div class="p-stat-grid">
@@ -956,26 +934,26 @@
             </div>
 
             <div class="p-card" style="margin-bottom:0;">
-              <h4 style="font-size:12px;margin-bottom:4px;">Peta Kepribadian (Personality Signal)</h4>
-              <div>
+              <h4 style="font-size:16px;font-weight:700;margin-bottom:8px;">Peta Kepribadian (Personality Signal)</h4>
+              <div style="margin-bottom:16px;">
                 <span class="pill-tag">Curious 94%</span>
                 <span class="pill-tag">Social 88%</span>
                 <span class="pill-tag">Practical 82%</span>
                 <span class="pill-tag">Cozy 79%</span>
               </div>
-              <hr style="border:0;border-top:1px solid var(--line);margin:8px 0;">
-              <h4 style="font-size:12px;margin-bottom:3px;">Audiens Demografi</h4>
-              <p style="font-size:10px;color:var(--text-muted);margin-bottom:8px;">68% Wanita • Usia 18-24 (62%) • Domisili Jabodetabek (74%)</p>
+              <hr style="border:0;border-top:1px solid var(--line);margin:16px 0;">
+              <h4 style="font-size:16px;font-weight:700;margin-bottom:4px;">Audiens Demografi</h4>
+              <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">68% Wanita • Usia 18-24 (62%) • Domisili Jabodetabek (74%)</p>
               
-              <h4 style="font-size:12px;margin-bottom:3px;">Kesesuaian Brand (Commercial Fit)</h4>
-              <p style="font-size:10px;color:var(--text-muted);margin-bottom:10px;">F&B (Coffee Shop), Practical Tech, Daily Wear & Youth Events.</p>
+              <h4 style="font-size:16px;font-weight:700;margin-bottom:4px;">Kesesuaian Brand (Commercial Fit)</h4>
+              <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">F&B (Coffee Shop), Practical Tech, Daily Wear & Youth Events.</p>
               
               <button class="btn-gold-p" onclick="navToStep(4)">Konfirmasi & Publish Profil Publik →</button>
             </div>
           </div>
         `,
         rightTitle: "04. Review Identity (Human-in-the-Loop Validation)",
-        rightDesc: "Creator dapat meninjau, mengonfirmasi, dan menyempurnakan atribut identitas sebelum dipublikasikan.",
+        rightDesc: "Creator meninjau dan mengonfirmasi atribut identitas sebelum dipublikasikan.",
         breakdowns: [
           { num: "1", title: "Peta Kepribadian Visual", tag: "Part of the user journey", desc: "Menampilkan atribut dominan yang terdeteksi dari gaya konten." },
           { num: "2", title: "Audiens Demografi Breakdown", tag: "Visible in prototype", desc: "Visualisasi jenis kelamin, kelompok usia, dan wilayah asal penonton." },
@@ -990,33 +968,33 @@
         id: 5,
         title: "Publish Profile",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div class="p-card" style="text-align:center;padding:12px;margin-bottom:4px;">
-              <div style="width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;display:grid;place-items:center;font-size:20px;font-weight:800;margin:0 auto 6px;">RM</div>
-              <span class="badge-status" style="margin-bottom:4px;">Verified Creator Profile</span>
-              <h3 style="font-size:16px;font-weight:800;margin-bottom:2px;">Rani Maharani</h3>
-              <div style="font-size:11px;color:var(--primary);font-weight:800;margin-bottom:6px;">brandx.id/ranimahr 📋</div>
-              <p style="font-size:10px;color:var(--text-muted);">★ 4.9 Rating (18 reviews) • Starting from Rp 600.000 / video</p>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="p-card" style="text-align:center;padding:24px;margin-bottom:8px;">
+              <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;display:grid;place-items:center;font-size:18px;font-weight:800;margin:0 auto 8px;">RM</div>
+              <span class="badge-status" style="margin-bottom:8px;">Verified Creator Profile</span>
+              <h3 style="font-size:18px;font-weight:800;margin-bottom:4px;">Rani Maharani</h3>
+              <div style="font-size:13px;color:var(--primary);font-weight:800;margin-bottom:8px;">brandx.id/ranimahr</div>
+              <p style="font-size:13px;color:var(--text-muted);">★ 4.9 Rating (18 reviews) • Starting from Rp 600.000 / video</p>
             </div>
 
-            <div style="font-size:11px;font-weight:800;color:var(--accent);">Portofolio Konten Terkini:</div>
+            <div style="font-size:13px;font-weight:700;color:var(--accent);">Portofolio Konten Terkini:</div>
             <div class="media-grid">
-              <div class="media-thumb">☕ KopiKenangan<span>48.2K Views</span></div>
-              <div class="media-thumb">📦 Tech Review<span>32.1K Views</span></div>
-              <div class="media-thumb">🎒 Campus Vlog<span>19.4K Views</span></div>
+              <div class="media-thumb">KopiKenangan<span>48.2K Views</span></div>
+              <div class="media-thumb">Tech Review<span>32.1K Views</span></div>
+              <div class="media-thumb">Campus Vlog<span>19.4K Views</span></div>
             </div>
 
-            <div class="p-card" style="margin-bottom:0;padding:10px;">
-              <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;">Review Brand Terakhir:</div>
-              <div style="font-size:11px;font-weight:700;">"Rani menghasilkan konten UGC yang sangat autentik dan konversi penjualan tinggi!"</div>
-              <div style="font-size:9px;color:var(--primary);margin-top:2px;">— Somethinc Brand Team ★ 5.0</div>
+            <div class="p-card" style="margin-bottom:0;padding:16px;">
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Review Brand Terakhir:</div>
+              <div style="font-size:13px;font-weight:700;">"Rani menghasilkan konten UGC yang sangat autentik dan konversi penjualan tinggi!"</div>
+              <div style="font-size:11px;color:var(--primary);margin-top:4px;">— Somethinc Brand Team ★ 5.0</div>
             </div>
 
-            <button class="btn-primary-p" style="margin-top:4px;" onclick="navToStep(5)">Cari Matching Opportunity →</button>
+            <button class="btn-primary-p" style="margin-top:8px;" onclick="navToStep(5)">Cari Matching Opportunity →</button>
           </div>
         `,
-        rightTitle: "05. Publish Profile (Collabstr-Grade Portfolio)",
-        rightDesc: "Menghasilkan profil publik lengkap dengan media portofolio, ulasan brand, dan paket harga sewa.",
+        rightTitle: "05. Publish Profile (Live Portfolio)",
+        rightDesc: "Menghasilkan profil publik lengkap dengan portofolio, ulasan brand, dan paket harga sewa.",
         breakdowns: [
           { num: "1", title: "Direct Handle brandx.id", tag: "Part of the user journey", desc: "Portofolio digital yang ringkas dan estetis untuk dipasang di bio sosial." },
           { num: "2", title: "Media Grid Portfolio Preview", tag: "Visible in prototype", desc: "Menampilkan contoh unggahan terbaik beserta jumlah penonton." },
@@ -1031,11 +1009,11 @@
         id: 6,
         title: "Find Matching Opportunity",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <div style="display:flex;justify-content:space-between;align-items:center;">
               <div>
-                <h3 style="font-size:15px;font-weight:800;">Opportunity Feed</h3>
-                <p style="font-size:10px;color:var(--text-muted);">Terurut skor kecocokan AI Match</p>
+                <h3 style="font-size:18px;font-weight:800;">Opportunity Feed</h3>
+                <p style="font-size:13px;color:var(--text-muted);">Terurut skor kecocokan AI Match</p>
               </div>
               <span class="badge-status">14 Match Cocok</span>
             </div>
@@ -1069,20 +1047,10 @@
               </div>
               <span class="badge-maroon">86% Match</span>
             </div>
-
-            <div class="opp-item" onclick="navToStep(6)">
-              <div class="opp-logo" style="background:#2C8A61;">EG</div>
-              <div class="opp-info">
-                <h4>Weekend Outdoor UGC</h4>
-                <p>Eiger Adventure • 1 Video</p>
-                <div class="money">Rp 750.000</div>
-              </div>
-              <span class="badge-maroon">84% Match</span>
-            </div>
           </div>
         `,
         rightTitle: "06. Find Matching Opportunity (AI Matchmaking)",
-        rightDesc: "Algoritma mencocokkan identitas unik creator dengan campaign yang sedang membuka slot pendaftaran.",
+        rightDesc: "Algoritma mencocokkan identitas unik creator dengan campaign yang sedang membuka slot.",
         breakdowns: [
           { num: "1", title: "Ranking Berbasis Skor AI Match", tag: "Part of the user journey", desc: "Pekerjaan diurutkan berdasarkan kesesuaian identitas, bukan hanya waktu posting." },
           { num: "2", title: "Rincian Reward Transparan", tag: "Visible in prototype", desc: "Nominal kompensasi langsung tertera di awal tanpa negosiasi panjang." },
@@ -1097,27 +1065,27 @@
         id: 7,
         title: "Apply Campaign",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <div class="p-card" style="margin-bottom:0;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+              <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
                 <div class="opp-logo">KK</div>
                 <div>
-                  <h3 style="font-size:14px;font-weight:800;">Aren Kenangan Campus Launch</h3>
-                  <div style="font-size:10px;color:var(--text-muted);">KopiKenangan Official • Verified Brand</div>
+                  <h3 style="font-size:18px;font-weight:800;">Aren Kenangan Campus Launch</h3>
+                  <div style="font-size:13px;color:var(--text-muted);">KopiKenangan Official • Verified Brand</div>
                 </div>
               </div>
-              <span class="badge-status" style="margin-bottom:8px;">95% AI Match — Highly Recommended</span>
-              <div style="font-size:16px;font-weight:800;color:var(--primary);margin-bottom:8px;">Kompensasi: Rp 850.000</div>
+              <span class="badge-status" style="margin-bottom:16px;">95% AI Match — Highly Recommended</span>
+              <div style="font-size:18px;font-weight:800;color:var(--primary);margin-bottom:16px;">Kompensasi: Rp 850.000</div>
               
-              <hr style="border:0;border-top:1px solid var(--line);margin:8px 0;">
+              <hr style="border:0;border-top:1px solid var(--line);margin:16px 0;">
               
-              <div style="font-size:11px;margin-bottom:4px;"><b>Deliverables:</b> 1 TikTok Video + 1 IG Story Frame</div>
-              <div style="font-size:10px;color:var(--text-muted);line-height:1.4;margin-bottom:8px;">
+              <div style="font-size:13px;margin-bottom:8px;"><b>Deliverables:</b> 1 TikTok Video + 1 IG Story Frame</div>
+              <div style="font-size:13px;color:var(--text-muted);line-height:1.4;margin-bottom:16px;">
                 Buat konten ulasan jujur mengenai pengalaman mencoba varian Aren Kenangan di sekitar kampus/area nongkrongmu.
               </div>
 
-              <div style="background:var(--neutral-bg);border:1px solid var(--line);padding:8px;border-radius:10px;font-size:10px;color:var(--accent);margin-bottom:10px;">
-                💡 <b>Kenapa Kamu Cocok:</b> Audiens dominan mahasiswa Jakarta, gaya cerita casual, interest coffee culture.
+              <div style="background:var(--neutral-bg);border:1px solid var(--line);padding:16px;border-radius:12px;font-size:13px;color:var(--accent);margin-bottom:16px;">
+                <b>Kenapa Kamu Cocok:</b> Audiens dominan mahasiswa Jakarta, gaya cerita casual, interest coffee culture.
               </div>
 
               <button class="btn-primary-p" onclick="navToStep(7)">Apply 1-Click dengan AI Resume →</button>
@@ -1125,7 +1093,7 @@
           </div>
         `,
         rightTitle: "07. Apply Campaign (Single-Tap Application)",
-        rightDesc: "Melamar campaign secara instan memanfaatkan data terverifikasi dalam AI Resume tanpa perlu proposal manual.",
+        rightDesc: "Melamar campaign secara instan memanfaatkan data terverifikasi dalam AI Resume.",
         breakdowns: [
           { num: "1", title: "Aplikasi 1-Click", tag: "Part of the user journey", desc: "Mengirimkan profil lengkap beserta sinyal keaslian hanya dengan satu tombol." },
           { num: "2", title: "Ringkasan Brief Jelas", tag: "Visible in prototype", desc: "Ekspektasi konten dan bentuk kompensasi tercantum transparan." },
@@ -1140,20 +1108,20 @@
         id: 8,
         title: "Complete Task",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <span class="badge-status" style="align-self:flex-start;">Status: Approved — Upload Draft</span>
-            <h3 style="font-size:16px;font-weight:800;margin-bottom:1px;">Submit Draft Konten Video</h3>
-            <p style="font-size:10px;color:var(--text-muted);margin-bottom:4px;">Unggah link draft video untuk pengecekan AI & review brand.</p>
+            <h3 style="font-size:18px;font-weight:800;margin-bottom:4px;">Submit Draft Konten Video</h3>
+            <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">Unggah link draft video untuk pengecekan AI & review brand.</p>
 
             <div class="p-card" style="margin-bottom:0;">
-              <label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:3px;">Link Draft Video (TikTok/Drive):</label>
-              <input type="text" value="tiktok.com/@ranimahr/video/73918239" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:11px;margin-bottom:8px;" readonly>
+              <label style="font-size:13px;color:var(--text-muted);display:block;margin-bottom:8px;">Link Draft Video (TikTok/Drive):</label>
+              <input type="text" value="tiktok.com/@ranimahr/video/73918239" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;font-family:inherit;font-size:13px;margin-bottom:16px;" readonly>
               
-              <div style="background:#000;color:white;height:90px;border-radius:10px;display:grid;place-items:center;font-size:11px;margin-bottom:8px;">
+              <div style="background:#1A0A0B;color:white;height:100px;border-radius:12px;display:grid;place-items:center;font-size:13px;margin-bottom:16px;">
                 ▶ Preview Video Draft (Aren Kenangan)
               </div>
 
-              <div style="background:var(--primary-soft);border:1px solid var(--line);padding:8px;border-radius:8px;font-size:10px;color:var(--primary);margin-bottom:10px;">
+              <div style="background:var(--primary-soft);border:1px solid var(--line);padding:16px;border-radius:12px;font-size:13px;color:var(--primary);margin-bottom:16px;">
                 <b>✓ AI Pre-Compliance Passed:</b> Logo brand terlihat, Hashtag #ArenKenangan terdeteksi, Audio jernih.
               </div>
 
@@ -1177,26 +1145,26 @@
         id: 9,
         title: "Receive Payment",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div class="p-hero-card" style="margin-bottom:4px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="p-hero-card" style="margin-bottom:8px;">
               <span class="tag-gold">Saldo Siap Ditarik</span>
-              <h2 style="font-size:22px;font-weight:800;margin-top:2px;">Rp 2.450.000</h2>
-              <p style="margin-bottom:8px;font-size:10px;">Rp 850.000 baru saja disetujui oleh KopiKenangan</p>
-              <button class="btn-gold-p" onclick="alert('Penarikan instan Rp 2.450.000 berhasil dikirim ke BCA ****8812')">Tarik Dana Instan ke Bank 🏦</button>
+              <h2 style="font-size:24px;font-weight:800;margin-top:4px;">Rp 2.450.000</h2>
+              <p style="margin-bottom:16px;font-size:13px;">Rp 850.000 baru saja disetujui oleh KopiKenangan</p>
+              <button class="btn-gold-p" onclick="alert('Penarikan instan Rp 2.450.000 berhasil dikirim ke BCA ****8812')">Tarik Dana Instan ke Bank</button>
             </div>
 
-            <div class="p-card" style="margin-bottom:0;padding:10px;">
-              <h4 style="font-size:12px;margin-bottom:8px;">Riwayat Transaksi Terkini</h4>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:6px;">
-                <div><b>KopiKenangan Launch</b><div style="font-size:9px;color:var(--text-muted);">Hari ini • Approved</div></div>
+            <div class="p-card" style="margin-bottom:0;">
+              <h4 style="font-size:16px;font-weight:700;margin-bottom:16px;">Riwayat Transaksi Terkini</h4>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:16px;">
+                <div><b>KopiKenangan Launch</b><div style="font-size:11px;color:var(--text-muted);">Hari ini • Approved</div></div>
                 <div style="font-weight:800;color:#2C8A61;">+Rp 850.000</div>
               </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:6px;">
-                <div><b>Somethinc UGC Video</b><div style="font-size:9px;color:var(--text-muted);">14 Sep 2026 • Paid</div></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:16px;">
+                <div><b>Somethinc UGC Video</b><div style="font-size:11px;color:var(--text-muted);">14 Sep 2026 • Paid</div></div>
                 <div style="font-weight:800;color:#2C8A61;">+Rp 600.000</div>
               </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;">
-                <div><b>Erigo Ambassador Bonus</b><div style="font-size:9px;color:var(--text-muted);">01 Sep 2026 • Paid</div></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;">
+                <div><b>Erigo Ambassador Bonus</b><div style="font-size:11px;color:var(--text-muted);">01 Sep 2026 • Paid</div></div>
                 <div style="font-weight:800;color:#2C8A61;">+Rp 1.000.000</div>
               </div>
             </div>
@@ -1220,24 +1188,23 @@
         id: 10,
         title: "Build Reputation",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div class="p-card" style="text-align:center;padding:14px;margin-bottom:0;">
-              <div style="width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;display:grid;place-items:center;font-size:22px;font-weight:800;margin:0 auto 8px;">⭐</div>
-              <span class="badge-status" style="margin-bottom:4px;">Level 4 Pro Creator</span>
-              <h3 style="font-size:16px;font-weight:800;margin-bottom:1px;">Rani Maharani</h3>
-              <p style="font-size:10px;color:var(--text-muted);margin-bottom:10px;">Rating Brand: 4.9★ (18 Reviews) • 100% On-Time</p>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="p-card" style="text-align:center;padding:24px;margin-bottom:0;">
+              <span class="badge-status" style="margin-bottom:8px;">Level 4 Top Creator</span>
+              <h3 style="font-size:18px;font-weight:800;margin-bottom:4px;">Rani Maharani</h3>
+              <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Rating Brand: 4.9★ (18 Reviews) • 100% On-Time</p>
               
-              <div class="p-stat-grid" style="margin-bottom:10px;">
+              <div class="p-stat-grid" style="margin-bottom:16px;">
                 <div class="p-stat-box" style="background:var(--neutral-bg);border-color:var(--line);"><b>4.9★</b><span style="color:var(--accent);">Quality</span></div>
                 <div class="p-stat-box" style="background:var(--neutral-bg);border-color:var(--line);"><b>100%</b><span style="color:var(--accent);">On-Time</span></div>
                 <div class="p-stat-box" style="background:var(--neutral-bg);border-color:var(--line);"><b>Rp18.5M</b><span style="color:var(--accent);">Earned</span></div>
               </div>
 
-              <div style="background:var(--neutral-bg);border:1px solid var(--line);padding:8px;border-radius:10px;font-size:10px;color:var(--text-muted);text-align:left;margin-bottom:10px;">
-                💬 <b>Ulasan Brand Terakhir:</b> "Punctual, video went viral & conversion rate sangat memuaskan!" — KopiKenangan Team ★ 5.0
+              <div style="background:var(--neutral-bg);border:1px solid var(--line);padding:16px;border-radius:12px;font-size:13px;color:var(--text-muted);text-align:left;margin-bottom:16px;">
+                <b>Ulasan Brand Terakhir:</b> "Punctual, video went viral & conversion rate sangat memuaskan!" — KopiKenangan Team ★ 5.0
               </div>
 
-              <button class="btn-gold-p" onclick="alert('Lencana Verified Pro Creator Aktif!')">Lihat Benefit Level Berikutnya 🏆</button>
+              <button class="btn-gold-p" onclick="alert('Lencana Verified Creator Aktif!')">Lihat Benefit Level Berikutnya →</button>
             </div>
           </div>
         `,
@@ -1260,20 +1227,20 @@
         id: 1,
         title: "Create Brand Account",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <span class="badge-maroon" style="align-self:flex-start;">Portal Bisnis B2B</span>
-            <h2 style="font-size:18px;font-weight:800;margin-bottom:2px;">Buat Akun Perusahaan</h2>
-            <p style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Registrasi akun resmi brand untuk otentikasi escrow.</p>
+            <h2 style="font-size:24px;font-weight:800;margin-bottom:4px;line-height:1.2;">Buat Akun Perusahaan</h2>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.4;">Registrasi akun resmi brand untuk otentikasi escrow.</p>
 
             <div class="p-card" style="margin-bottom:0;">
-              <label style="font-size:10px;font-weight:700;display:block;margin-bottom:3px;">Nama Perusahaan / Brand:</label>
-              <input type="text" value="KopiKenangan (PT Bumi Kopi Indonesia)" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:11px;margin-bottom:8px;" readonly>
+              <label style="font-size:13px;font-weight:700;display:block;margin-bottom:8px;">Nama Perusahaan / Brand:</label>
+              <input type="text" value="KopiKenangan (PT Bumi Kopi Indonesia)" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;font-family:inherit;font-size:13px;margin-bottom:16px;" readonly>
               
-              <label style="font-size:10px;font-weight:700;display:block;margin-bottom:3px;">Email Bisnis Terverifikasi:</label>
-              <input type="text" value="brand@kopikenangan.com" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:11px;margin-bottom:8px;" readonly>
+              <label style="font-size:13px;font-weight:700;display:block;margin-bottom:8px;">Email Bisnis Terverifikasi:</label>
+              <input type="text" value="brand@kopikenangan.com" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;font-family:inherit;font-size:13px;margin-bottom:16px;" readonly>
 
-              <label style="font-size:10px;font-weight:700;display:block;margin-bottom:3px;">NPWP / Faktur Pajak ID:</label>
-              <input type="text" value="01.234.567.8-012.000" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:11px;margin-bottom:10px;" readonly>
+              <label style="font-size:13px;font-weight:700;display:block;margin-bottom:8px;">NPWP / Faktur Pajak ID:</label>
+              <input type="text" value="01.234.567.8-012.000" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;font-family:inherit;font-size:13px;margin-bottom:16px;" readonly>
 
               <button class="btn-primary-p" onclick="navToStep(1)">Registrasi Brand & Lanjut →</button>
             </div>
@@ -1295,29 +1262,26 @@
         id: 2,
         title: "Set Campaign Goal",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <span class="badge-maroon" style="align-self:flex-start;">Langkah 2 dari 10</span>
-            <h2 style="font-size:18px;font-weight:800;margin-bottom:2px;">Tentukan Goal Campaign</h2>
-            <p style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Pilih objektif utama untuk penyesuaian strategi AI.</p>
+            <h2 style="font-size:24px;font-weight:800;margin-bottom:4px;line-height:1.2;">Tentukan Goal Campaign</h2>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.4;">Pilih objektif utama untuk penyesuaian strategi AI.</p>
 
-            <div class="p-card" style="margin-bottom:6px;border-color:var(--primary);background:var(--primary-soft);padding:10px;">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <div style="font-size:20px;">🎯</div>
-                <div><b>Drive Sales & Conversions</b><div style="font-size:10px;color:var(--text-muted);">Fokus ke penjualan varian Aren Kenangan</div></div>
+            <div class="p-card" style="margin-bottom:8px;border-color:var(--primary);background:var(--primary-soft);">
+              <div style="display:flex;align-items:center;gap:16px;">
+                <div><b>Drive Sales & Conversions</b><div style="font-size:13px;color:var(--text-muted);">Fokus ke penjualan varian Aren Kenangan</div></div>
               </div>
             </div>
 
-            <div class="p-card" style="margin-bottom:6px;opacity:0.7;padding:10px;">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <div style="font-size:20px;">🚀</div>
-                <div><b>Brand Awareness & Reach</b><div style="font-size:10px;color:var(--text-muted);">Mencapai 500K+ tayangan video</div></div>
+            <div class="p-card" style="margin-bottom:8px;opacity:0.7;">
+              <div style="display:flex;align-items:center;gap:16px;">
+                <div><b>Brand Awareness & Reach</b><div style="font-size:13px;color:var(--text-muted);">Mencapai 500K+ tayangan video</div></div>
               </div>
             </div>
 
-            <div class="p-card" style="margin-bottom:8px;opacity:0.7;padding:10px;">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <div style="font-size:20px;">🎥</div>
-                <div><b>UGC Content Library</b><div style="font-size:10px;color:var(--text-muted);">Pengumpulan materi video autentik</div></div>
+            <div class="p-card" style="margin-bottom:16px;opacity:0.7;">
+              <div style="display:flex;align-items:center;gap:16px;">
+                <div><b>UGC Content Library</b><div style="font-size:13px;color:var(--text-muted);">Pengumpulan materi video autentik</div></div>
               </div>
             </div>
 
@@ -1340,17 +1304,17 @@
         id: 3,
         title: "Create AI Campaign Brief",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <span class="badge-maroon" style="align-self:flex-start;">Generative AI Brief</span>
-            <h3 style="font-size:16px;font-weight:800;margin-bottom:2px;">Buat Brief Campaign</h3>
-            <p style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Ketik tujuan marketing dalam bahasa sehari-hari.</p>
+            <h3 style="font-size:18px;font-weight:800;margin-bottom:4px;">Buat Brief Campaign</h3>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.4;">Ketik tujuan marketing dalam bahasa sehari-hari.</p>
 
             <div class="p-card" style="margin-bottom:0;">
-              <label style="font-size:10px;font-weight:700;display:block;margin-bottom:3px;">Prompt Bahasa Alami:</label>
-              <textarea style="width:100%;height:56px;padding:8px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:11px;margin-bottom:8px;" readonly>Cari 50 mahasiswa Jabodetabek penggemar kopi & lifestyle untuk promosi peluncuran varian Aren Kenangan.</textarea>
+              <label style="font-size:13px;font-weight:700;display:block;margin-bottom:8px;">Prompt Bahasa Alami:</label>
+              <textarea style="width:100%;height:64px;padding:8px;border:1px solid var(--line);border-radius:12px;font-family:inherit;font-size:13px;margin-bottom:16px;" readonly>Cari 50 mahasiswa Jabodetabek penggemar kopi & lifestyle untuk promosi peluncuran varian Aren Kenangan.</textarea>
               
-              <div style="background:var(--neutral-bg);border:1px solid var(--line);padding:8px;border-radius:10px;font-size:10px;margin-bottom:10px;">
-                <b>🤖 Output Brief AI:</b><br>
+              <div style="background:var(--neutral-bg);border:1px solid var(--line);padding:16px;border-radius:12px;font-size:13px;margin-bottom:16px;">
+                <b>Output Brief AI:</b><br>
                 • Target: 50 Nano Creators (10K-30K followers)<br>
                 • Recommended Budget: Rp 42.500.000<br>
                 • Deliverables: 1 TikTok Video + 1 IG Story<br>
@@ -1377,9 +1341,9 @@
         id: 4,
         title: "Search Creator Identity",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <div style="display:flex;justify-content:space-between;align-items:center;">
-              <h3 style="font-size:15px;font-weight:800;">Identity Search</h3>
+              <h3 style="font-size:18px;font-weight:800;">Identity Search</h3>
               <span class="badge-status">486 Identity Found</span>
             </div>
 
@@ -1389,24 +1353,17 @@
               <span class="pill-tag">Authenticity > 90%</span>
             </div>
 
-            <div class="p-card" style="margin-bottom:4px;padding:10px;">
+            <div class="p-card" style="margin-bottom:8px;padding:16px;">
               <div style="display:flex;justify-content:space-between;align-items:center;">
-                <div><b>Rani Maharani</b><div style="font-size:10px;color:var(--text-muted);">@ranimahr • Lifestyle & Coffee • Rp 850K</div></div>
+                <div><b>Rani Maharani</b><div style="font-size:13px;color:var(--text-muted);">@ranimahr • Lifestyle & Coffee • Rp 850K</div></div>
                 <span class="badge-status">95% Match</span>
               </div>
             </div>
 
-            <div class="p-card" style="margin-bottom:4px;padding:10px;">
+            <div class="p-card" style="margin-bottom:8px;padding:16px;">
               <div style="display:flex;justify-content:space-between;align-items:center;">
-                <div><b>Raka Pratama</b><div style="font-size:10px;color:var(--text-muted);">@rakapr • Lifestyle & Tech • Rp 850K</div></div>
+                <div><b>Raka Pratama</b><div style="font-size:13px;color:var(--text-muted);">@rakapr • Lifestyle & Tech • Rp 850K</div></div>
                 <span class="badge-status">92% Match</span>
-              </div>
-            </div>
-
-            <div class="p-card" style="margin-bottom:6px;padding:10px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;">
-                <div><b>Dimas Setiawan</b><div style="font-size:10px;color:var(--text-muted);">@dimasset • Campus Life • Rp 750K</div></div>
-                <span class="badge-status">89% Match</span>
               </div>
             </div>
 
@@ -1429,32 +1386,26 @@
         id: 5,
         title: "Match & Shortlist Creator",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <div style="display:flex;justify-content:space-between;align-items:center;">
-              <h3 style="font-size:15px;font-weight:800;">Shortlist Terpilih</h3>
+              <h3 style="font-size:18px;font-weight:800;">Shortlist Terpilih</h3>
               <span class="badge-maroon">15 Creator Terpilih</span>
             </div>
 
-            <div class="p-card" style="margin-bottom:4px;padding:8px 10px;display:flex;align-items:center;gap:10px;">
+            <div class="p-card" style="margin-bottom:8px;padding:16px;display:flex;align-items:center;gap:16px;">
               <input type="checkbox" checked readonly>
-              <div style="flex:1;"><b>Rani Maharani</b><div style="font-size:9px;color:var(--text-muted);">@ranimahr • Rp 850.000</div></div>
+              <div style="flex:1;"><b>Rani Maharani</b><div style="font-size:13px;color:var(--text-muted);">@ranimahr • Rp 850.000</div></div>
               <span class="badge-status">95%</span>
             </div>
 
-            <div class="p-card" style="margin-bottom:4px;padding:8px 10px;display:flex;align-items:center;gap:10px;">
+            <div class="p-card" style="margin-bottom:8px;padding:16px;display:flex;align-items:center;gap:16px;">
               <input type="checkbox" checked readonly>
-              <div style="flex:1;"><b>Raka Pratama</b><div style="font-size:9px;color:var(--text-muted);">@rakapr • Rp 850.000</div></div>
+              <div style="flex:1;"><b>Raka Pratama</b><div style="font-size:13px;color:var(--text-muted);">@rakapr • Rp 850.000</div></div>
               <span class="badge-status">92%</span>
             </div>
 
-            <div class="p-card" style="margin-bottom:8px;padding:8px 10px;display:flex;align-items:center;gap:10px;">
-              <input type="checkbox" checked readonly>
-              <div style="flex:1;"><b>Dimas Setiawan</b><div style="font-size:9px;color:var(--text-muted);">@dimasset • Rp 750.000</div></div>
-              <span class="badge-status">89%</span>
-            </div>
-
-            <div style="background:var(--neutral-bg);border:1px solid var(--line);padding:8px;border-radius:10px;font-size:10px;color:var(--accent);margin-bottom:8px;">
-              💰 <b>Total Biaya Shortlist:</b> Rp 12.750.000 (15 Creator) • 94% Coverage Jabodetabek
+            <div style="background:var(--neutral-bg);border:1px solid var(--line);padding:16px;border-radius:12px;font-size:13px;color:var(--accent);margin-bottom:16px;">
+              <b>Total Biaya Shortlist:</b> Rp 12.750.000 (15 Creator) • 94% Coverage Jabodetabek
             </div>
 
             <button class="btn-primary-p" onclick="navToStep(5)">Konfirmasi Shortlist (15 Creator) →</button>
@@ -1476,20 +1427,20 @@
         id: 6,
         title: "Invite Collaboration",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <span class="badge-status" style="align-self:flex-start;">Ready to Send</span>
-            <h3 style="font-size:16px;font-weight:800;margin-bottom:2px;">Kirim Undangan Massal</h3>
-            <p style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Undangan dan dana escrow akan dikunci untuk 15 creator terpilih.</p>
+            <h3 style="font-size:18px;font-weight:800;margin-bottom:4px;">Kirim Undangan Massal</h3>
+            <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">Undangan dan dana escrow akan dikunci untuk 15 creator terpilih.</p>
 
             <div class="p-card" style="margin-bottom:0;">
-              <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;">Status Dana Escrow:</div>
-              <div style="background:var(--primary-soft);border:1px solid var(--line);padding:10px;border-radius:10px;font-size:11px;color:var(--primary);font-weight:800;margin-bottom:10px;">
-                🔒 Dana Escrow Terkunci: Rp 12.750.000 (Garansi Keamanan)
+              <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">Status Dana Escrow:</div>
+              <div style="background:var(--primary-soft);border:1px solid var(--line);padding:16px;border-radius:12px;font-size:13px;color:var(--primary);font-weight:800;margin-bottom:16px;">
+                Dana Escrow Terkunci: Rp 12.750.000 (Garansi Keamanan)
               </div>
-              <div style="font-size:10px;color:var(--text-muted);line-height:1.4;margin-bottom:10px;">
+              <div style="font-size:13px;color:var(--text-muted);line-height:1.4;margin-bottom:16px;">
                 Dana hanya akan dicairkan ke creator setelah draft video mereka Anda setujui.
               </div>
-              <button class="btn-gold-p" onclick="navToStep(6)">Kirim Batch Invitation Sekarang 🚀</button>
+              <button class="btn-gold-p" onclick="navToStep(6)">Kirim Batch Invitation Sekarang →</button>
             </div>
           </div>
         `,
@@ -1509,26 +1460,26 @@
         id: 7,
         title: "Review Content",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <span class="badge-status" style="align-self:flex-start;">Content Review Queue</span>
-            <h3 style="font-size:16px;font-weight:800;margin-bottom:2px;">Review Konten Creator</h3>
-            <p style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Review draft video sebelum dipublikasikan secara publik.</p>
+            <h3 style="font-size:18px;font-weight:800;margin-bottom:4px;">Review Konten Creator</h3>
+            <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">Review draft video sebelum dipublikasikan secara publik.</p>
 
             <div class="p-card" style="margin-bottom:0;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-                <div style="width:36px;height:36px;border-radius:10px;background:var(--primary);color:white;display:grid;place-items:center;font-weight:800;">RM</div>
-                <div><b>Rani Maharani (@ranimahr)</b><div style="font-size:10px;color:var(--text-muted);">Draft TikTok Video • 45 Detik</div></div>
+              <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+                <div style="width:40px;height:40px;border-radius:12px;background:var(--primary);color:white;display:grid;place-items:center;font-weight:800;">RM</div>
+                <div><b>Rani Maharani (@ranimahr)</b><div style="font-size:13px;color:var(--text-muted);">Draft TikTok Video • 45 Detik</div></div>
               </div>
 
-              <div style="background:#000;color:white;height:100px;border-radius:10px;display:grid;place-items:center;font-size:11px;margin-bottom:8px;">
+              <div style="background:#1A0A0B;color:white;height:110px;border-radius:12px;display:grid;place-items:center;font-size:13px;margin-bottom:16px;">
                 ▶ Preview Video Draft (Aren Kenangan)
               </div>
 
-              <div style="background:var(--primary-soft);padding:6px;border-radius:8px;font-size:10px;color:var(--primary);margin-bottom:10px;">
+              <div style="background:var(--primary-soft);padding:16px;border-radius:12px;font-size:13px;color:var(--primary);margin-bottom:16px;">
                 ✓ AI Vision Passed: Logo KopiKenangan terdeteksi (frame 12-45).
               </div>
 
-              <div style="display:flex;gap:8px;">
+              <div style="display:flex;gap:16px;">
                 <button class="btn-primary-p" style="flex:1;" onclick="navToStep(7)">Approve Konten ✓</button>
                 <button class="btn-secondary-p" style="flex:1;" onclick="alert('Catatan revisi dikirim')">Minta Revisi</button>
               </div>
@@ -1551,33 +1502,33 @@
         id: 8,
         title: "Track Performance",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <div style="display:flex;justify-content:space-between;align-items:center;">
               <div>
-                <h3 style="font-size:16px;font-weight:800;">Live Performance</h3>
-                <p style="font-size:11px;color:var(--text-muted);">Aren Kenangan Launch</p>
+                <h3 style="font-size:18px;font-weight:800;">Live Performance</h3>
+                <p style="font-size:13px;color:var(--text-muted);">Aren Kenangan Launch</p>
               </div>
               <span class="badge-status">Active Tracking</span>
             </div>
 
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;">
-              <div class="p-card" style="margin-bottom:0;padding:10px;">
-                <b style="font-size:16px;color:var(--primary);">342.5K</b>
-                <span style="display:block;font-size:9px;color:var(--text-muted);margin-top:2px;">Total Impressions</span>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">
+              <div class="p-card" style="margin-bottom:0;padding:16px;">
+                <b style="font-size:24px;color:var(--primary);">342.5K</b>
+                <span style="display:block;font-size:13px;color:var(--text-muted);margin-top:4px;">Total Impressions</span>
               </div>
-              <div class="p-card" style="margin-bottom:0;padding:10px;">
-                <b style="font-size:16px;color:#2C8A61;">9.2%</b>
-                <span style="display:block;font-size:9px;color:var(--text-muted);margin-top:2px;">Engagement Rate</span>
+              <div class="p-card" style="margin-bottom:0;padding:16px;">
+                <b style="font-size:24px;color:#2C8A61;">9.2%</b>
+                <span style="display:block;font-size:13px;color:var(--text-muted);margin-top:4px;">Engagement Rate</span>
               </div>
             </div>
 
-            <div class="p-card" style="margin-bottom:0;padding:10px;">
-              <div style="font-size:10px;color:var(--text-muted);margin-bottom:3px;">Status Posting Creator:</div>
-              <div style="font-size:11px;font-weight:800;color:var(--primary);">15 dari 15 Creator Sudah Tayang ✓</div>
-              <div style="font-size:9px;color:var(--text-muted);margin-top:2px;">28.4K Likes • 4.2K Shares • 1.420 Link Clicks</div>
+            <div class="p-card" style="margin-bottom:0;padding:16px;">
+              <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">Status Posting Creator:</div>
+              <div style="font-size:16px;font-weight:800;color:var(--primary);">15 dari 15 Creator Sudah Tayang ✓</div>
+              <div style="font-size:13px;color:var(--text-muted);margin-top:4px;">28.4K Likes • 4.2K Shares • 1.420 Link Clicks</div>
             </div>
 
-            <button class="btn-primary-p" style="margin-top:4px;" onclick="navToStep(8)">Lihat Report Akhir & ROI →</button>
+            <button class="btn-primary-p" style="margin-top:8px;" onclick="navToStep(8)">Lihat Report Akhir & ROI →</button>
           </div>
         `,
         rightTitle: "08. Track Performance (Real-time Analytics)",
@@ -1596,33 +1547,33 @@
         id: 9,
         title: "Generate Report",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
             <div style="display:flex;justify-content:space-between;align-items:center;">
               <div>
-                <h3 style="font-size:16px;font-weight:800;">Campaign Report</h3>
-                <p style="font-size:11px;color:var(--text-muted);">Aren Kenangan Launch</p>
+                <h3 style="font-size:18px;font-weight:800;">Campaign Report</h3>
+                <p style="font-size:13px;color:var(--text-muted);">Aren Kenangan Launch</p>
               </div>
               <span class="badge-status">Completed</span>
             </div>
 
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;">
-              <div class="p-card" style="margin-bottom:0;padding:10px;">
-                <b style="font-size:16px;color:var(--accent);">1,420</b>
-                <span style="display:block;font-size:9px;color:var(--text-muted);margin-top:2px;">Conversions (Orders)</span>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">
+              <div class="p-card" style="margin-bottom:0;padding:16px;">
+                <b style="font-size:24px;color:var(--accent);">1,420</b>
+                <span style="display:block;font-size:13px;color:var(--text-muted);margin-top:4px;">Conversions (Orders)</span>
               </div>
-              <div class="p-card" style="margin-bottom:0;padding:10px;">
-                <b style="font-size:16px;color:var(--primary);">4.8x</b>
-                <span style="display:block;font-size:9px;color:var(--text-muted);margin-top:2px;">Campaign ROI</span>
+              <div class="p-card" style="margin-bottom:0;padding:16px;">
+                <b style="font-size:24px;color:var(--primary);">4.8x</b>
+                <span style="display:block;font-size:13px;color:var(--text-muted);margin-top:4px;">Campaign ROI</span>
               </div>
             </div>
 
-            <div class="p-card" style="margin-bottom:0;padding:10px;">
-              <div style="font-size:10px;color:var(--text-muted);margin-bottom:2px;">Top Performer:</div>
-              <b>🥇 Rani Maharani (@ranimahr)</b>
-              <div style="font-size:9px;color:var(--text-muted);">48.2K Views • 12.4% ER • 320 Sales</div>
+            <div class="p-card" style="margin-bottom:0;padding:16px;">
+              <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">Top Performer:</div>
+              <b>Rani Maharani (@ranimahr)</b>
+              <div style="font-size:13px;color:var(--text-muted);">48.2K Views • 12.4% ER • 320 Sales</div>
             </div>
 
-            <button class="btn-gold-p" style="margin-top:4px;" onclick="navToStep(9)">Luncurkan Repeat Campaign →</button>
+            <button class="btn-gold-p" style="margin-top:8px;" onclick="navToStep(9)">Luncurkan Repeat Campaign →</button>
           </div>
         `,
         rightTitle: "09. Generate Report (Commercial Attribution)",
@@ -1641,24 +1592,24 @@
         id: 10,
         title: "Repeat Campaign",
         phoneUI: `
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div class="p-hero-card" style="margin-bottom:4px;background:linear-gradient(135deg,var(--primary-dark),var(--primary));">
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="p-hero-card" style="margin-bottom:8px;background:linear-gradient(135deg,var(--primary-dark),var(--primary));">
               <span class="tag-gold">Scale Up Campaign</span>
               <h3>Luncurkan Phase 2</h3>
               <p>Re-hire 5 creator terbaik dari kampanye sebelumnya dengan 1-click duplicate.</p>
-              <button class="btn-gold-p" onclick="alert('Campaign Phase 2 berhasil diluncurkan!')">Luncurkan Campaign Phase 2 🚀</button>
+              <button class="btn-gold-p" onclick="alert('Campaign Phase 2 berhasil diluncurkan!')">Luncurkan Campaign Phase 2 →</button>
             </div>
 
-            <div class="p-card" style="margin-bottom:0;padding:10px;">
-              <h4 style="font-size:12px;margin-bottom:4px;">Re-engagement Retensi</h4>
-              <p style="font-size:10px;color:var(--text-muted);line-height:1.4;">
+            <div class="p-card" style="margin-bottom:0;padding:16px;">
+              <h4 style="font-size:16px;font-weight:700;margin-bottom:8px;">Re-engagement Retensi</h4>
+              <p style="font-size:13px;color:var(--text-muted);line-height:1.5;">
                 Mempertahankan hubungan kolaborasi jangka panjang dengan creator terbukti berkinerja tinggi.
               </p>
             </div>
           </div>
         `,
         rightTitle: "10. Repeat Campaign (Scale & Retention)",
-        rightDesc: "Menutup siklus dengan merekrut kembali creator terbaik untuk kampanye lanjutan secara lebih efisien.",
+        rightDesc: "Menutup siklus dengan merekrut kembali creator terbaik untuk kampanye lanjutan secara efisien.",
         breakdowns: [
           { num: "1", title: "Re-hire 1-Click Creator Best", tag: "Part of the user journey", desc: "Memperpanjang kontrak kerja dengan creator yang sudah terbukti mendatangkan hasil." },
           { num: "2", title: "Duplicate Settings Campaign", tag: "Visible in prototype", desc: "Mengulang struktur campaign sukses tanpa perlu menyusun brief dari awal." },
@@ -1685,7 +1636,7 @@
         <button class="menu-item ${idx === currentStepIndex ? 'active' : ''}" onclick="selectStep(${idx})">
           <span class="step-num">${item.id}</span>
           <span style="flex:1;">${item.title}</span>
-          <span class="arrow">›</span>
+          <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </button>
       `).join('');
     }
